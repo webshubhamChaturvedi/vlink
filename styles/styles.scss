@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css?family=Permanent+Marker|Rock+Salt");
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+
+
+  .controls {
+    flex-grow: 1;
+    margin: 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .player__button {
+    width: fit-content;
+    margin-bottom: 15px;
+    background-color: transparent;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      cursor: pointer;
+      svg {
+        color: greenyellow;
+      }
+    }
+
+    svg {
+      font-size: 4em;
+      color: white;
+    }
+  }
+
+  .bar {
+    user-select: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    .bar__time {
+      color: white;
+      font-size: 16px;
+    }
+
+    .bar__progress {
+      flex: 1;
+      margin: 0 20px;
+      height: 10px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+    }
+  }
+
+  .bar_volume {
+    user-select: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+
+    .bar__progress_volume {
+      flex: 1;
+      margin: 0 20px;
+      height: 2px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+    }
+  }
+
+
+ 

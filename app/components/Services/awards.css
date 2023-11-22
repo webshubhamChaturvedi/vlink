@@ -1,0 +1,28 @@
+.awards-sec .slick-active.slick-center.slick-current {
+    /* position: relative; */
+    /* padding-top: 30px; */
+    
+}
+.awards-sec .slick-slider .slick-list {
+    padding-top: 20px !important;
+    padding-bottom: 20px;
+    overflow-x: hidden;
+}
+.awards-sec .slick-active.slick-center.slick-current .awards-circle {
+    box-shadow: 0px 10px 40px 0px #8E8EF05A;
+    margin-top: -10px;
+}
+.awards-sec .slick-dots li {
+    background: #D9D9D9;
+    border-radius: 100%;
+}
+.awards-sec .slick-dots li button:before {
+    color: #D9D9D9;
+}
+.awards-sec .slick-dots li.slick-active {
+    background: #0F2278;
+    border-radius: 100%;
+}
+.awards-sec .slick-dots li.slick-active button:before {
+    color: #0F2278;
+}

@@ -1,0 +1,11 @@
+.cloud_case {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+}
+.cloud_case h6 {
+margin-bottom: 1.25rem;
+}
+.cloud_case h5 {
+    margin-bottom: 0rem;
+    }

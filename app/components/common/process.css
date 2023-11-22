@@ -1,0 +1,124 @@
+.timeline-box {
+    display: flex;
+    flex-direction: column;
+    background-color: #A68BC1;
+  }
+  
+  .single-event-container {
+    padding: 10px 85px;
+    width: 50%;
+    /* background-color: #EE8790; */
+    position: relative;
+    transition: all 400ms ease-in-out;
+  }
+  
+  .single-event-container.right {
+    margin-left: auto;
+  }
+  
+  .event-description {
+    background-color: #021B70;
+    padding: 30px 35px;
+    color: dimgray;
+    box-shadow: 0px 8px 15px -9px #000;
+    border: 2px solid #1246D5;
+    border-radius: 10px;
+  }
+
+  .single-event-container.right .event-description:before {
+    position: absolute;
+    width: 85px;
+    height: 1px;
+    background: #1246D5;
+    content: "";
+    top: 50%;
+    left: 0;
+}
+
+.single-event-container .event-description:before {
+    position: absolute;
+    width: 85px;
+    height: 1px;
+    background: #1246D5;
+    content: "";
+    top: 50%;
+    right: 0;
+}
+  
+  .event-description h2 {
+    margin-bottom: 20px;
+    /* color: darkslategray; */
+  }
+  
+  
+  .border-process {
+    width: 2px;
+    height: 100%;
+    position: absolute;
+    background-color: #1246D5;
+    top: 0;
+    right: 0px;
+  }
+  
+  .single-event-container.right .border-process {
+    left: -2px;
+  }
+  
+  .circle-date {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #00A6FF;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    border: 6px solid #0F2278
+  }
+  
+  .single-event-container.right .circle-date {
+    left: -25px;
+  }
+  
+  @media all and (max-width: 1024px) {
+    .single-event-container {
+      margin: 0;
+      width: 100%;
+    }
+    .single-event-container .border-process,
+    .single-event-container.right .border-process {
+      left: 23px;
+    }
+    .single-event-container .circle-date,
+    .single-event-container.right .circle-date {
+      left: 0;
+    }
+    .single-event-container .event-description:before {
+        left: 0;
+    }
+    .single-event-container {
+      padding: 20px 5px 20px 60px;}
+      .single-event-container .event-description:before,
+      .single-event-container.right .event-description:before {
+        width: 60px;
+      }
+  }
+
+  .border-process.process-start:before,
+  .border-process.process-last:before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    background: #00a6ff;
+    position: absolute;
+    left: 50%;
+    border-radius: 100%;
+    transform: translateX(-50%);
+}
+.border-process.process-last:before {
+    bottom: 0px;
+}

@@ -1,0 +1,1377 @@
+{
+  "header": {
+    "id": 1,
+    "attributes": {
+      "createdAt": "2022-12-30T05:07:38.645Z",
+      "updatedAt": "2023-10-17T08:28:38.409Z",
+      "publishedAt": "2022-12-30T05:07:40.383Z",
+      "menu": {
+        "id": 1,
+        "title": "Header menu",
+        "menu_sidebar": [
+          {
+            "id": 1,
+            "year": "17+ Years",
+            "text": "of Experience",
+            "image": {
+              "data": {
+                "id": 280,
+                "attributes": {
+                  "name": "experience.svg",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 32,
+                  "height": 30,
+                  "formats": null,
+                  "hash": "experience_bdc6cc318e",
+                  "ext": ".svg",
+                  "mime": "image/svg+xml",
+                  "size": 1.29,
+                  "url": "/uploads/experience_bdc6cc318e.svg",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "createdAt": "2023-01-09T07:05:02.307Z",
+                  "updatedAt": "2023-01-09T07:05:02.307Z"
+                }
+              }
+            }
+          },
+          {
+            "id": 2,
+            "year": "200+",
+            "text": "Global Clients",
+            "image": {
+              "data": {
+                "id": 281,
+                "attributes": {
+                  "name": "satisfiedclient.svg",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 32,
+                  "height": 29,
+                  "formats": null,
+                  "hash": "satisfiedclient_bc1465546e",
+                  "ext": ".svg",
+                  "mime": "image/svg+xml",
+                  "size": 2.19,
+                  "url": "/uploads/satisfiedclient_bc1465546e.svg",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "createdAt": "2023-01-09T07:05:46.672Z",
+                  "updatedAt": "2023-01-09T07:05:46.672Z"
+                }
+              }
+            }
+          },
+          {
+            "id": 3,
+            "year": "10+ ",
+            "text": "Countries served",
+            "image": {
+              "data": {
+                "id": 282,
+                "attributes": {
+                  "name": "countriesserved.svg",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 32,
+                  "height": 32,
+                  "formats": null,
+                  "hash": "countriesserved_9417bb7b72",
+                  "ext": ".svg",
+                  "mime": "image/svg+xml",
+                  "size": 2.52,
+                  "url": "/uploads/countriesserved_9417bb7b72.svg",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "createdAt": "2023-01-09T07:06:50.745Z",
+                  "updatedAt": "2023-01-09T07:06:50.745Z"
+                }
+              }
+            }
+          },
+          {
+            "id": 4,
+            "year": "400+",
+            "text": "Projects Delivered",
+            "image": {
+              "data": {
+                "id": 283,
+                "attributes": {
+                  "name": "productsdelivered.svg",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 19,
+                  "height": 37,
+                  "formats": null,
+                  "hash": "productsdelivered_6de91fbc25",
+                  "ext": ".svg",
+                  "mime": "image/svg+xml",
+                  "size": 1.22,
+                  "url": "/uploads/productsdelivered_6de91fbc25.svg",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "createdAt": "2023-01-09T07:07:26.022Z",
+                  "updatedAt": "2023-01-09T07:07:26.022Z"
+                }
+              }
+            }
+          }
+        ],
+        "menu_name": [
+          {
+            "id": 1,
+            "menu_name": "Services",
+            "menu_link": "/services",
+            "sub_menu": "Dedicated Teams",
+            "sub_link": "/services/dedicated-teams",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 2,
+            "menu_name": "Services",
+            "menu_link": "/services",
+            "sub_menu": "IT Staff Augmentation",
+            "sub_link": "/services/it-staff-augmentation",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 50,
+            "menu_name": "Services",
+            "menu_link": "/services",
+            "sub_menu": "Data And Analytics",
+            "sub_link": "/services/data-analytics",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 48,
+            "menu_name": "Services",
+            "menu_link": "/services",
+            "sub_menu": "Digital Transformation",
+            "sub_link": null,
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 55,
+            "menu_name": "Services",
+            "menu_link": "/services",
+            "sub_menu": "Custom Software Development",
+            "sub_link": null,
+            "sub_sub_menu": "Data Warehouse",
+            "sub_sub_link": "/services/data-warehouse/",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 4,
+            "menu_name": "Services",
+            "menu_link": "/services",
+            "sub_menu": "Custom Software Development",
+            "sub_link": null,
+            "sub_sub_menu": "Product Engineering",
+            "sub_sub_link": "/services/product-engineering",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 5,
+            "menu_name": "Services",
+            "menu_link": "/services",
+            "sub_menu": "Custom Software Development",
+            "sub_link": null,
+            "sub_sub_menu": "Web Development Services",
+            "sub_sub_link": "/services/web-development-services",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 6,
+            "menu_name": "Services",
+            "menu_link": "/services",
+            "sub_menu": "Custom Software Development",
+            "sub_link": null,
+            "sub_sub_menu": "Mobile App Development",
+            "sub_sub_link": "/services/mobile-app-development",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 7,
+            "menu_name": "Services",
+            "menu_link": "/services",
+            "sub_menu": "Custom Software Development",
+            "sub_link": null,
+            "sub_sub_menu": "Maintenance & Support Service",
+            "sub_sub_link": "/services/software-maintenance-support-services",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 8,
+            "menu_name": "Services",
+            "menu_link": "/services",
+            "sub_menu": "Custom Software Development",
+            "sub_link": null,
+            "sub_sub_menu": "QA & Testing Service ",
+            "sub_sub_link": "/services/qa-software-testing-services",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 9,
+            "menu_name": "Services",
+            "menu_link": "/services",
+            "sub_menu": "Digital Transformation",
+            "sub_link": null,
+            "sub_sub_menu": "Re-engineering Legacy Apps & Products",
+            "sub_sub_link": "/services/re-engineering-legacy-products-and-apps",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 10,
+            "menu_name": "Services",
+            "menu_link": "/services",
+            "sub_menu": "Digital Transformation",
+            "sub_link": null,
+            "sub_sub_menu": "DevOps & Automation",
+            "sub_sub_link": "/services/cloud-devops-automation-services",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 11,
+            "menu_name": "Services",
+            "menu_link": "/services",
+            "sub_menu": "Digital Transformation",
+            "sub_link": null,
+            "sub_sub_menu": "Machine Learning & AI",
+            "sub_sub_link": "/services/machine-learning-ai-development",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 12,
+            "menu_name": "Services",
+            "menu_link": "/services",
+            "sub_menu": "Digital Transformation",
+            "sub_link": null,
+            "sub_sub_menu": "Internet of Things (IoT)",
+            "sub_sub_link": "/services/internet-of-things-iot",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 13,
+            "menu_name": "Services",
+            "menu_link": "/services",
+            "sub_menu": "Digital Transformation",
+            "sub_link": null,
+            "sub_sub_menu": "Cloud Managed Services",
+            "sub_sub_link": "/services/cloud-managed-infrastructure-services",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 22,
+            "menu_name": "Hire Developers",
+            "menu_link": "/hire-developers",
+            "sub_menu": "Backend Developers",
+            "sub_link": null,
+            "sub_sub_menu": "NodeJS",
+            "sub_sub_link": "/hire-developers/nodejs",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 14,
+            "menu_name": "Hire Developers",
+            "menu_link": "/hire-developers",
+            "sub_menu": "Backend Developers",
+            "sub_link": null,
+            "sub_sub_menu": "Python",
+            "sub_sub_link": "/hire-developers/python",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 18,
+            "menu_name": "Hire Developers",
+            "menu_link": "/hire-developers",
+            "sub_menu": "Frontend Developers",
+            "sub_link": null,
+            "sub_sub_menu": "Angular",
+            "sub_sub_link": "/hire-developers/angular",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 15,
+            "menu_name": "Hire Developers",
+            "menu_link": "/hire-developers",
+            "sub_menu": "Backend Developers",
+            "sub_link": null,
+            "sub_sub_menu": "Java",
+            "sub_sub_link": "/hire-developers/java",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 16,
+            "menu_name": "Hire Developers",
+            "menu_link": "/hire-developers",
+            "sub_menu": "Backend Developers",
+            "sub_link": null,
+            "sub_sub_menu": "Dot Net ",
+            "sub_sub_link": "/hire-developers/dot-net",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 17,
+            "menu_name": "Hire Developers",
+            "menu_link": "/hire-developers",
+            "sub_menu": "Frontend Developers",
+            "sub_link": null,
+            "sub_sub_menu": "React",
+            "sub_sub_link": "/hire-developers/react",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 45,
+            "menu_name": "Hire Developers",
+            "menu_link": "/hire-developers",
+            "sub_menu": "Frontend Developers",
+            "sub_link": null,
+            "sub_sub_menu": "Vue js",
+            "sub_sub_link": "/hire-developers/vue-js",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 19,
+            "menu_name": "Hire Developers",
+            "menu_link": "/hire-developers",
+            "sub_menu": "Full Stack Developers",
+            "sub_link": null,
+            "sub_sub_menu": "MERN",
+            "sub_sub_link": "/hire-developers/mern-developer",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 21,
+            "menu_name": "Hire Developers",
+            "menu_link": null,
+            "sub_menu": "Mobile Developers",
+            "sub_link": null,
+            "sub_sub_menu": "Flutter",
+            "sub_sub_link": "/hire-developers/flutter",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 20,
+            "menu_name": "Hire Developers",
+            "menu_link": null,
+            "sub_menu": "Mobile Developers",
+            "sub_link": null,
+            "sub_sub_menu": "React Native",
+            "sub_sub_link": "/hire-developers/react-native",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 23,
+            "menu_name": "Industries",
+            "menu_link": "/industries",
+            "sub_menu": "Healthcare",
+            "sub_link": "/industries/healthcare",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": "Industries We Serve",
+            "desc": "It’s said- ” be innovative or be gone”, and the only way you can innovate in your field is if you know every  blade of grass!",
+            "image": {
+              "data": {
+                "id": 510,
+                "attributes": {
+                  "name": "industry-header.webp",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 1280,
+                  "height": 767,
+                  "formats": {
+                    "large": {
+                      "ext": ".webp",
+                      "url": "/uploads/large_industry_header_155230b4ba.webp",
+                      "hash": "large_industry_header_155230b4ba",
+                      "mime": "image/webp",
+                      "name": "large_industry-header.webp",
+                      "path": null,
+                      "size": 37.33,
+                      "width": 1000,
+                      "height": 599
+                    },
+                    "small": {
+                      "ext": ".webp",
+                      "url": "/uploads/small_industry_header_155230b4ba.webp",
+                      "hash": "small_industry_header_155230b4ba",
+                      "mime": "image/webp",
+                      "name": "small_industry-header.webp",
+                      "path": null,
+                      "size": 17.11,
+                      "width": 500,
+                      "height": 300
+                    },
+                    "medium": {
+                      "ext": ".webp",
+                      "url": "/uploads/medium_industry_header_155230b4ba.webp",
+                      "hash": "medium_industry_header_155230b4ba",
+                      "mime": "image/webp",
+                      "name": "medium_industry-header.webp",
+                      "path": null,
+                      "size": 27.72,
+                      "width": 750,
+                      "height": 449
+                    },
+                    "thumbnail": {
+                      "ext": ".webp",
+                      "url": "/uploads/thumbnail_industry_header_155230b4ba.webp",
+                      "hash": "thumbnail_industry_header_155230b4ba",
+                      "mime": "image/webp",
+                      "name": "thumbnail_industry-header.webp",
+                      "path": null,
+                      "size": 6.81,
+                      "width": 245,
+                      "height": 147
+                    }
+                  },
+                  "hash": "industry_header_155230b4ba",
+                  "ext": ".webp",
+                  "mime": "image/webp",
+                  "size": 55.72,
+                  "url": "/uploads/industry_header_155230b4ba.webp",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "createdAt": "2023-01-30T15:38:22.080Z",
+                  "updatedAt": "2023-01-30T15:38:22.080Z"
+                }
+              }
+            }
+          },
+          {
+            "id": 24,
+            "menu_name": "Industries",
+            "menu_link": "/industries",
+            "sub_menu": "Financial Services",
+            "sub_link": "/industries/financial-services",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 25,
+            "menu_name": "Industries",
+            "menu_link": "/industries",
+            "sub_menu": "Manufacturing",
+            "sub_link": "/industries/manufacturing",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 27,
+            "menu_name": "Industries",
+            "menu_link": "/industries",
+            "sub_menu": "Telecom",
+            "sub_link": "/industries/telecom",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 26,
+            "menu_name": "Industries",
+            "menu_link": "/industries",
+            "sub_menu": "E-commerce",
+            "sub_link": "/industries/ecommerce",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 28,
+            "menu_name": "Industries",
+            "menu_link": "/industries",
+            "sub_menu": "Media & Entertainment",
+            "sub_link": "/industries/media-entertainment",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 29,
+            "menu_name": "Industries",
+            "menu_link": "/industries",
+            "sub_menu": "Consumer Technology",
+            "sub_link": "/industries/consumer-technology",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 30,
+            "menu_name": "Industries",
+            "menu_link": "/industries",
+            "sub_menu": "Education- EdTech",
+            "sub_link": "/industries/education",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 31,
+            "menu_name": "Case Studies",
+            "menu_link": "/case-study",
+            "sub_menu": null,
+            "sub_link": null,
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 32,
+            "menu_name": "About Us",
+            "menu_link": "/about-us",
+            "sub_menu": null,
+            "sub_link": null,
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": "About VLink",
+            "desc": "There’s truth in numbers. For VLink, those numbers are 1s and 0s — binary code that’s found in the solutions  we develop for some of the world’s most successful and best-known companies.",
+            "image": {
+              "data": {
+                "id": 511,
+                "attributes": {
+                  "name": "about-us-header.webp",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 1280,
+                  "height": 767,
+                  "formats": {
+                    "large": {
+                      "ext": ".webp",
+                      "url": "/uploads/large_about_us_header_0a690109b3.webp",
+                      "hash": "large_about_us_header_0a690109b3",
+                      "mime": "image/webp",
+                      "name": "large_about-us-header.webp",
+                      "path": null,
+                      "size": 73.14,
+                      "width": 1000,
+                      "height": 599
+                    },
+                    "small": {
+                      "ext": ".webp",
+                      "url": "/uploads/small_about_us_header_0a690109b3.webp",
+                      "hash": "small_about_us_header_0a690109b3",
+                      "mime": "image/webp",
+                      "name": "small_about-us-header.webp",
+                      "path": null,
+                      "size": 32.64,
+                      "width": 500,
+                      "height": 300
+                    },
+                    "medium": {
+                      "ext": ".webp",
+                      "url": "/uploads/medium_about_us_header_0a690109b3.webp",
+                      "hash": "medium_about_us_header_0a690109b3",
+                      "mime": "image/webp",
+                      "name": "medium_about-us-header.webp",
+                      "path": null,
+                      "size": 53.64,
+                      "width": 750,
+                      "height": 449
+                    },
+                    "thumbnail": {
+                      "ext": ".webp",
+                      "url": "/uploads/thumbnail_about_us_header_0a690109b3.webp",
+                      "hash": "thumbnail_about_us_header_0a690109b3",
+                      "mime": "image/webp",
+                      "name": "thumbnail_about-us-header.webp",
+                      "path": null,
+                      "size": 11.32,
+                      "width": 245,
+                      "height": 147
+                    }
+                  },
+                  "hash": "about_us_header_0a690109b3",
+                  "ext": ".webp",
+                  "mime": "image/webp",
+                  "size": 107.98,
+                  "url": "/uploads/about_us_header_0a690109b3.webp",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "createdAt": "2023-01-30T15:40:35.168Z",
+                  "updatedAt": "2023-01-30T15:40:35.168Z"
+                }
+              }
+            }
+          },
+          {
+            "id": 33,
+            "menu_name": "About Us",
+            "menu_link": "/about-us",
+            "sub_menu": "Our Process",
+            "sub_link": "/about-us/our-process",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 35,
+            "menu_name": "About Us",
+            "menu_link": "/about-us",
+            "sub_menu": "Contact Us",
+            "sub_link": "/about-us/contact-us",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 36,
+            "menu_name": "About Us",
+            "menu_link": "/about-us",
+            "sub_menu": "FAQ’s",
+            "sub_link": "/about-us/faq",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 37,
+            "menu_name": "About Us",
+            "menu_link": "/about-us",
+            "sub_menu": "Corporate Social Responsibility",
+            "sub_link": "/about-us/corporate-social-responsibility",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 54,
+            "menu_name": "About Us",
+            "menu_link": "/about-us",
+            "sub_menu": "Labor Condition Application",
+            "sub_link": "/about-us/lca",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 38,
+            "menu_name": "Resources",
+            "menu_link": "/podcast",
+            "sub_menu": "Technology Podcast",
+            "sub_link": "/podcast",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": "All Resources",
+            "desc": "Articles, links and thought-provoking material to help you on your IT journey",
+            "image": {
+              "data": {
+                "id": 512,
+                "attributes": {
+                  "name": "resources-header.webp",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 1280,
+                  "height": 767,
+                  "formats": {
+                    "large": {
+                      "ext": ".webp",
+                      "url": "/uploads/large_resources_header_a0d96031cb.webp",
+                      "hash": "large_resources_header_a0d96031cb",
+                      "mime": "image/webp",
+                      "name": "large_resources-header.webp",
+                      "path": null,
+                      "size": 49.43,
+                      "width": 1000,
+                      "height": 599
+                    },
+                    "small": {
+                      "ext": ".webp",
+                      "url": "/uploads/small_resources_header_a0d96031cb.webp",
+                      "hash": "small_resources_header_a0d96031cb",
+                      "mime": "image/webp",
+                      "name": "small_resources-header.webp",
+                      "path": null,
+                      "size": 21.02,
+                      "width": 500,
+                      "height": 300
+                    },
+                    "medium": {
+                      "ext": ".webp",
+                      "url": "/uploads/medium_resources_header_a0d96031cb.webp",
+                      "hash": "medium_resources_header_a0d96031cb",
+                      "mime": "image/webp",
+                      "name": "medium_resources-header.webp",
+                      "path": null,
+                      "size": 35.38,
+                      "width": 750,
+                      "height": 449
+                    },
+                    "thumbnail": {
+                      "ext": ".webp",
+                      "url": "/uploads/thumbnail_resources_header_a0d96031cb.webp",
+                      "hash": "thumbnail_resources_header_a0d96031cb",
+                      "mime": "image/webp",
+                      "name": "thumbnail_resources-header.webp",
+                      "path": null,
+                      "size": 7.93,
+                      "width": 245,
+                      "height": 147
+                    }
+                  },
+                  "hash": "resources_header_a0d96031cb",
+                  "ext": ".webp",
+                  "mime": "image/webp",
+                  "size": 79.64,
+                  "url": "/uploads/resources_header_a0d96031cb.webp",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "createdAt": "2023-01-30T15:41:56.931Z",
+                  "updatedAt": "2023-01-30T15:41:56.931Z"
+                }
+              }
+            }
+          },
+          {
+            "id": 44,
+            "menu_name": "Resources",
+            "menu_link": "/resources",
+            "sub_menu": "Webinars",
+            "sub_link": "/webinars",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 40,
+            "menu_name": "Resources",
+            "menu_link": "/resources",
+            "sub_menu": "Brochures",
+            "sub_link": "/resources/brochures",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 41,
+            "menu_name": "Resources",
+            "menu_link": "/resources",
+            "sub_menu": "Whitepapers",
+            "sub_link": "/resources/whitepapers",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 42,
+            "menu_name": "Resources",
+            "menu_link": "/resources",
+            "sub_menu": "Newsroom",
+            "sub_link": "/resources/newsroom",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 43,
+            "menu_name": "Resources",
+            "menu_link": "/resources",
+            "sub_menu": "Careers",
+            "sub_link": "/resources/career",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 51,
+            "menu_name": "Hire Developers",
+            "menu_link": "/hire-developers",
+            "sub_menu": "Full Stack Developers",
+            "sub_link": null,
+            "sub_sub_menu": "MEAN",
+            "sub_sub_link": "/hire-developers/mean-developers",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 52,
+            "menu_name": "Hire Developers",
+            "menu_link": "/hire-developers",
+            "sub_menu": "Full Stack Developers",
+            "sub_link": null,
+            "sub_sub_menu": "Spring Boot/React",
+            "sub_sub_link": "/hire-developers/springboot-react-developers",
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 56,
+            "menu_name": "Services",
+            "menu_link": "/services",
+            "sub_menu": "Supply Chain",
+            "sub_link": "/services/supply-chain/",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 57,
+            "menu_name": "Services",
+            "menu_link": "/services",
+            "sub_menu": "Block Chain",
+            "sub_link": "/services/block-chain/",
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          },
+          {
+            "id": 60,
+            "menu_name": "Blog",
+            "menu_link": "/blog",
+            "sub_menu": null,
+            "sub_link": null,
+            "sub_sub_menu": null,
+            "sub_sub_link": null,
+            "title": null,
+            "desc": null,
+            "image": {
+              "data": null
+            }
+          }
+        ]
+      }
+    }
+  },
+  "footer": {
+    "id": 1,
+    "attributes": {
+      "title": "footer",
+      "slug": "footer",
+      "createdAt": "2022-12-05T09:58:53.368Z",
+      "updatedAt": "2023-11-03T05:18:01.854Z",
+      "publishedAt": "2022-12-05T10:00:48.905Z",
+      "footer_section2": {
+        "id": 1,
+        "title": "Quick Links",
+        "footer_link": [
+          {
+            "id": 1,
+            "name": "About Us",
+            "href": "/about-us",
+            "target": "_blank"
+          },
+          {
+            "id": 2,
+            "name": "Case Studies",
+            "href": "/case-study",
+            "target": "_blank"
+          },
+          {
+            "id": 7,
+            "name": "Careers",
+            "href": "/resources/career",
+            "target": "_blank"
+          },
+          {
+            "id": 3,
+            "name": "Tech Podcasts",
+            "href": "/podcast",
+            "target": "_blank"
+          },
+          {
+            "id": 4,
+            "name": "Services",
+            "href": "/services",
+            "target": "_blank"
+          },
+          {
+            "id": 5,
+            "name": "Location Based Services",
+            "href": null,
+            "target": "_blank"
+          },
+          {
+            "id": 6,
+            "name": "FAQ’s",
+            "href": "/about-us/faq",
+            "target": "_blank"
+          },
+          {
+            "id": 8,
+            "name": "Blog",
+            "href": "/blog",
+            "target": "_blank"
+          }
+        ]
+      },
+      "footer_section3": {
+        "id": 1,
+        "title": "Hire Developers",
+        "footer_services": [
+          {
+            "id": 1,
+            "name": "Hire Python Developers",
+            "href": "/hire-developers/python",
+            "target": "_blank"
+          },
+          {
+            "id": 2,
+            "name": "Hire Java Developers",
+            "href": "/hire-developers/java",
+            "target": "_blank"
+          },
+          {
+            "id": 3,
+            "name": "Hire Dot Net Developers",
+            "href": "/hire-developers/dot-net",
+            "target": "_blank"
+          },
+          {
+            "id": 4,
+            "name": "Hire Full Stack Developers",
+            "href": "/hire-developers/mern-developer",
+            "target": "_blank"
+          },
+          {
+            "id": 5,
+            "name": "Hire Backend Developers",
+            "href": "/hire-developers/backend-development-services",
+            "target": "_blank"
+          },
+          {
+            "id": 6,
+            "name": " Hire Front End Developers",
+            "href": "/hire-developers/frontend-development-services",
+            "target": "_blank"
+          },
+          {
+            "id": 7,
+            "name": "Hire Angular Developers",
+            "href": "/hire-developers/angular",
+            "target": "_blank"
+          }
+        ]
+      },
+      "footer_section4": {
+        "id": 1,
+        "email1": "info.us@vlinkinfo.com",
+        "email2": "info.india@vlinkinfo.com",
+        "email3": "info.indonesia@vlinkinfo.com",
+        "phone_no1": "+1 (860) 247-1400",
+        "phone_no2": "+91 (124) 426-0818",
+        "phone_n03": "+62 (811) 151-9851",
+        "title": "Get in Touch",
+        "button_text": "Hire IT Professionals",
+        "href": "/hire-developers",
+        "target": "_blank"
+      },
+      "footer_section5": {
+        "id": 1,
+        "title": "Global Locations",
+        "awardImg": [
+          {
+            "id": 3,
+            "image": {
+              "data": {
+                "id": 3242,
+                "attributes": {
+                  "name": "iamsafe.png",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 429,
+                  "height": 429,
+                  "formats": {
+                    "thumbnail": {
+                      "ext": ".png",
+                      "url": "/uploads/thumbnail_iamsafe_15ddd42f56.png",
+                      "hash": "thumbnail_iamsafe_15ddd42f56",
+                      "mime": "image/png",
+                      "name": "thumbnail_iamsafe.png",
+                      "path": null,
+                      "size": 15.89,
+                      "width": 156,
+                      "height": 156
+                    }
+                  },
+                  "hash": "iamsafe_15ddd42f56",
+                  "ext": ".png",
+                  "mime": "image/png",
+                  "size": 34.82,
+                  "url": "/uploads/iamsafe_15ddd42f56.png",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "createdAt": "2023-09-27T11:44:12.721Z",
+                  "updatedAt": "2023-09-27T11:44:12.721Z"
+                }
+              }
+            }
+          }
+        ],
+        "gobal_locations": [
+          {
+            "id": 1,
+            "location_name": "South Windsor CT, USA 06074"
+          },
+          {
+            "id": 2,
+            "location_name": "Framingham MA, USA 01701"
+          },
+          {
+            "id": 3,
+            "location_name": "Mississauga, ON-L5R 3G5, Canada"
+          },
+          {
+            "id": 4,
+            "location_name": "Gurugram, Haryana, India 122016"
+          },
+          {
+            "id": 5,
+            "location_name": "Jakarta Selatan, Indonesia 12190"
+          }
+        ]
+      },
+      "social_media": [
+        {
+          "id": 1,
+          "name": null,
+          "link": "https://www.linkedin.com/company/vlink-inc",
+          "target": "_blank",
+          "logo_image": {
+            "data": {
+              "id": 293,
+              "attributes": {
+                "name": "Shape.svg",
+                "alternativeText": null,
+                "caption": null,
+                "width": 19,
+                "height": 18,
+                "formats": null,
+                "hash": "Shape_cf5d1a3d13",
+                "ext": ".svg",
+                "mime": "image/svg+xml",
+                "size": 0.77,
+                "url": "/uploads/Shape_cf5d1a3d13.svg",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "createdAt": "2023-01-10T03:56:11.449Z",
+                "updatedAt": "2023-01-10T03:56:11.449Z"
+              }
+            }
+          }
+        },
+        {
+          "id": 3,
+          "name": null,
+          "link": "https://twitter.com/VLinkInc",
+          "target": "_blank",
+          "logo_image": {
+            "data": {
+              "id": 294,
+              "attributes": {
+                "name": "Shape (1).svg",
+                "alternativeText": null,
+                "caption": null,
+                "width": 17,
+                "height": 14,
+                "formats": null,
+                "hash": "Shape_1_18f8847b14",
+                "ext": ".svg",
+                "mime": "image/svg+xml",
+                "size": 1.49,
+                "url": "/uploads/Shape_1_18f8847b14.svg",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "createdAt": "2023-01-10T03:57:07.079Z",
+                "updatedAt": "2023-01-10T03:57:07.079Z"
+              }
+            }
+          }
+        },
+        {
+          "id": 2,
+          "name": null,
+          "link": "https://www.facebook.com/vlinkinc",
+          "target": "_blank",
+          "logo_image": {
+            "data": {
+              "id": 295,
+              "attributes": {
+                "name": "Shape (2).svg",
+                "alternativeText": null,
+                "caption": null,
+                "width": 9,
+                "height": 19,
+                "formats": null,
+                "hash": "Shape_2_eec75fb4a9",
+                "ext": ".svg",
+                "mime": "image/svg+xml",
+                "size": 0.39,
+                "url": "/uploads/Shape_2_eec75fb4a9.svg",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "createdAt": "2023-01-10T03:57:27.143Z",
+                "updatedAt": "2023-01-10T03:57:27.143Z"
+              }
+            }
+          }
+        },
+        {
+          "id": 4,
+          "name": null,
+          "link": "https://www.instagram.com/vlinkinc/",
+          "target": "_blank",
+          "logo_image": {
+            "data": {
+              "id": 296,
+              "attributes": {
+                "name": "Shape (3).svg",
+                "alternativeText": null,
+                "caption": null,
+                "width": 20,
+                "height": 20,
+                "formats": null,
+                "hash": "Shape_3_05a003ae83",
+                "ext": ".svg",
+                "mime": "image/svg+xml",
+                "size": 14.3,
+                "url": "/uploads/Shape_3_05a003ae83.svg",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "createdAt": "2023-01-10T03:57:53.965Z",
+                "updatedAt": "2023-01-10T03:57:53.965Z"
+              }
+            }
+          }
+        },
+        {
+          "id": 5,
+          "name": null,
+          "link": "https://www.youtube.com/channel/UCIts-lcy_h9hhboDZnroLFg",
+          "target": "_blank",
+          "logo_image": {
+            "data": {
+              "id": 297,
+              "attributes": {
+                "name": "Vector (1).svg",
+                "alternativeText": null,
+                "caption": null,
+                "width": 23,
+                "height": 17,
+                "formats": null,
+                "hash": "Vector_1_477597eb92",
+                "ext": ".svg",
+                "mime": "image/svg+xml",
+                "size": 0.82,
+                "url": "/uploads/Vector_1_477597eb92.svg",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "createdAt": "2023-01-10T03:58:22.145Z",
+                "updatedAt": "2023-01-10T03:58:22.145Z"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

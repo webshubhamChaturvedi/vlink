@@ -1,0 +1,243 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* @tailwind extend; */
+@layer base {
+  html {
+    /* font-family: 'Roboto', sans-serif; */
+    font-family: "Open Sans";
+    background: #ffffff;
+  }
+
+  strong {
+    @apply font-medium;
+  }
+  /**
+  * Home clients table 
+  */
+
+  .bg-vlinker:before {
+    background: linear-gradient(
+      358.32deg,
+      #0a3273 -0.9%,
+      rgba(0, 28, 73, 0) 98.26%
+    );
+  }
+  .row {
+    @apply border-b border-gray-300;
+  }
+  .row:last-child {
+    @apply border-b-0;
+  }
+  .col {
+    @apply border-r border-gray-300 p-8 flex items-center justify-center;
+  }
+  .col:last-child {
+    @apply border-r-0;
+  }
+  .image-container div {
+    position: relative !important;
+  }
+  nav.navbar ul li a {
+    @apply justify-center text-black hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300;
+  }
+  nav.navbar ul li a.active {
+    @apply text-stickyPrimary border-stickyPrimary dark:text-blue-500 dark:border-blue-500;
+  }
+  nav.pagination ul li a.pagination-link {
+    color: #7e7e7e;
+    /* width: 50px;
+    height: 50px; */
+    text-align: center;
+    /* @apply block font-bold px-4 py-3 !rounded-md text-primary bg-white border border-primary hover:bg-blue-100 hover:text-stickyPrimary; */
+  }
+  nav.pagination ul li a.pagination-link.active {
+    padding: 5px 10px;
+    border-radius: 4px;
+    @apply border-transparent text-white bg-primary hover:bg-stickyPrimary hover:text-blue-100;
+  }
+  nav.pagination ul li button.pagination-link {
+    /* width: 50px;
+    height: 50px; */
+    text-align: center;
+    /* @apply block font-bold px-4 py-3 !rounded-md text-primary bg-white border border-primary hover:bg-blue-100 hover:text-stickyPrimary; */
+  }
+  nav.pagination ul li button.pagination-link.active {
+    @apply border-transparent text-white bg-primary hover:bg-stickyPrimary hover:text-blue-100;
+  }
+  .image-container > .image {
+    object-fit: contain;
+    position: relative !important;
+    height: unset !important;
+  }
+  section.blog-page a {
+    @apply text-primary underline;
+  }
+  section.blog-page > div {
+    @apply mb-8;
+  }
+  section.blog-page > div > h2 {
+    @apply text-secondary mb-3;
+  }
+  section.blog-page > div > div > h3 {
+    @apply text-secondary;
+  }
+  section.blog-page > div > div {
+    @apply mb-4;
+  }
+  section.blog-page > div > p:not(:last-child) {
+    @apply mb-2;
+  }
+  .case-study-list > li {
+    @apply ml-3 pl-2 mb-1;
+  }
+  .case-study-list > li::marker {
+    content: "●";
+    @apply text-primary text-xl;
+  }
+  select,
+  textarea {
+    color: theme("colors.dark");
+    @apply bg-gray-200 p-3 border border-gray-300 rounded-sm w-full text-sm focus:border-primary focus:ring-primary;
+  }
+  input[type="checkbox"] {
+    @apply w-4 h-4 text-primary bg-lighterGray rounded border-lightGray focus:ring-primary focus:ring-2;
+  }
+  input[type="range"] {
+    @apply bg-company;
+  }
+  .card-story {
+    @apply border-r border-r-gray-400;
+  }
+  .card-story {
+    @apply border-r border-r-gray-400;
+  }
+  .card-story:last-child {
+    @apply border-r-0;
+  }
+  .dedicated-teams-card,
+  .dedicated-teams-card > div {
+    @apply transition-colors ease-in-out duration-300;
+  }
+  .dedicated-teams-card:hover {
+    @apply bg-primary text-white;
+  }
+  .dedicated-teams-card:hover > div {
+    @apply bg-white text-primary;
+  }
+  h1 {
+    @apply text-3xl  font-[500];
+  }
+  h2 {
+    @apply text-xl font-normal;
+  }
+  .card {
+    @apply bg-white border border-gray-200 rounded-md;
+  }
+  .card.appointment {
+    @apply mx-auto p-6 py-12;
+  }
+  .error-field {
+    @apply text-xs  font-bold w-full px-1;
+  }
+  input {
+    @apply focus:outline-primary;
+  }
+  input {
+    @apply placeholder:text-dark;
+  }
+  textarea {
+    @apply resize-none;
+    @apply placeholder:text-dark;
+  }
+  button {
+    @apply !rounded p-2 pt-3 ease-out duration-300;
+  }
+  div.w-fit > button {
+    @apply p-0 rounded-none;
+  }
+  button:hover {
+    @apply opacity-90;
+  }
+  input,
+  button {
+    @apply disabled:pointer-events-none disabled:cursor-auto disabled:opacity-50;
+  }
+  .services-text {
+  }
+  .member-card {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+  .member-card:hover {
+    @apply bg-primary;
+  }
+  .member-card:hover * {
+    @apply text-white;
+  }
+  .services-card:hover .services-img {
+    display: none;
+    /* @apply absolute text-white inset-0; */
+    /* py-6; */
+  }
+  /* .services-card:hover .services-text:not(.plain) {
+    @apply bg-gradient-to-r from-primary to-darkPrimary;
+  } */
+  .services-card:hover .services-text.plain {
+    @apply bg-primary;
+  }
+
+  .services-card:hover .services-text button {
+    @apply block mx-auto;
+  }
+  textarea {
+    @apply resize-none;
+    @apply placeholder:text-dark;
+  }
+  .link {
+    @apply hover:text-primary focus:text-primary ease-in duration-150;
+  }
+  .link-active {
+    @apply text-primary focus:text-primary ease-in duration-150;
+  }
+  .lca-table-td {
+    @apply p-[10px] font-sans font-[400] text-[#353535] text-[16px];
+  }
+  .content-step-hire::before {
+    content: "" counter(index) !important;
+    counter-increment: index 1;
+  }
+  @keyframes rpt-slideUpDown {
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+  }
+
+  @keyframes rpt-slideUpDown-out {
+    0% {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+  }
+}
+
+.marquee-text > div {
+  display: inline-block;
+}
+.herobgimg {
+  background-image: url("https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_340/v1690807418/home_page_bg_260dcfa971.jpg?_a=BAJFJtWI0");
+  background-position: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}

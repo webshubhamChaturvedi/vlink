@@ -1,0 +1,16 @@
+.approach_slider .slick-list {
+    padding-left: 15%;
+}
+
+/* .approach_slider .slick-initialized .slick-slide {padding-left: 0px;} */
+.approach_slider .slick-slider .slick-track {
+    display: flex;
+}
+.approach_slider .slick-initialized .slick-slide {
+    display: block;
+    height: initial;
+}
+.approach_slider .slick-initialized .slick-slide > div,
+.approach_slider .slick-initialized .slick-slide > div > div {
+height: 100%;
+}

@@ -1,0 +1,13 @@
+
+.row{
+  @apply border-b-2 border-gray-500;
+}
+.row:last-child{
+  @apply border-b-0
+}
+.col{
+  @apply border-r-2 border-gray-500
+}
+.col:last-child{
+  @apply border-r-0
+}

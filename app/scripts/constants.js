@@ -1,0 +1,5 @@
+const CONSTANTS = {
+  PAGINATION_PAGE_SIZE:8,
+  PAGINATION_INITIAL_PAGE:1
+  };
+  export default CONSTANTS;

@@ -1,0 +1,75 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css");
+
+/* Form container */
+.webinarform {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  /* background-color: #f0f0f0;
+  border: 1px solid #ddd; */
+  border-radius: 8px;
+  background-image: linear-gradient(157.06deg, #7e25f9 -1.04%, #4926ff 102.87%);
+  position: relative;
+  top: 100px;
+  text-align: center;
+  z-index: 9;
+}
+
+/* Input container */
+.webinarform .input-container {
+  margin-bottom: 15px;
+}
+
+/* Label style */
+.webinarform .input-container label {
+  /* font-weight: bold; */
+  display: block;
+  margin-bottom: 5px;
+  color: #fff;
+  font-weight: 400;
+  text-align: left;
+}
+
+/* Input field style */
+.webinarform .input-field {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  transition: border-color 0.2s;
+}
+
+/* Input field style when there is an error */
+.webinarform .input-error {
+  border-color: #ff6666;
+}
+
+/* Error message style */
+.webinarform .error-message {
+  color: #ff6666;
+  font-size: 14px;
+  margin-top: 5px;
+}
+/* #zmmtg-root {background-color: #fff;z-index: 99;} */
+/* footer,
+  header {display: none;} */
+.webinar_btn {
+  background: #61207d;
+  font-weight: 600;
+  padding: 7px 20px;
+  color: #fff;
+  margin-top: 15px;
+}
+
+#zmmtg-root {
+  background-color: #fff !important;
+}
+.formblockZoom {
+  min-height: 500px;
+}
+
+.bg-footer-texture-new {
+  display: none;
+}
