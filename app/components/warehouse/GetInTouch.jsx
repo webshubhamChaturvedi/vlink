@@ -9,12 +9,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { subscribeEmail, zohoLeadApi } from "app/scripts/utils";
 import { apiEndpoint } from "app/scripts/fetch";
-import { useForm } from "react-hook-form";
-import dynamic from "next/dynamic";
-import CloudinaryImage from "../common/CloudinaryImage";
-// const ReCAPTCHA = dynamic(() => import("react-google-recaptcha"));
+import { useForm, Controller } from "react-hook-form";
 const jsonFileData = require("../../../public/cloudinaryLinks.json");
-
+import { useRouter } from "next/router";
+import { timeZoneCityToCountry } from "app/helpers/timeZoneCityToCountry";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 const style = {
   inputField: {
     borderColor: "transparent",
@@ -50,20 +50,51 @@ export default function GetInTouch({
   const [phone, setPhone] = useState(true);
   const [getInTouchData, setGetInTouchData] = useState();
   const [active, setActive] = useState(false);
+
+  const { asPath } = useRouter();
+
+  let userCity;
+  let userCountry;
+  let userTimeZone;
+  if (Intl) {
+    userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var tzArr = userTimeZone.split("/");
+    userCity = tzArr[tzArr.length - 1];
+    timeZoneCityToCountry.map((coun, key) => (
+      <>{(userCountry = coun[userCity])}</>
+    ));
+  }
+
   function onChangeCaptcha(value) {
     if (captcha.current.getValue() && captcha.current.getValue() != "") {
       setCaptchaError(false);
     }
   }
+  const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
   const Schema = yup.object().shape({
-    mobile: yup.string().required(),
-    email: yup.string().email().required("Email is required"),
-    name: yup.string().required("Full name  is required"),
+    mobile: yup
+      .string()
+      .required("Numbar is required")
+      .min(5, "Number is not valid"),
+    email: yup
+      .string()
+      .required("Email is required")
+      .matches(emailRegex, "Email must be a valid"),
+    name: yup
+      .string()
+      .required("Name is required")
+      .matches(
+        /^[a-zA-Z\s]*$/,
+        "Name can not contain number and special character"
+      ),
     organization: yup.string().required("Organization is required"),
-    message: yup.string().required("message is required"),
+    message: yup.string().required("Message is required"),
   });
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
     reset,
@@ -74,6 +105,8 @@ export default function GetInTouch({
       name: "",
       message: "",
       organization: "",
+      sourceCode: asPath,
+      countryName: userCountry,
     },
   });
   const toast = useSelector((state) => state?.toast);
@@ -88,7 +121,7 @@ export default function GetInTouch({
         const formData = {
           ...data,
         };
-        setActive(!active)
+        setActive(!active);
         const res = await REQUEST({
           method: "POST",
           url: API_ENDPOINTS.SAVE_CONTACT_US,
@@ -102,7 +135,7 @@ export default function GetInTouch({
           reset();
           zohoLeadApi({ ...data, firstName: data?.name });
           subscribeEmail(data);
-          setActive(active)
+          setActive(active);
         } else toast.error(res?.data?.error?.message);
       } catch (err) {
         toast.error("failed");
@@ -111,15 +144,6 @@ export default function GetInTouch({
       setCaptchaError(true);
     }
   };
-  const isValidEmail = (email) =>
-    setEmail(
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-        email
-      )
-    );
-
-  const isValidPhone = (phone) =>
-    setPhone(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(phone));
   const loads = () => {
     REQUEST({
       method: "GET",
@@ -128,7 +152,6 @@ export default function GetInTouch({
         if (res?.data?.data) {
           setGetInTouchData(res.data.data);
         } else {
-          // Handle the case where data is not present
         }
       },
     });
@@ -150,6 +173,7 @@ export default function GetInTouch({
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   return (
     <section className="md:py-[55px] py-[30px]">
       <div className="container">
@@ -161,10 +185,10 @@ export default function GetInTouch({
           {getInTouchData ? (
             <h4 className="font-bold text-black xl:text-4xl lg:text-[32px] text-[22px] text-center xl:leading-[45px] lg:leading-[35px] mb-5">
               <span
-                className="inline-block font-bold bg-[center top 20%] bg-no-repeat bg-size-100 bg-center bg-cover md:pt-16 pt-8 max-w-[400px] w-full"
+                className="inline-block font-bold bg-[center_top_20%] bg-no-repeat lg:bg-size-100 bg-center md:pt-8 pt-8 max-w-[400px] w-full"
                 style={{
                   backgroundImage:
-                    "url(https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_300/Connect_9af8e0c9df)",
+                    "url(https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_300/Connect_9af8e0c9df)",
                 }}
               >
                 {getInTouchData?.attributes?.title}
@@ -198,21 +222,18 @@ export default function GetInTouch({
                     />
                     {errors.name && (
                       <span className="mt-2 font-normal text-sm text-red-700">
-                        This field is required
+                        {errors?.name?.message}
                       </span>
                     )}
                   </div>
 
-                  <div className="md:w-1/2 px-[10px]">
+                  <div className="md:w-1/2 px-[10px] mt-4 md:mt-0">
                     <label htmlFor="email2" style={style.label}>
                       Work Email
                     </label>
                     <input
-                      type="email"
                       {...register("email")}
-                      onChange={(e) => {
-                        isValidEmail(e.target.value);
-                      }}
+                      type="email"
                       name="email"
                       id="email2"
                       className="w-[100%] block focus:ring-0 placeholder-[#191A59] text-[#191A59] "
@@ -223,42 +244,38 @@ export default function GetInTouch({
                         {errors?.email?.message}
                       </span>
                     )}
-                    {!email && (
-                      <span className="mt-2 font-normal text-sm text-red-700">
-                        {"email must be a valid"}
-                      </span>
-                    )}
                   </div>
                 </div>
 
-                <div className="md:flex mt-10 justify-items-stretch">
+                <div className="md:flex mt-3 md:mt-10 justify-items-stretch">
                   <div className="md:w-1/2 px-[10px]">
                     <label htmlFor="mobile" style={style.label}>
                       Phone Number
                     </label>
-                    <input
-                      {...register("mobile")}
+                    <Controller
                       name="mobile"
-                      id="mobile"
-                      className="w-[100%] block focus:ring-0 placeholder-[#191A59] text-[#191A59]"
-                      style={style.inputField}
-                      onChange={(e) => {
-                        isValidPhone(e.target.value);
-                      }}
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <PhoneInput
+                          country={"us"}
+                          value={field.mobile}
+                          onChange={(phone) => {
+                            field.onChange(phone);
+                          }}
+                          style={style.inputField}
+                          className="phoneNumberNobor p-[0px_!important] phonenumber react-tel-input focus:ring-0 placeholder-[#343434] text-[#343434] bg-[#F9F9F9]"
+                        />
+                      )}
                     />
                     {errors.mobile && (
                       <span className="mt-2 font-normal text-sm text-red-700">
-                        This field is required
-                      </span>
-                    )}
-                    {!phone && (
-                      <span className="mt-2 font-normal text-sm text-red-700">
-                        {"phone number must be a valid "}
+                        {`${errors.mobile.message}`}
                       </span>
                     )}
                   </div>
 
-                  <div className="md:w-1/2 px-[10px]">
+                  <div className="md:w-1/2 px-[10px] mt-4 md:mt-0">
                     <label htmlFor="organization" style={style.label}>
                       Organization Name
                     </label>
@@ -271,7 +288,7 @@ export default function GetInTouch({
                     />
                     {errors.organization && (
                       <span className="mt-2 font-normal text-sm text-red-700">
-                        This field is required
+                        {errors?.organization?.message}
                       </span>
                     )}
                   </div>
@@ -291,7 +308,7 @@ export default function GetInTouch({
                   ></textarea>
                   {errors.message && (
                     <span className="mt-2 font-normal text-sm text-red-700">
-                      This field is required
+                      {errors?.message?.message}
                     </span>
                   )}
                 </div>
@@ -310,7 +327,11 @@ export default function GetInTouch({
                     )}
                   </div>
                   <div className="md:block flex justify-center">
-                    <button disabled={active} className="py-1 bg-[#3E2093] text-white md:px-20 px-6 py-[15px] rounded flex justify-center items-center md:w-auto w-[100%]">
+                    <button
+                      id={"Submit"}
+                      disabled={active}
+                      className="py-1 bg-[#3E2093] text-white md:px-20 px-6 py-[15px] rounded flex justify-center items-center md:w-auto w-[100%]"
+                    >
                       <span className="inline-block mr-2">Submit</span>
                     </button>
                   </div>
@@ -323,7 +344,7 @@ export default function GetInTouch({
             <div className="lg:basis-4/12 w-full px-[20px] relative">
               <Image
                 className="getintouch-video"
-                src="https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_200//animation_640_lj6okk4i_1_3f257b1d6c"
+                src="https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_200//animation_640_lj6okk4i_1_3f257b1d6c"
                 alt={
                   getInTouchData?.attributes?.gif_popup?.data?.attributes
                     .alternativeText || "getintouch"
@@ -331,14 +352,6 @@ export default function GetInTouch({
                 width={320}
                 height={180}
               />
-              {/* <img
-                className="getintouch-video"
-                src={apiEndpoint(
-                  getInTouchData?.attributes?.gif_popup?.data?.attributes?.url
-                )}
-                alt="animation_640_lj6okk4i_1_3f257b1d6c"
-              /> */}
-              {/* TODO: Need to handle video format*/}
               <img
                 src={apiEndpoint(
                   getInTouchData?.attributes?.gif_bg_img?.data?.attributes?.url
@@ -351,6 +364,5 @@ export default function GetInTouch({
         </Container>
       </div>
     </section>
-    // </div>
   );
 }

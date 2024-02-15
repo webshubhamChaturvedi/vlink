@@ -20,7 +20,7 @@ export default function Solutions({
         <div className="col-span-9 pr-0 lg:pr-[65px]">
           <h2 className="xl:text-4xl lg:text-[32px] text-[22px] font-bold md:mb-6 mb-[25px] xl:leading-[50px] md:leading-[40px] leading-[35px]">
             {section?.h1_black}
-            <span className="text-company">{section?.h1_purple}</span>
+            <span className="text-company ml-2">{section?.h1_purple}</span>
           </h2>
           <div className="leading-relaxed whitespace-pre-line ">
             <p

@@ -13,7 +13,9 @@ export default function StepsToHire({ section }) {
         <div className="grid grid-cols-4 gap-5 flex justify-center flex-wrap">
           <div className="col-span-4 text-center mb-12">
             <h5 className="xl:text-4xl lg:text-[32px] text-[22px] font-bold text-center font-sans xl:leading-[50px] leading-[30px]">
-              <span className="text-[#62207E]">{section?.h2_purple} -</span>
+              <span className="text-[#62207E] mr-2">
+                {section?.h2_purple} -
+              </span>
               {section?.h2_black}
             </h5>
           </div>

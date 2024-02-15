@@ -2,17 +2,17 @@ import { useState, useRef, useEffect } from "react";
 import { apiEndpoint } from "app/scripts/fetch";
 import API_ENDPOINTS from "app/helpers/apiEndpoint";
 import ReCAPTCHA from "react-google-recaptcha";
-// import dynamic from "next/dynamic";
-
-// const ReCAPTCHA = dynamic(() => import("react-google-recaptcha"));
 import { Button } from "flowbite-react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import REQUEST from "app/helpers/http.service";
 import { useSelector } from "react-redux";
 import { zohoLeadApi } from "app/scripts/utils";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
+import { useRouter } from "next/router";
+import { timeZoneCityToCountry } from "app/helpers/timeZoneCityToCountry";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 export default function GetInTouchModal({ isGetModal, isOpen, setIsOpen }) {
   const captcha = useRef(null);
 
@@ -22,21 +22,48 @@ export default function GetInTouchModal({ isGetModal, isOpen, setIsOpen }) {
   const [isError, setIsError] = useState(null);
   const [active, setActive] = useState(false);
 
+  const { asPath } = useRouter();
+
+  let userCity;
+  let userCountry;
+  let userTimeZone;
+  if (Intl) {
+    userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var tzArr = userTimeZone.split("/");
+    userCity = tzArr[tzArr.length - 1];
+    timeZoneCityToCountry.map((coun, key) => (
+      <>{(userCountry = coun[userCity])}</>
+    ));
+  }
+
   function onChangeCaptcha(value) {
     if (captcha.current.getValue() && captcha.current.getValue() != "") {
       setCaptchaError(false);
     }
   }
+  const nameRegex = /^[A-Za-z\s]+$/;
+  const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const Schema = yup.object().shape({
-    phoneNumber: yup.string().required(),
-    email: yup.string().email().required("Email is required"),
-    fullName: yup.string().required("Full name  is required"),
-    message: yup.string().required("message is required"),
+    phoneNumber: yup
+      .string()
+      .required("Number is required")
+      .min(5, "Number is not valid"),
+    email: yup
+      .string()
+      .required("Email is required")
+      .matches(emailRegex, "Email must be a valid"),
+    fullName: yup
+      .string()
+      .required("Full name  is required")
+      .matches(nameRegex, "Name can not contain number and special character"),
+    message: yup.string().required("Message is required"),
   });
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
     reset,
@@ -47,21 +74,12 @@ export default function GetInTouchModal({ isGetModal, isOpen, setIsOpen }) {
       fullName: "",
       message: "",
       email: "",
+      countryName: userCountry,
+      sourceCode: asPath,
     },
   });
 
   const toast = useSelector((state) => state?.toast);
-
-  const isValidEmail = (email) =>
-    setEmail(
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-        email
-      )
-    );
-
-  const isValidPhone = (phone) =>
-    setPhone(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(phone));
-
   const ScheduleCall = async (data) => {
     if (
       captcha.current.getValue() &&
@@ -73,7 +91,7 @@ export default function GetInTouchModal({ isGetModal, isOpen, setIsOpen }) {
         const formData = {
           ...data,
         };
-        setActive(!active)
+        setActive(!active);
         const res = await REQUEST({
           method: "POST",
           url: API_ENDPOINTS.GETINTOUCH_MODAL_FORM,
@@ -88,7 +106,7 @@ export default function GetInTouchModal({ isGetModal, isOpen, setIsOpen }) {
           zohoLeadApi({ ...data });
           setIsOpen(false);
           setIsError(true);
-          setActive(active)
+          setActive(active);
         } else toast.error(res?.data?.error?.message);
       } catch (err) {
         toast.error("failed");
@@ -208,6 +226,11 @@ export default function GetInTouchModal({ isGetModal, isOpen, setIsOpen }) {
                         name="fullName"
                         {...register("fullName")}
                       />
+                      {errors.fullName && (
+                        <span className="mt-2 font-normal text-sm text-red-700">
+                          {errors?.fullName?.message}
+                        </span>
+                      )}
                     </div>
                     <div className="w-full px-3 mb-3">
                       <label
@@ -222,6 +245,11 @@ export default function GetInTouchModal({ isGetModal, isOpen, setIsOpen }) {
                         name="email"
                         {...register("email")}
                       />
+                      {errors.email && (
+                        <span className="mt-2 font-normal text-sm text-red-700">
+                          {errors?.email?.message}
+                        </span>
+                      )}
                     </div>
                     <div className="w-full px-3 mb-3">
                       <label
@@ -230,13 +258,26 @@ export default function GetInTouchModal({ isGetModal, isOpen, setIsOpen }) {
                       >
                         Contact Number
                       </label>
-                      <input
-                        className="appearance-none block w-full border text-[16px] border-[#DADADA] rounded-[10px] text-[#00102B] py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-[#62207E_!important]"
-                        id="grid-password"
-                        type="number"
+                      <Controller
                         name="phoneNumber"
-                        {...register("phoneNumber")}
+                        control={control}
+                        defaultValue=""
+                        render={({ field }) => (
+                          <PhoneInput
+                            className="getTouchModalPhone"
+                            country={"us"}
+                            value={field.phoneNumber}
+                            onChange={(phone) => {
+                              field.onChange(phone);
+                            }}
+                          />
+                        )}
                       />
+                      {errors.phoneNumber && (
+                        <span className="mt-2 font-normal text-sm text-red-700">
+                          {`${errors.phoneNumber.message}`}
+                        </span>
+                      )}
                     </div>
                   </div>
                   <div className="w-full md:w-1/2 mb-6 md:mb-0">
@@ -254,8 +295,27 @@ export default function GetInTouchModal({ isGetModal, isOpen, setIsOpen }) {
                         rows={9}
                         className="bg-[rgba(218,_218,_218,_0.25)] text-[16px] rounded-[10px] text-[#00102B] py-3 px-4"
                       ></textarea>
+                      {errors.message && (
+                        <span className="mt-2 font-normal text-sm text-red-700">
+                          {errors?.message?.message}
+                        </span>
+                      )}
                     </div>
                   </div>
+                  <input
+                    type="text"
+                    placeholder="countryName"
+                    {...register("countryName")}
+                    name="countryName"
+                    className="hidden"
+                  />
+                  <input
+                    type="text"
+                    placeholder="SourceCode"
+                    {...register("sourceCode")}
+                    name="sourceCode"
+                    className="hidden"
+                  />
                 </div>
                 <div className="w-full">
                   <div className="mt-4 mb-7">

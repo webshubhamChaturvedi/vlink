@@ -1,0 +1,29 @@
+.service-sec-list,
+.service-sec-list:hover,
+.service-sec-list:hover .contentBlock {
+  -moz-transition: all 0.8s;
+  -o-transition: all 0.8s;
+  -webkit-transition: all 0.8s;
+  transition: all 0.8s;
+}
+/* .service-sec-list:hover {
+    padding: 25px;
+} */
+.service-sec-list img {
+  -moz-transition: width 0.5s, height 0.5s;
+  -webkit-transition: width 0.5s, height 0.5s;
+  transition: width 0.5s, height 0.5s;
+}
+.service-sec-list .contentBlock {
+  display: none;
+}
+.service-sec-list .contentBlock p a {
+  color: #1155cc;
+  font-weight: 500;
+}
+.service-sec-list:hover img {
+  height: 0;
+}
+.service-sec-list:hover .contentBlock {
+  display: block;
+}

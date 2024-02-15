@@ -1,22 +1,27 @@
 import Head from "next/head";
-import ServiceOfferings from "app/components/Home/ServiceOfferings";
-import CertificateBar from "app/components/Home/CertificateBar";
-import SuccessStories from "app/components/Home/SuccesStories";
-import Blogs from "app/components/Home/Blogs";
-import WhyVlink from "app/components/Home/WhyVlink";
-import Testimonial from "app/components/Home/Testimonials";
 import OurClients from "app/components/Home/OurClients";
 import "styles/Home.module.css";
-import GetInTouchForm from "app/components/common/GetInTouchForm";
-import CeoCard from "app/components/Home/CeoCard";
 import REQUEST from "app/helpers/http.service";
 import API_ENDPOINTS from "app/helpers/apiEndpoint";
-import TechStacks from "app/components/Home/TechStacks/TechStacks";
-import HeroSection from "app/components/common/HeroSection";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Metatag from "app/components/metaTag";
+import TestimonialData from "app/components/warehouse/TestimonialData";
+import DataResources from "app/components/warehouse/DataResources";
+import GetInTouch from "app/components/warehouse/GetInTouch";
+import ToolsTechnologies from "app/components/Services/ToolsTechnologies";
+import WhyChoose from "app/components/Services/ItStaff";
+import FrontendServices from "app/components/HireDevelopers/FrontendServices";
+import HomeHeroSection from "app/components/common/HomeHeroSection";
+import AwardWinningBar from "app/components/Home/AwardWinningBar";
+import HomeService from "app/components/Home/HomeService";
+import WarehousePlatform from "app/components/warehouse/WarehousePlatform";
+import Industries from "app/components/common/Industries";
+import OurAchievements from "app/components/common/OurAchievements";
+import CollaborateFrontend from "app/components/common/CollaborateFrontend";
+import OurWork from "app/components/common/OurWork";
+import Interested from "app/components/common/Interested";
 const GetInTouchModal = dynamic(() =>
   import("../app/components/common/GetInTouchModal")
 );
@@ -33,6 +38,24 @@ export default function Home({ res }) {
   ).split("?")[0];
 
   const { homeData, awards, testimonials, stories, blogData } = JSON.parse(res);
+
+  useEffect(() => {
+    if (typeof document !== undefined) {
+      const sidebarContentEl = document.querySelector("#some-id");
+      const buttonnn = document.querySelectorAll(".buttonOpen");
+      buttonnn.forEach((box) => {
+        box.addEventListener("click", function () {
+          sidebarContentEl.classList.add("mystyle");
+        });
+      });
+      const removeButton1 = document.querySelectorAll(".buttonremove1");
+      removeButton1.forEach((box) => {
+        box.addEventListener("click", function () {
+          sidebarContentEl.classList.remove("mystyle");
+        });
+      });
+    }
+  }, []);
 
   if (homeData?.error) {
     return <div>{homeData?.error}</div>;
@@ -68,47 +91,63 @@ export default function Home({ res }) {
 
         <link rel="canonical" href={canonicalUrl} />
       </Head>
-      <HeroSection
-        data={homeData?.hero_section}
+      <HomeHeroSection
+        data={homeData?.HeroSection}
         ishome={true}
+        setModalCall={setModalScheduleCall}
         headingSize="11.56vh"
       />
-      <CertificateBar section={Object.keys(awards)?.length ? awards : null} />
-      <OurClients
-        section={homeData?.our_clients}
+
+      <AwardWinningBar section={awards} />
+
+      <HomeService isHomeService={true} datas={homeData?.ServiceOfferings} />
+
+      <ToolsTechnologies
+        tech={homeData?.Technologies}
+        isStaff={true}
+        isWeb={"Web development"}
+        isHm={true}
+      />
+
+      <OurWork work={homeData?.Work} isWorkHome={true} />
+
+      <Interested
+        interested={homeData?.Interested}
+        setModalCall={setModalScheduleCall}
+      />
+
+      <WhyChoose data={homeData?.WhyChoose} isHomeWhyChoose={true} />
+
+      <FrontendServices
+        frontend={homeData?.Process}
+        isHomeService={true}
         setModalScheduleCall={setModalScheduleCall}
       />
-      <WhyVlink
-        section_title={homeData?.why_choose}
-        section_content={homeData?.why_choose_content}
-      />
-      <ServiceOfferings
-        section_title={homeData?.service_offering}
-        section_content={homeData?.service_offering_fields}
-      />
-      <TechStacks
-        section_title={homeData?.teach_stacks_header}
-        section_content={homeData?.tech_stacks}
-      />
-      <CeoCard section={homeData?.sharad_patney} />
-      <div className="lg:pt-0">
-        <SuccessStories
-          section_title={homeData?.success_story_blogs}
-          section_content={stories}
-        />
-      </div>
-      <Testimonial
-        section_title={testimonials?.Testimonial}
-        section_content={testimonials?.testimonial_content}
-      />
-      <div className="lg:pt-12 pt-[30px]">
-        <Blogs section_title={homeData?.home_blogs} homeBlog={blogData} />
-      </div>
-      <GetInTouchForm />
 
+      <WarehousePlatform data={homeData?.CaseStudy} />
+
+      <Industries industries={homeData?.industries} />
+
+      <OurClients
+        section={homeData?.our_clients}
+        isCaseClient={true}
+        setModalScheduleCall={setModalScheduleCall}
+        isHomeclient={true}
+      />
+
+      <OurAchievements data={homeData?.Achievements} />
+
+      <TestimonialData testimonials={testimonials} isNewTestimonial={true} />
+
+      <CollaborateFrontend
+        crm={homeData?.CollabForDev}
+        isCollaborateStaticData={true}
+      />
+
+      <DataResources resources={homeData?.MoreCaseStudy} isEduProduct={true} />
+      <GetInTouch getintouch={homeData?.GetInTouch} isStaff={true} />
       {modalScheduleCall && (
         <GetInTouchModal
-          // modalData={modalData?.attributes}
           isOpen={modalScheduleCall}
           setIsOpen={setModalScheduleCall}
         />

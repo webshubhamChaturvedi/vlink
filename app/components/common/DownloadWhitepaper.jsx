@@ -7,25 +7,47 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReCAPTCHA from "react-google-recaptcha";
 import { download } from "app/scripts/utils";
-// import dynamic from 'next/dynamic';
-// const ReCAPTCHA = dynamic(() => import('react-google-recaptcha'));
+import { useRouter } from "next/router";
+import { timeZoneCityToCountry } from "app/helpers/timeZoneCityToCountry";
 
-export default function DownloadWhitepaper({ data = {}, key ,downloadLink}) {
+export default function DownloadWhitepaper({ data = {}, key, downloadLink }) {
   const captcha = useRef(null);
   const [captchaError, setCaptchaError] = useState(false);
-  const [email,setEmail] = useState(true);
+  const [email, setEmail] = useState(true);
+
+  const { asPath } = useRouter();
+
+  let userCity;
+  let userCountry;
+  let userTimeZone;
+  if (Intl) {
+    userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var tzArr = userTimeZone.split("/");
+    userCity = tzArr[tzArr.length - 1];
+    timeZoneCityToCountry.map((coun, key) => (
+      <>{(userCountry = coun[userCity])}</>
+    ));
+  }
 
   function onChangeCaptcha(value) {
     if (captcha.current.getValue() && captcha.current.getValue() != "") {
       setCaptchaError(false);
     }
   }
+  const nameRegex = /^[A-Za-z\s]+$/;
+  const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
   const Schema = yup.object().shape({
     company: yup.string().required(),
-    email: yup.string().email().required("Email is required"),
-    name: yup.string().required("Full name  is required"),
-    // requirement: yup.string().required("Requirement is required"),
-    // message: yup.string().required("message is required"),
+    email: yup
+      .string()
+      .required("Email is required")
+      .matches(emailRegex, "Email must be a valid"),
+    name: yup
+      .string()
+      .required("Name is required")
+      .matches(nameRegex, "Name can not contain number and special character"),
   });
   const {
     register,
@@ -37,19 +59,15 @@ export default function DownloadWhitepaper({ data = {}, key ,downloadLink}) {
     defaultValues: {
       company: "",
       name: "",
-      message: "",
-      requirement: "",
       email: "",
+      countryName: userCountry,
+      sourceCode: asPath,
     },
   });
   const toast = useSelector((state) => state?.toast);
-  const isValidEmail = email =>
-  setEmail( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-     email
-   ));
+
   const SubmitHandler = async (data) => {
     if (captcha.current.getValue()) {
-
       try {
         const formData = {
           ...data,
@@ -64,8 +82,8 @@ export default function DownloadWhitepaper({ data = {}, key ,downloadLink}) {
           setCaptchaError(false);
           captcha.current.reset();
           reset();
-          if(downloadLink){
-            download(downloadLink)
+          if (downloadLink) {
+            download(downloadLink);
           }
         } else toast.error(res?.data?.error?.message);
       } catch (err) {
@@ -92,7 +110,7 @@ export default function DownloadWhitepaper({ data = {}, key ,downloadLink}) {
             />
             {errors.name && (
               <span className="mt-2 font-normal text-sm text-red-700">
-                This field is required
+                {errors?.name?.message}
               </span>
             )}
           </div>
@@ -101,22 +119,14 @@ export default function DownloadWhitepaper({ data = {}, key ,downloadLink}) {
               type="text"
               placeholder="Work Email*"
               {...register("email")}
-              onChange={(e) => {
-                isValidEmail(e.target.value);
-              }}
               className="!bg-white w-full border-[1px] border-[#d1d5db] rounded-[0.125rem] p-[0.75rem] text-[0.875rem] leading-[1.25rem]"
             />
-           
-          {errors.email && (
-            <span className="mt-2 font-normal text-sm text-red-700">
-            {errors.email?.message}
-            </span>
-          )}
-          {!email && (
-            <span className="mt-2 font-normal text-sm text-red-700">
-              {"email must be a valid email"}
-            </span>
-          )}
+
+            {errors.email && (
+              <span className="mt-2 font-normal text-sm text-red-700">
+                {errors.email?.message}
+              </span>
+            )}
           </div>
           <div className="mb-4">
             <input
@@ -131,11 +141,24 @@ export default function DownloadWhitepaper({ data = {}, key ,downloadLink}) {
               </span>
             )}
           </div>
+          <input
+            type="text"
+            placeholder="countryName"
+            {...register("countryName")}
+            name="countryName"
+            className="hidden"
+          />
+          <input
+            type="text"
+            placeholder="SourceCode"
+            {...register("sourceCode")}
+            name="sourceCode"
+            className="hidden"
+          />
           <div className="mt-2 mb-6">
             <ReCAPTCHA
               ref={captcha}
               sitekey={`${process.env.NEXT_PUBLIC_CLIENT_SIDE_GOOGLE_CAPTCHA}`}
-              // onChange={onChangeCaptcha}
               size={"normal"}
             />
             {captchaError && (

@@ -26,7 +26,7 @@ export default function PrivacyPolicy() {
           crossOrigin="use-credentials"
         />
       </Head>
-      <section className="py-[55px]">
+      <section className="py-[55px] mt-20">
         <div className="container">
           <div className="grid grid-cols-12 gap-10">
             <div className="col-span-12 w-full">

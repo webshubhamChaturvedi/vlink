@@ -2,6 +2,9 @@ import React from "react";
 import TabTechStacks from "./TabTechStacks";
 
 const GridTechStacks = ({ list }) => {
+  // let one = list?.map((i, k) =>
+  //   i?.tech_language.map((i, k) => i?.icon?.data?.attributes?.url)
+  // );
   return (
     <div className="md:px-10 px-0 text-center w-full md:mt-8 mt-4">
       <div className="grid lg:grid-cols-2 md:gap-8 gap-5 lg:p-0 h-full">

@@ -11,7 +11,6 @@ import HumanRights from "app/components/Crs/HumanRights";
 import CeoCard from "app/components/Home/CeoCard";
 import Diversity from "app/components/Crs/Diversity";
 import ACTION_TYPE from "store/action-type";
-// import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { apiEndpoint } from "app/scripts/fetch";
 import Metatag from "app/components/metaTag";
@@ -64,7 +63,13 @@ export default function CorporateSocialResponsibility({ crsData }) {
         <link rel="canonical" href={canonicalUrl} />
       </Head>
       <SectionHeader list={header} />
-      <HeroSection data={crsData?.section1} isService={true} />
+      <HeroSection
+        data={crsData?.section1}
+        isService={true}
+        downloadLink={apiEndpoint(
+          crsData?.section1?.banner_btn[1]?.icon?.data?.attributes?.url
+        )}
+      />
       <div className="md:pt-0 pt-[30px]">
         <CeoCard section={crsData?.image_section} />
       </div>

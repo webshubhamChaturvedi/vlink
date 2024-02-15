@@ -4,7 +4,7 @@ const Banner = ({ section }) => {
   return (
     <section className="md:py-[55px] py-[30px]">
       <div className="container">
-        <div className="bg-financial-image bg-why-vlink-texture bg-primary p-[60px] rounded-[10px]">
+        <div className="bg-financial-image bg-why-vlink-texture bg-primary  p-6 md:p-[60px] rounded-[10px]">
           <div className="flex justify-center items-center flex-wrap max-w-[1000px] mx-auto">
             <div className="text-white text-left border-r border-lightGrayTransparent md:border-r-0 mb-6 flex flex-col gap-[5px] flex-1">
               <h3 className="xl:text-[42px] lg:text-[28px] text-[22px] font-[700] mb-[5px] xl:leading-[55px]  leading-[26px]">

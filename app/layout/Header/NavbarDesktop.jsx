@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import staticData from "../../../public/staticData.json";
 import CloudinaryImage from "../../components/common/CloudinaryImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,8 +10,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 import { useRouter } from "next/router";
-import LINK from "app/components/common/LINK";
-import { apiEndpoint } from "app/scripts/fetch";
 import "./header.css";
 
 export default function Navbar() {
@@ -50,9 +48,6 @@ export default function Navbar() {
         const subMenuObj = {
           sub_menu_name: menu.sub_menu,
           sub_menu_link: menu.sub_link,
-          // title: menu.title,
-          // desc: menu.desc,
-          // image: menu.image,
           sub_sub_menus: [],
         };
 
@@ -86,29 +81,45 @@ export default function Navbar() {
 
   const [mobile, setMobile] = useState(false);
 
-  const handleToggle = (name) => {
-    if (name === open?.menuName) {
-      setOpen({ ...open, isOpen: !open?.isOpen });
+  const handleToggle = (event, name) => {
+    const isMobile = window.innerWidth <= 1024;
+    if (isMobile) {
+      if (name === open?.menuName) {
+        setOpen({ ...open, isOpen: !open?.isOpen });
+      } else {
+        setOpen({ menuName: name, isOpen: true });
+      }
     } else {
-      setOpen({ menuName: name, isOpen: true });
+      const liElement = document.querySelectorAll(`.topmenu`);
+      event.currentTarget.classList.remove("group");
+      setTimeout(() => {
+        liElement.forEach((elm) => {
+          if (!elm.classList.contains("group")) {
+            elm.classList.add("group");
+          }
+        });
+      }, 3000);
     }
   };
-
-  const [scrolltopdata, setscrolltopdata] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY < 140) {
-        setscrolltopdata("");
-      } else {
-        setscrolltopdata("scrolled");
-      }
-    });
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 140);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
+
+  const navbarClass = isScrolled
+    ? "navbar bg-[#FFFFFFc7_!important] z-50 shadow-[0px_0px_4px_0px_#00000045] sticky top-0  scrolled"
+    : "navbar bg-[#FFFFFFAB_!important] z-50 shadow-[0px_0px_4px_0px_#00000045] sticky top-0 ";
 
   return (
     <nav
-      className={`navbar bg-white border-gray-200 dark:bg-gray-900 z-50 shadow sticky top-0 ${scrolltopdata}`}
+      className={`navbar bg-[#FFFFFFAB] z-50 shadow-[0px_0px_4px_0px_#00000045] sticky top-0 ${navbarClass}`}
     >
       <div className={`container flex flex-row items-center justify-between`}>
         <div className="py-2.5 pr-3">
@@ -128,7 +139,7 @@ export default function Navbar() {
             id="navbar-cta"
             className={`items-stretch justify-between ${
               mobile
-                ? "border-b margin-[#ccc] pb-1 transition-[all_0.3s_ease_0s] lg:static absolute lg:top-[unset] top-[68px] lg:h-[auto] h-[calc(100vh - 70px)] lg:overflow-x-visible overflow-x-hidden lg:overflow-y-visible overflow-y-auto lg:border-b-[0px] border-t-[1px_solid_rgb(238, 238, 238)] justify-center bg-[#fff] lg:w-auto w-[100%] lg:z-[unset] z-[1000] lg:left-[unset] left-[0px_!important]"
+                ? "border-b margin-[#ccc] pb-1 transition-[all_0.3s_ease_0s] lg:static absolute lg:top-[unset] top-[68px] lg:h-[auto] h-[calc(100vh - 70px)] lg:overflow-x-visible overflow-x-hidden lg:overflow-y-visible overflow-y-auto lg:border-b-[0px] border-t-[1px_solid_rgb(238, 238, 238)] justify-center  lg:w-auto w-[100%] lg:z-[unset] z-[1000] lg:left-[unset] left-[0px_!important] lg:bg-[trasnparent]"
                 : ""
             } w-full lg:flex md:w-auto`}
           >
@@ -142,28 +153,37 @@ export default function Navbar() {
               >
                 {menuEntries.map(([menuName, menuData]) => (
                   <li
-                    className={`group ${
+                    className={`group topmenu ${
                       open?.menuName === menuName && open.isOpen
                         ? "openmenu"
                         : "closemenu"
                     }`}
                     key={menuName}
-                    onClick={() => handleToggle(menuName)}
+                    onClick={(e) => handleToggle(e, menuName, menuData)}
                   >
                     <div className="flex items-center lg:justify-normal justify-between lg:mx-3">
                       <Link
                         className={`${
                           menuData?.menu_link === path ? "active" : ""
-                        } custom_font text-[#212121] font-[500] text-xs lg:text-md rounded-t-lg border-b-2 border-transparent pb-5 pt-5 lg:hover:border-[#62207E_!important] lg:hover:text-[#62207E_!important]`}
+                        } custom_font text-[#000000] font-[500] text-xs lg:text-md rounded-t-lg border-b-2
+                         border-transparent pb-5 pt-5 lg:hover:border-[#0050D5_!important] lg:hover:text-[#0050D5_!important] flex items-center lg:justify-normal justify-between`}
                         href={menuData?.menu_link || "#"}
                         onClick={() => setMobile(!mobile)}
                       >
                         {menuName}
+                        {menuData?.sub_menus.length !== 0 ? (
+                          <FontAwesomeIcon
+                            icon={faAngleDown}
+                            className="pl-2 w-[20px] h-[10px] lg:block hidden"
+                          />
+                        ) : (
+                          ""
+                        )}
                       </Link>
                       {menuData?.sub_menus.length !== 0 ? (
                         <FontAwesomeIcon
                           icon={faAngleDown}
-                          className="pl-2 w-[20px] h-[10px]"
+                          className="pl-2 w-[20px] h-[10px] lg:hidden"
                         />
                       ) : (
                         ""
@@ -171,7 +191,7 @@ export default function Navbar() {
                     </div>
 
                     {menuData?.sub_menus.length !== 0 ? (
-                      <header className="transition-[all_.3s_ease-in] hidden lg:opacity-0 lg:group-hover:opacity-100 lg:group-hover:block lg:absolute left-0 right-0 w-[100%] bg-[#fff] lg:shadow-lg">
+                      <header className="max-w-[1300px] mx-auto transition-[all_.3s_ease-in] hidden lg:opacity-0 lg:group-hover:opacity-100 lg:group-hover:block lg:absolute left-0 right-0 w-[100%] bg-[#fff] lg:shadow-lg">
                         <div
                           className={`lg:pl-16 megadiv flex flex-row ${
                             menuData?.sub_menus.some(
@@ -205,6 +225,7 @@ export default function Navbar() {
                                           subMenu?.sub_menu_link || "#"
                                         }`}
                                         onClick={() => setMobile(!mobile)}
+                                        className="text-[#131313_!important]"
                                       >
                                         {subMenu?.sub_menu_name}
                                       </Link>
@@ -225,19 +246,25 @@ export default function Navbar() {
                           >
                             {menuData?.sub_menus.map((subMenu) => (
                               <>
-                                {subMenu?.sub_menu_link === null ? (
+                                {subMenu?.sub_menu_link === null ||
+                                subMenu?.sub_sub_menus.length != 0 ? (
                                   <div
                                     className={`submenu flex-1 lg:pl-16`}
                                     key={subMenu?.sub_menu_name}
                                   >
                                     <li className="border-b-[#868686]-300 border-b-[1px] inline-block py-2 mb-2 text-[#2A2A2A] font-[600] text-[15px] font-sans ">
-                                      <Link
-                                        href={`${
-                                          subMenu?.sub_menu_link || "#"
-                                        }`}
-                                      >
-                                        {subMenu?.sub_menu_name}
-                                      </Link>
+                                      {subMenu?.sub_menu_link ? (
+                                        <Link
+                                          href={`${
+                                            subMenu?.sub_menu_link || "#"
+                                          }`}
+                                          className="text-[#131313_!important]"
+                                        >
+                                          {subMenu?.sub_menu_name}
+                                        </Link>
+                                      ) : (
+                                        <>{subMenu?.sub_menu_name}</>
+                                      )}
                                     </li>
                                     <ul className="pb-8">
                                       {subMenu.sub_sub_menus.map(
@@ -249,6 +276,7 @@ export default function Navbar() {
                                             <Link
                                               href={`${subSubMenu.sub_sub_menu_link}`}
                                               onClick={() => setMobile(!mobile)}
+                                              className="text-[#131313_!important]"
                                             >
                                               {subSubMenu.sub_sub_menu_name}
                                             </Link>
@@ -275,7 +303,7 @@ export default function Navbar() {
                                     {menuData?.title}
                                   </h4>
 
-                                  <p className="font-sans text-[#383838] text-[14px] font-[400] mb-4 w-[700px]">
+                                  <p className="font-sans text-[#383838] text-[14px] font-[400] mb-4">
                                     {menuData?.desc}
                                   </p>
 
@@ -334,20 +362,13 @@ export default function Navbar() {
           </div>
         </div>
         <div className="flex items-center">
-          <LINK
-            m_top={"0px"}
-            reflink={`/hire-developers/process`}
-            py={"py-2"}
-            px={"px-4 md:px-7"}
-            FAIcon={""}
-            bgColor={"#0050D5"}
-            textColor={"#fff"}
-            hoverBgColor={"#fff"}
-            HOVERTextColor={"#000"}
-            borderColor={"#0050D5"}
+          <button
+            id="HireTopTelent"
+            type="button"
+            className="buttonOpen text-[#fff] text-[undefined] hover:text-[#ffffff] mt-[0px] bg-[#0050D5] border border-[#0050D5] hover:bg-[#0050D5] focus:ring-4 focus:ring-blue-300 disabled:hover:bg-[#0050D5] dark:bg-[#0050D5] dark:hover:bg-[#0050D5] dark:focus:ring-blue-800 dark:disabled:hover:bg-[#0050D5] focus:!ring-2 group h-min text-center font-medium focus:z-10 relative rounded overflow-hidden text-center inline-block py-2 px-4 md:px-7"
           >
             {"Hire Top Talent"}
-          </LINK>
+          </button>
           <button
             type="button"
             className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 lg:hidden"

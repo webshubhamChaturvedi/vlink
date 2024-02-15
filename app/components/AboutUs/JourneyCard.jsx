@@ -133,7 +133,7 @@ export default function JourneyCard({ data, position, index, max }) {
             width="4.16811"
             height="156.304"
             fill="#62207E"
-            fill-opacity="0.4"
+            fillOpacity="0.4"
           />
           <circle
             cx="19.5314"

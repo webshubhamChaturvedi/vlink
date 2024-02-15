@@ -3,8 +3,8 @@ import React from "react";
 
 export default function ThemesElement({themeselement}) {
   return (
-    <section className="">
-      <div className="container bg-[#22222D] lg:p-[30px_0px_0px_30px] p-[30px_20px_30px_20px] rounded-[30px]">
+    <section className="mt-[-300px] relative z-[1]">
+      <div className="container bg-[#22222D] lg:p-[80px_0px_0px_80px] p-[30px_20px_30px_20px] rounded-[30px]">
         <h6 className="lg:text-[48px] md:text-[32px] text-[24px] text-[#FFFFFF] font-[700]">
           {themeselement?.title}
         </h6>
@@ -53,14 +53,14 @@ export default function ThemesElement({themeselement}) {
             </div>
             {themeselement?.styleName?.map((items, index)=>(
                 <div key={index} className={`flex justify-between  border-[#FFFFFF33] py-[20px] ${index < (themeselement.styleName.length-1) ? "border-b-[1px]" : ""}`}>
-                  <div className="lg:text-[20px] text-[16px] text-[#FFFFFF] font-[600] w-[50%]">
+                  <div className={`text-[#FFFFFF] font-[600] w-[50%] ${index == 0 ? "lg:text-[20px] text-[16px]" : index == 1 ? "text-[16px]" : index == 2 ? "text-[14px]" : index == 3 ? "lg:text-[12px]" : ""}`}>
                       {items?.hdTitle}
                   </div>
                   <div className="w-[50%]">
-                      <p className="lg:text-[20px] text-[16px] text-[#FFFFFF] font-[600]">
+                      <p className={`text-[#FFFFFF] font-[600] ${index == 0 ? "lg:text-[20px] text-[16px]" : index == 1 ? "text-[16px]" : index == 2 ? "text-[14px]" : index == 3 ? "lg:text-[12px]" : ""}`}>
                           {items?.hdDescription}
                       </p>
-                      <p className="text-[14px] text-[#FFFFFF80] font-[400]">
+                      <p className={`text-[#FFFFFF80] font-[400] ${index == 0 ? "text-[16px]" : index == 1 ? "text-[14px]" : index == 2 ? "text-[12px]" : index == 3 ? "lg:text-[10px]" : ""}`}>
                           {items?.hdHeading}
                       </p>
                   </div>

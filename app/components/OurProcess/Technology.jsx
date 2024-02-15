@@ -3,7 +3,6 @@ import OurServicesCard from "app/components/Services/OurServicesCard";
 import { apiEndpoint } from "app/scripts/fetch";
 
 export default function Technology({ section }) {
-  // const { p, h1_black, h1_purple, team_section6detail } = section
   const items = section?.section6_content?.map((item) => ({
     icon: {
       src: apiEndpoint(item?.image?.data?.attributes?.url) ?? "/",
@@ -19,7 +18,7 @@ export default function Technology({ section }) {
       className="bg-tell-us-your-needs bg-cover bg-no-repeat md:py-[55px] py-[30px]"
       style={{
         backgroundImage:
-          "linear-gradient(0deg, rgba(74,12,100,0.96), rgba(74, 12, 100, 0.96)), url('https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_340/v1691470534/tell_us_your_needs_background_f008b0eb58.png')",
+          "linear-gradient(0deg, rgba(74,12,100,0.96), rgba(74, 12, 100, 0.96)), url('https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_340/v1691470534/tell_us_your_needs_background_f008b0eb58.png')",
       }}
     >
       <div className="container">

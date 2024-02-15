@@ -6,6 +6,107 @@
 .cloud_case h6 {
 margin-bottom: 1.25rem;
 }
+.casetopbtn {transition: .5s ease;}
+.btncase {display: none;transition: .5s ease;}
+.casetopbtn:hover h6 .btncase {
+    display: block;
+}
+.testimonialdata .slick-dots li {background: #B8B8B8;
+    border-radius: 100%;}
+    .testimonialdata .slick-dots li.slick-active {background: #0050D5;}
+.testimonialdata .slick-dots li.slick-active button:before,
+.testimonialdata .slick-dots li button:before {color: transparent;}
 .cloud_case h5 {
     margin-bottom: 0rem;
     }
+    img.bg-gra {
+        position: absolute;
+        top: -300px;
+        z-index: 0;
+    }
+    
+    @media screen and (max-width:1199px) {
+        img.bg-gra {
+            top: -200px;
+        }
+    }
+    @media screen and (max-width:800px) {
+        img.bg-gra {
+            display: none;
+            top: -150px;
+        }
+    }
+  
+/*----- button 3 -----*/
+.casediv .button3 {
+    display: inline-block;
+    position: relative;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    background: rgba(255,255,255,0.09);
+    border-radius: 4px;
+  }
+  .casediv .button3 span {
+    display: block;
+    /* padding: 25px 80px; */
+  }
+  .casediv .button3::before, .casediv .button3::after{
+    content:"";
+    width: 0;
+    height: 2px;
+    position: absolute;
+    transition: all 0.2s linear;
+    background: #fff;
+  }
+  
+  .casediv .button3 span::before, .casediv .button3 span::after{
+    content:"";
+    width:2px;
+    height:0;
+    position: absolute;
+    transition: all 0.2s linear;
+    background: #fff;
+  }
+  .casediv:hover .button3::before, .casediv:hover .button3::after{
+    width: 100%;
+  }
+  .casediv:hover .button3 span::before, .casediv:hover .button3 span::after{
+    height: 100%;
+  }
+.btn-3::after{
+    left: 0;
+    bottom: 0;
+    transition-delay: 0.6s;
+  }
+  .btn-3 span::after{
+    transition-delay: 0.4s;
+    right: 0;
+    bottom: 0
+  }
+  .btn-3::before{
+    right: 0;
+    top: 0;
+    transition-delay: 0.2s;
+  }
+  .btn-3 span::before{
+    transition-delay: 0s;
+    left: 0;
+    top: 0;
+  }
+  
+  .btn-3:hover::after{
+    transition-delay: 0s;
+  }
+  .btn-3:hover span::after{
+    transition-delay: 0.2s;
+  }
+  .btn-3:hover::before{
+    transition-delay: 0.4s;
+  }
+  .btn-3:hover span::before{
+    transition-delay: 0.6s;
+  }
+  

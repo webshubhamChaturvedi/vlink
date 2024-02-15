@@ -43,7 +43,7 @@ export default function Sitemap({ headerData }) {
           crossOrigin="use-credentials"
         />
       </Head>
-      <section className="py-[55px]">
+      <section className="py-[55px] mt-20">
         <div className="container">
           {headerData &&
             section.length > 0 &&

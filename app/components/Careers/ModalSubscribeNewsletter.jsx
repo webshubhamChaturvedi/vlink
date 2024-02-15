@@ -1,7 +1,6 @@
 import { Button, Label, Select } from 'flowbite-react';
 import React, { Fragment, useState } from 'react';
 import ButtonModal from '../common/ButtonModal';
-import CloudIcon from "./../../../public/icons/cloud-icons.png";
 
 const ModalSubscribeNewsletter =({isOpen = false, setIsOpen})=> {
    

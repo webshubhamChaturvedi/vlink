@@ -53,11 +53,15 @@ export default function TechnologyPodcast({
         />
         <meta
           property="og:title"
-          content={podcast?.title ? podcast?.title : `Vlink`}
+          content={podcast?.Seo?.metaTitle || podcast?.title || `Vlink`}
         />
         <meta
           property="og:description"
-          content={podcast?.description || "Vlink Description"}
+          content={
+            podcast?.Seo?.metaDescription ||
+            podcast?.description ||
+            "Vlink Description"
+          }
         />
         <meta
           property="og:url"
@@ -65,8 +69,9 @@ export default function TechnologyPodcast({
         />
         <Metatag
           content={apiEndpoint(
-            podcastDetail[0]?.attributes?.playlist_data?.playlist_img?.data
-              ?.attributes?.url
+            podcast?.Seo?.metaImage?.data?.attributes?.url ||
+              podcastDetail[0]?.attributes?.playlist_data?.playlist_img?.data
+                ?.attributes?.url
           )}
         />
         <link

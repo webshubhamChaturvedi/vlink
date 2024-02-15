@@ -29,8 +29,8 @@ export default function Blogs({ res }) {
   const [dataBlog, setDataBlog] = useState([]);
   const dispatch = useDispatch();
   const blogCategories = useSelector((state) => state?.blogCategories);
-  const [data, setData] = useState();
-
+  const [selectedItem, setSelectedItem] = useState(0);
+  const selectedText = useSelector((state) => state?.selectedBlog?.category);
   useEffect(() => {
     if (!Object.keys(blogCategories)?.length)
       REQUEST({
@@ -50,7 +50,8 @@ export default function Blogs({ res }) {
     setDataBlog(blogs);
   }, []);
 
-  const select = (e) => {
+  const select = (e, item) => {
+    setSelectedItem(item);
     dispatch({
       type: ACTION_TYPE.SELECTED_BLOG_CATEGORY,
       payload: { [e.target.name]: e.target.value },
@@ -82,7 +83,6 @@ export default function Blogs({ res }) {
 
         <link rel="canonical" href={canonicalUrl} />
       </Head>
-
       <SectionHeader list={header} />
 
       <SearchBar blogref={blogref} add={topref} />
@@ -108,13 +108,25 @@ export default function Blogs({ res }) {
                   Categories
                 </h6>
                 <ul className="flex flex-wrap">
+                  {/* <li
+                    className={`${
+                      selectedText =="all"
+                        ? "bg-[#0050D5] text-[#fff]"
+                        : "text-[#020202] bg-[#EEF4FF]"
+                    } rounded-[50px] py-2 px-4 mr-2 mb-3 lg:text-[14px] font-[400] cursor-pointer text-[13px]`}
+                  >
+                    <button name="category" className="p-0" value="all">
+                      All Category
+                    </button>
+                  </li> */}
                   {Object?.keys(blogCategories)?.length &&
                     Object?.keys(blogCategories)?.map((data, key) => (
                       <>
                         <li
                           key={key}
                           className={`${
-                            key === 0
+                            selectedText ==
+                            blogCategories[data]?.attributes?.slug
                               ? "bg-[#0050D5] text-[#fff]"
                               : "text-[#020202] bg-[#EEF4FF]"
                           } rounded-[50px] py-2 px-4 mr-2 mb-3 lg:text-[14px] font-[400] cursor-pointer text-[13px]`}
@@ -122,7 +134,7 @@ export default function Blogs({ res }) {
                           <button
                             name="category"
                             className="p-0"
-                            onClick={(e) => select(e)}
+                            onClick={(e) => select(e, data)}
                             value={blogCategories[data]?.attributes?.slug}
                           >
                             {blogCategories[data]?.attributes?.title}

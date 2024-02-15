@@ -12,10 +12,9 @@ import { useState } from "react";
 // } from "@material-tailwind/react";
 
 export default function Faq({ section }) {
-
   const router = useRouter();
   const [open, setOpen] = useState(0);
- 
+
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
   };
@@ -26,7 +25,7 @@ export default function Faq({ section }) {
         <div className="text-center">
           <h5 className="font-bold text-black xl:text-4xl lg:text-[32px] text-[22px] text-center mb-3">
             {section?.h1_black}
-            <span className="text-company">{section?.h1_purple}</span>
+            <span className="text-company ml-2">{section?.h1_purple}</span>
             {" " + section?.h2_black}
           </h5>
         </div>
@@ -36,8 +35,11 @@ export default function Faq({ section }) {
             <div>
               {section?.faqs?.map((item, key) => (
                 <div className={key} key={key}>
-                  <div className={`open=${open === key}`}>
-                    <div onClick={() => handleOpen(key)}  className={`faq-question`} >
+                  <div className={`open=${open === key} ${open === key}`}>
+                    <div
+                      onClick={() => handleOpen(key)}
+                      className={`faq-question`}
+                    >
                       {item?.q || item?.title}
                     </div>
                     <div className="faq-answer">
@@ -48,34 +50,11 @@ export default function Faq({ section }) {
                           )}
                         ></div>
                       ) : (
-                        <p>
-                        </p>
+                        <p></p>
                       )}
                     </div>
                   </div>
                 </div>
-                // <AccordionItem key={key}>
-                //   <AccordionItemHeading>
-                //     <AccordionItemButton>
-                //       {item?.q || item?.title}
-                //     </AccordionItemButton>
-                //   </AccordionItemHeading>
-                //   <AccordionItemPanel>
-                //     {item.a || item?.body ? (
-                //       <div
-                //         dangerouslySetInnerHTML={createMarkup(
-                //           item.a || item?.body
-                //         )}
-                //       ></div>
-                //     ) : (
-                //       <p>
-                //         Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                //         Sit inventore ipsa commodi recusandae reprehenderit ut
-                //         neque amet enim corrupti deserunt.
-                //       </p>
-                //     )}
-                //   </AccordionItemPanel>
-                // </AccordionItem>
               ))}
             </div>
           </div>
@@ -89,7 +68,9 @@ export default function Faq({ section }) {
               <Link href="/hire-developers/react">React</Link>
             </p>
             <p className="text-primary mb-2">
-              <Link href="/hire-developers/nodejs">Full Stack</Link>
+              <Link href="/hire-developers/mern-developer/">
+                MERN Developers
+              </Link>
             </p>
             <p className="text-primary mb-2">
               <Link href="/hire-developers/java">Java</Link>

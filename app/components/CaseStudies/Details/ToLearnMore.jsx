@@ -13,13 +13,14 @@ export default function ToLearnMore({
   isNewsRoom,
 }) {
   const [modalDownload, setModalDownload] = useState(false);
+
   return (
     <div className="bg-['#D9D9D9']">
       <div
         className="md:py-[60px] md:px-[30px] py-[30px] px-[5px]"
         style={{
           backgroundImage: `url(
-            "https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_991/v1691470403/building_texture_7d168e409f.png"
+            "https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_991/v1691470403/building_texture_7d168e409f.png"
           )`,
           height: "auto",
           backgroundSize: "cover",

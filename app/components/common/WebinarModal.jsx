@@ -7,8 +7,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReCAPTCHA from "react-google-recaptcha";
-// import dynamic from 'next/dynamic';
-// const ReCAPTCHA = dynamic(() => import('react-google-recaptcha'));
 
 const WebinarModal = ({ isOpen, setIsOpen, title, setOpenVideo }) => {
   const captcha = useRef(null);
@@ -20,10 +18,21 @@ const WebinarModal = ({ isOpen, setIsOpen, title, setOpenVideo }) => {
       setCaptchaError(false);
     }
   }
+
+  const nameRegex = /^[A-Za-z\s]+$/;
+  const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
   const Schema = yup.object().shape({
-    company: yup.string().required(),
-    email: yup.string().email().required("Email is required"),
-    name: yup.string().required("Full name  is required"),
+    company: yup.string().required("Company is a required field"),
+    email: yup
+      .string()
+      .required("Email is required")
+      .matches(emailRegex, "Email must be a valid"),
+    name: yup
+      .string()
+      .required("Full name  is required")
+      .matches(nameRegex, "Name can not contain number and special character"),
   });
   const {
     register,
@@ -118,7 +127,7 @@ const WebinarModal = ({ isOpen, setIsOpen, title, setOpenVideo }) => {
                     />
                     {errors.name && (
                       <span className="mt-2 font-normal text-sm text-red-700">
-                        This field is required
+                        {errors?.name?.message}
                       </span>
                     )}
                   </div>
@@ -132,7 +141,7 @@ const WebinarModal = ({ isOpen, setIsOpen, title, setOpenVideo }) => {
                     />
                     {errors.email && (
                       <span className="mt-2 font-normal text-sm text-red-700">
-                        This field is required
+                        {errors?.email?.message}
                       </span>
                     )}
                   </div>
@@ -146,7 +155,7 @@ const WebinarModal = ({ isOpen, setIsOpen, title, setOpenVideo }) => {
                     />
                     {errors.company && (
                       <span className="mt-2 font-normal text-sm text-red-700">
-                        This field is required
+                        {errors?.company?.message}
                       </span>
                     )}
                   </div>

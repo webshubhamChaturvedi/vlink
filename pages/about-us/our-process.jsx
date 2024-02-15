@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Testimonial from "app/components/Home/Testimonials";
 import OurWay from "app/components/AboutUs/OurWay";
 import "styles/Home.module.css";
 import GetInTouchForm from "app/components/common/GetInTouchForm";
@@ -15,6 +14,7 @@ import Technology from "app/components/OurProcess/Technology";
 import { useRouter } from "next/router";
 import { apiEndpoint } from "app/scripts/fetch";
 import Metatag from "app/components/metaTag";
+import TestimonialData from "app/components/warehouse/TestimonialData";
 
 export default function OurProcess({ ourProcessData, trusted, testimonial }) {
   const router = useRouter();
@@ -36,19 +36,31 @@ export default function OurProcess({ ourProcessData, trusted, testimonial }) {
   return (
     <div>
       <Head>
-        <title>{ourProcessData?.title ? ourProcessData?.title : `VLink`}</title>
+        <title>
+          {ourProcessData?.Seo?.metaTitle || ourProcessData?.title || `VLink`}
+        </title>
         <meta
           name="description"
-          content={ourProcessData?.description || "Vlink Description"}
+          content={
+            ourProcessData?.Seo?.metaDescription ||
+            ourProcessData?.description ||
+            "Vlink Description"
+          }
         />
 
         <meta
           property="og:title"
-          content={ourProcessData?.title ? ourProcessData?.title : `Vlink`}
+          content={
+            ourProcessData?.Seo?.metaTitle || ourProcessData?.title || `VLink`
+          }
         />
         <meta
           property="og:description"
-          content={ourProcessData?.description || "Vlink Description"}
+          content={
+            ourProcessData?.Seo?.metaDescription ||
+            ourProcessData?.description ||
+            "Vlink Description"
+          }
         />
         <meta
           property="og:url"
@@ -57,7 +69,8 @@ export default function OurProcess({ ourProcessData, trusted, testimonial }) {
 
         <Metatag
           content={apiEndpoint(
-            ourProcessData?.section1?.image?.data?.attributes?.url
+            ourProcessData?.Seo?.metaImage?.data?.attributes?.url ||
+              ourProcessData?.section1?.image?.data?.attributes?.url
           )}
         />
         <link rel="canonical" href={canonicalUrl} />
@@ -78,10 +91,7 @@ export default function OurProcess({ ourProcessData, trusted, testimonial }) {
         background="bg-vlink-apart"
         backgroundPosition="bg-vlink-apart-position"
       />
-      <Testimonial
-        section_title={testimonial?.Testimonial}
-        section_content={testimonial?.testimonial_content}
-      />
+      <TestimonialData testimonials={testimonial} isNewTestimonial={true} />
       <Technology section={ourProcessData?.sectiom6} />
       <div className="pt-8">
         <GetInTouchForm />

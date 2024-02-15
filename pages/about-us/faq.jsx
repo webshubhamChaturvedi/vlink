@@ -75,14 +75,14 @@ export default function Faq() {
         <link rel="canonical" href={canonicalUrl} />
       </Head>
       <SectionHeader list={header} />
-      <div className="faq py-12">
+      <div className="faq py-12 mt-20">
         <div className="container">
           <div className="grid grid-cols-3 gap-10">
             <div className="lg:col-span-2 col-span-3">
               <div className="columns mb-8">
                 <h1 className="font-[700] color-[#030303] md:text-[40px] text-[22px] md:leading-[48px] leading-[30px]">
                   {faqData?.section1?.h1_black}
-                  <span className="text-[#62207E]">
+                  <span className="text-[#62207E] ml-2">
                     {faqData?.section1?.h1_purple}
                   </span>
                 </h1>
@@ -106,6 +106,7 @@ export default function Faq() {
                   onChange={(e) => setSearch(e.target.value)}
                 />
                 <button
+                  id="Search"
                   type="text"
                   className="bg-[#62207E] text-[#FFFFFF] px-6 leading-[22px] !rounded-[4px] !rounded-l-none text-[14px] font-[600] h-12"
                   onClick={() => filterData()}
@@ -131,11 +132,6 @@ export default function Faq() {
                             : ""
                         }
                       >
-                        {/* <img
-                          src={apiEndpoint(data?.attributes?.url)}
-                          alt={data?.attributes?.alternativeText || data?.attributes?.name}
-                          srcSet=""
-                        /> */}
                         <CloudinaryImage
                           backendImgUrl={data?.attributes?.url}
                           alt={data?.attributes?.alternativeText}
@@ -153,15 +149,3 @@ export default function Faq() {
     </div>
   );
 }
-
-// export async function getStaticProps() {
-//   const [faqData] = await Promise.all([
-//     REQUEST({
-//       method: "GET",
-//       url: API_ENDPOINTS.FAQ,
-//     }),
-//   ]);
-//   return {
-//     props: { faqData: faqData?.data?.data?.attributes },
-//   };
-// }

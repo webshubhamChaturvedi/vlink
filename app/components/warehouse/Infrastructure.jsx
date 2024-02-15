@@ -59,7 +59,7 @@ export const Infrastructure = ({ infrastructure }) => {
     <section className="md:py-[55px] py-[30px]">
       <div className="container">
         <div
-          className="md:mb-[55px] mb-[30px]"
+          className="md:mb-[55px] mb-[30px] overflow-hidden"
           data-aos="fade-up"
           data-aos-easing="linear"
           data-aos-duration="1000"
@@ -88,19 +88,12 @@ export const Infrastructure = ({ infrastructure }) => {
                     key={key}
                     className="bg-[#fff] rounded-[12px] shadow-[0px_0px_3px_rgba(0,_0,_0,_0.25)] py-[15px] px-[10px] text-center"
                   >
-                    {/* <img
-                      src={apiEndpoint(list?.image?.data?.attributes?.url)}
-                      alt=""
-                      width="50px"
-                      height="50px"
-                      className="inline-block mb-3"
-                    /> */}
                     <CloudinaryImage
                       backendImgUrl={list?.image?.data?.attributes?.url}
                       alt={list?.image?.data?.attributes?.alternativeText}
-                      className="inline-block mb-3 w-12 h-12"
+                      className="inline-block w-12 h-12"
                     />
-                    <p className="text-[#383838] text-[14px] font-sans font-[600]">
+                    <p className="mt-3 text-[#383838] text-[14px] font-sans font-[600]">
                       {list?.title}
                     </p>
                   </div>

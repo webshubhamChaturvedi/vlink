@@ -8,9 +8,14 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { subscribeEmail, zohoLeadApi } from "app/scripts/utils";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/router";
+import { timeZoneCityToCountry } from "app/helpers/timeZoneCityToCountry";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import "./getintouch.css";
 
 const style = {
   inputField: {
@@ -32,24 +37,53 @@ const style = {
 export default function GetInTouchForm() {
   const captcha = useRef(null);
   const [captchaError, setCaptchaError] = useState(false);
-  const [email, setEmail] = useState(true);
-  const [phone, setPhone] = useState(true);
   const [active, setActive] = useState(false);
+
+  const { asPath } = useRouter();
+
+  let userCity;
+  let userCountry;
+  let userTimeZone;
+  if (Intl) {
+    userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var tzArr = userTimeZone.split("/");
+    userCity = tzArr[tzArr.length - 1];
+    timeZoneCityToCountry.map((coun, key) => (
+      <>{(userCountry = coun[userCity])}</>
+    ));
+  }
+
   function onChangeCaptcha(value) {
     if (captcha.current.getValue() && captcha.current.getValue() != "") {
       setCaptchaError(false);
     }
   }
+  const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
   const Schema = yup.object().shape({
-    mobile: yup.string().required(),
-    email: yup.string().email().required("Email is required"),
-    name: yup.string().required("Full name  is required"),
-    organization: yup.string().required("Organization is required"),
-    message: yup.string().required("message is required"),
+    mobile: yup
+      .string()
+      .required("Numbar is required")
+      .min(5, "Number is not valid"),
+    email: yup
+      .string()
+      .required("Email is required")
+      .matches(emailRegex, "Email must be a valid"),
+    name: yup
+      .string()
+      .required("Name is required")
+      .matches(
+        /^[a-zA-Z\s]*$/,
+        "Name can not contain number and special character"
+      ),
+    organization: yup.string().required("organization Name is required"),
+    message: yup.string().required("Message is required"),
   });
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
     reset,
   } = useForm({
@@ -59,21 +93,19 @@ export default function GetInTouchForm() {
       name: "",
       message: "",
       organization: "",
+      email: "",
+      countryName: userCountry,
+      sourceCode: asPath,
     },
   });
   const toast = useSelector((state) => state?.toast);
   const submitHandler = async (data) => {
-    if (
-      captcha.current.getValue() &&
-      captcha.current.getValue() != "" &&
-      email &&
-      phone
-    ) {
+    if (captcha.current.getValue() && captcha.current.getValue() != "") {
       try {
         const formData = {
           ...data,
         };
-        setActive(!active)
+        setActive(!active);
         const res = await REQUEST({
           method: "POST",
           url: API_ENDPOINTS.SAVE_CONTACT_US,
@@ -87,7 +119,7 @@ export default function GetInTouchForm() {
           setCaptchaError(false);
           captcha.current.reset();
           reset();
-          setActive(active)
+          setActive(active);
         } else toast.error(res?.data?.error?.message);
       } catch (err) {
         toast.error("failed");
@@ -96,14 +128,6 @@ export default function GetInTouchForm() {
       setCaptchaError(true);
     }
   };
-  const isValidEmail = (email) =>
-    setEmail(
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-        email
-      )
-    );
-  const isValidPhone = (phone) =>
-    setPhone(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(phone));
 
   return (
     <div
@@ -115,7 +139,7 @@ export default function GetInTouchForm() {
       }}
       id="get-in-touch"
     >
-      <div className="gradient">
+      <div className="">
         <Container className="md:flex">
           <div className="lg:w-[60%] w-[100%] md:pr-14 relative md:pt-12 md:pb-20 py-[30px]">
             <div className="z-40 relative">
@@ -139,7 +163,7 @@ export default function GetInTouchForm() {
                     />
                     {errors.name && (
                       <span className="mt-2 font-normal text-sm text-red-700">
-                        This field is required
+                        {`${errors.name.message}`}
                       </span>
                     )}
                   </div>
@@ -149,9 +173,6 @@ export default function GetInTouchForm() {
                       placeholder="Enter Work Email*"
                       type="email"
                       {...register("email")}
-                      onChange={(e) => {
-                        isValidEmail(e.target.value);
-                      }}
                       name="email"
                       className="w-[100%] block focus:ring-0 placeholder-[#343434] text-[#343434] bg-[#F9F9F9]"
                       style={style.inputField}
@@ -161,33 +182,30 @@ export default function GetInTouchForm() {
                         {errors?.email?.message}
                       </span>
                     )}
-                    {!email && (
-                      <span className="mt-2 font-normal text-sm text-red-700">
-                        {"email must be a valid"}
-                      </span>
-                    )}
                   </div>
                 </div>
 
                 <div className="md:flex space-y-4 md:space-y-0 md:space-x-4 justify-items-stretch">
                   <div className="md:w-1/2">
-                    <input
-                      placeholder="Enter Phone Number*"
-                      {...register("mobile")}
-                      className="w-[100%] block focus:ring-0 placeholder-[#343434] text-[#343434] bg-[#F9F9F9]"
-                      style={style.inputField}
-                      onChange={(e) => {
-                        isValidPhone(e.target.value);
-                      }}
+                    <Controller
+                      name="mobile" // Name of the field in the form data
+                      control={control}
+                      defaultValue="" // Initial value for the field
+                      render={({ field }) => (
+                        <PhoneInput
+                          country={"us"}
+                          value={field.mobile} // Set the value from react-hook-form
+                          onChange={(phone) => {
+                            field.onChange(phone); // Update react-hook-form value on change
+                          }}
+                          style={style.inputField}
+                          className="p-[0px_!important] phonenumber react-tel-input focus:ring-0 placeholder-[#343434] text-[#343434] bg-[#F9F9F9]"
+                        />
+                      )}
                     />
                     {errors.mobile && (
                       <span className="mt-2 font-normal text-sm text-red-700">
-                        This field is required
-                      </span>
-                    )}
-                    {!phone && (
-                      <span className="mt-2 font-normal text-sm text-red-700">
-                        {"phone number must be a valid "}
+                        {`${errors.mobile.message}`}
                       </span>
                     )}
                   </div>
@@ -201,7 +219,7 @@ export default function GetInTouchForm() {
                     />
                     {errors.organization && (
                       <span className="mt-2 font-normal text-sm text-red-700">
-                        This field is required
+                        {`${errors.organization.message}`}
                       </span>
                     )}
                   </div>
@@ -212,12 +230,13 @@ export default function GetInTouchForm() {
                     rows="4"
                     placeholder="Small brief about Project*"
                     {...register("message")}
+                    minlength="20"
                     name="message"
                     className="w-[100%] block focus:ring-0 focus:border-[rgba(146,146,146,0.5)] focus-visible:outline-0 placeholder-[#343434] text-[#343434] bg-[#F9F9F9] rounded-[4px]"
                   ></textarea>
                   {errors.message && (
                     <span className="mt-2 font-normal text-sm text-red-700">
-                      This field is required
+                      {`${errors.message.message}`}
                     </span>
                   )}
                 </div>
@@ -236,7 +255,11 @@ export default function GetInTouchForm() {
                     )}
                   </div>
                   <div className="md:block flex justify-center">
-                    <button disabled={active} className="text-white bg-blue-700 border border-transparent hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:hover:bg-blue-600 focus:!ring-2 group flex h-min items-center justify-center text-center font-medium focus:z-10 text-[#ffffff_!important] white_btn relative rounded overflow-hidden text-center inline-block lg:px-10 px-5 py-1">
+                    <button
+                      id="getInTouch"
+                      disabled={active}
+                      className="text-white bg-blue-700 border border-transparent hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:hover:bg-blue-600 focus:!ring-2 group flex h-min items-center justify-center text-center font-medium focus:z-10 text-[#ffffff_!important] white_btn relative rounded overflow-hidden text-center inline-block lg:px-10 px-5 py-1"
+                    >
                       <span className="flex items-center rounded-md text-sm px-4 py-2">
                         <span
                           className={`absolute top-0 left-0 flex w-full h-0 mb-0 transition-all duration-200 ease-out transform translate-y-0 group-hover:h-full opacity-1  bg-[#fff]`}

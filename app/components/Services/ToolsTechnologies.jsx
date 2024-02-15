@@ -6,7 +6,9 @@ export default function ToolsTechnologies({
   tech,
   isToolsTechnologies = false,
   isStaff = false,
-  isWeb
+  isWeb,
+  isHm = false,
+  isHm2 = true,
 }) {
   const [activeTab, setActiveTab] = useState(isWeb);
 
@@ -19,21 +21,21 @@ export default function ToolsTechnologies({
       className={`lg:py-[55px] py-[30px] bg-cover bg-no-repeat bg-center`}
       style={{
         backgroundImage:
-          tech?.bg_img.length === 0 &&
-          `url(${apiEndpoint(tech?.bg_img?.data?.attributes?.url)})`,
+          tech?.bg_img &&
+          `url(https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_480/5778896_1_1_d29f006360)`,
       }}
     >
       <div className="container">
         <div className="flex flex-col md:flex-row md:justify-around items-center lg:mb-[50px] mb-[30px]">
-          <div
-            className="succesful-team md:basis-full"
-            data-aos="fade"
-            data-aos-easing="linear"
-          >
+          <div className="succesful-team md:basis-full">
             {isStaff ? (
-              <h4 className="font-bold text-black xl:text-4xl lg:text-[32px] text-[22px] text-center xl:leading-[55px] lg:leading-[35px]">
+              <h4
+                className={`${
+                  isHm2 ? "text-[#fff]" : "text-black"
+                } font-bold xl:text-4xl lg:text-[32px] text-[22px] text-center xl:leading-[55px] lg:leading-[35px]`}
+              >
                 <span
-                  className="inline-block font-bold bg-no-repeat backgroundsize pt-16 bg-size-100 bg-[center_top_40%] md:px-[40px]"
+                  className="inline-block font-bold bg-no-repeat backgroundsize pt-16 lg:bg-size-100 bg-size-60 bg-[center_top_40%] md:px-[40px]"
                   style={{
                     backgroundImage: `url(${apiEndpoint(
                       tech?.title_bg?.data?.attributes?.url
@@ -47,7 +49,11 @@ export default function ToolsTechnologies({
               ""
             )}
             {isToolsTechnologies ? (
-              <h4 className="font-bold text-black xl:text-4xl lg:text-[32px] text-[22px] text-center xl:leading-[55px] lg:leading-[35px]">
+              <h4
+                className={`${
+                  isHm2 ? "text-[#fff]" : "text-black"
+                } font-boldxl:text-4xl lg:text-[32px] text-[22px] text-center xl:leading-[55px] lg:leading-[35px]`}
+              >
                 <span
                   className="inline-block font-bold bg-no-repeat backgroundsize pt-16 bg-size-60 bg-[center_top_40%] md:px-[40px]"
                   style={{
@@ -62,6 +68,9 @@ export default function ToolsTechnologies({
             ) : (
               ""
             )}
+            <p className="text-[#FFFFFF94] text-center font-[600] text-[18px]">
+              {tech?.description && tech?.description}
+            </p>
           </div>
         </div>
         <div>
@@ -71,7 +80,7 @@ export default function ToolsTechnologies({
                 onMouseOver={() => handleTab(item)}
                 className={`cursor-pointer  rounded-[50px] py-[10px] px-[20px] inline-block ${
                   activeTab === item.title
-                    ? "acive bg-[#DEE0FF] text-[#141414] text-[16px] font-[600] shadow-[0px_0px_30px_0px_#0000001F]"
+                    ? "acive bg-[#0050D5] text-[#fff] text-[16px] font-[600] shadow-[0px_0px_30px_0px_#0000001F]"
                     : "bg-[#ffffff] shadow-[0px_1px_6px_0px_#0000001C] text-[#141414] text-[16px] font-[600]"
                 }`}
                 key={key}

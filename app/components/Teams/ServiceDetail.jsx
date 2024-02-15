@@ -12,8 +12,8 @@ import Solutions from "app/components/Teams/Solutions";
 import Faq from "app/components/Teams/Faq";
 import CertificateBar from "../Home/CertificateBar";
 import OurDevelopers from "./OurDevelopers";
-import Testimonial from "../Home/Testimonials";
 import HeroSection from "../common/HeroSection";
+import TestimonialData from "../warehouse/TestimonialData";
 
 export default function ServiceDetail({
   data,
@@ -73,10 +73,7 @@ export default function ServiceDetail({
       {data?.team_section8?.h1_black && (
         <OurDevelopers section={data?.team_section8} />
       )}
-      <Testimonial
-        section_title={testimonials?.Testimonial}
-        section_content={testimonials?.testimonial_content}
-      />
+      <TestimonialData testimonials={testimonials} isNewTestimonial={true} />
       {data?.faq?.h && <Faq section={data?.faq} />}
       <GetInTouchForm />
     </div>

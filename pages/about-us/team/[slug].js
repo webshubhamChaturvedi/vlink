@@ -30,7 +30,6 @@ export default function CaseStudy({ aboutUsData }) {
       setData(filterData);
     }
   }, [aboutUsData]);
-  // console.log(data?.image?.src);
   return (
     <div>
       <Head>
@@ -50,10 +49,10 @@ export default function CaseStudy({ aboutUsData }) {
         <link rel="canonical" href={canonicalUrl} />
       </Head>
       <SectionHeader list={header} />
-      <section className="py-14">
+      <section className="py-14 mt-10">
         <div className="container">
           <div className="md:grid lg:grid-cols-12 gap-6">
-            <div className="col-span-9 pr-12">
+            <div className="col-span-9 lg:pr-12">
               <h1 className="xl:text-4xl lg:text-[32px] text-[28px] font-bold mb-4">
                 Team
                 <span className="text-company"> Details</span>
@@ -84,17 +83,19 @@ export default function CaseStudy({ aboutUsData }) {
                         alt="Vlink mail-icon"
                       ></img>
                     </Link>
-                    <Link
-                      className="flex items-center break-all mb-2"
-                      href={data?.linkedin || "#"}
-                      target={"_blank"}
-                    >
-                      <img
-                        src="/img/teams-detail/linkedin-icon.svg"
-                        className="inline mr-2"
-                        alt="Vlink linkedin"
-                      ></img>
-                    </Link>
+                    {data?.linkedin && !data?.linkedin.includes("#") && (
+                      <Link
+                        className="flex items-center break-all mb-2"
+                        href={data?.linkedin}
+                        target="_blank"
+                      >
+                        <img
+                          src="/img/teams-detail/linkedin-icon.svg"
+                          className="inline mr-2"
+                          alt="Vlink linkedin"
+                        />
+                      </Link>
+                    )}
                   </div>
                 </div>
                 <div className="md:ml-8 md:w-[75%] mt-10 md:mt-0">
@@ -168,7 +169,7 @@ export default function CaseStudy({ aboutUsData }) {
                       height="20px"
                       alt="image"
                       type="icon"
-                      src="https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_100/v1690804244/Shape_cf5d1a3d13.svg?_a=BAJFJtWI0"
+                      src="https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_100/v1690804244/Shape_cf5d1a3d13.svg?_a=BAJFJtWI0"
                     />
                   </Link>
                 </li>
@@ -184,7 +185,7 @@ export default function CaseStudy({ aboutUsData }) {
                       height="20px"
                       alt="image"
                       type="icon"
-                      src="https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_991/v1690804247/Shape_1_18f8847b14.svg?_a=BAJFJtWI0"
+                      src="https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_991/v1690804247/Shape_1_18f8847b14.svg?_a=BAJFJtWI0"
                     />
                   </Link>
                 </li>
@@ -200,7 +201,7 @@ export default function CaseStudy({ aboutUsData }) {
                       height="20px"
                       alt="image"
                       type="icon"
-                      src="https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_991/v1690804249/Shape_2_eec75fb4a9.svg?_a=BAJFJtWI0"
+                      src="https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_991/v1690804249/Shape_2_eec75fb4a9.svg?_a=BAJFJtWI0"
                     />
                   </Link>
                 </li>
@@ -216,7 +217,7 @@ export default function CaseStudy({ aboutUsData }) {
                       height="20px"
                       alt="image"
                       type="icon"
-                      src="https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_991/v1690804252/Shape_3_05a003ae83.svg?_a=BAJFJtWI0"
+                      src="https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_991/v1690804252/Shape_3_05a003ae83.svg?_a=BAJFJtWI0"
                     />
                   </Link>
                 </li>
@@ -234,7 +235,7 @@ export default function CaseStudy({ aboutUsData }) {
                       height="20px"
                       alt="image"
                       type="icon"
-                      src="https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_991/v1690804254/Vector_1_477597eb92.svg?_a=BAJFJtWI0"
+                      src="https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_991/v1690804254/Vector_1_477597eb92.svg?_a=BAJFJtWI0"
                     />
                   </Link>
                 </li>

@@ -48,22 +48,27 @@ const cd = ({ className, alt, backendImgUrl, style, type }) => {
 
   let width;
 
-  if (type === "icon" && isDesktop) {
+  if (type === "icon") {
     width = "130";
-  } else if (type === "icon" && isMobile) {
-    width = "100";
-  } else if (isMobile && type === "smallimg") {
-    width = "340";
-  } else if (type === "smallimg") {
+  }
+  // else if (type === "icon" && isMobile) {
+  //   width = "100";
+  // }
+  // else if (isMobile && type === "smallimg") {
+  //   width = "340";
+  // }
+  else if (type === "smallimg") {
     width = "480";
-  } else if (isMobile || type === "smallimg") {
-    width = "340";
-  } else if (isTablet) {
+  }
+  //  else if (isMobile || type === "smallimg") {
+  //   width = "340";
+  // }
+  else if (isTablet) {
     width = "991";
   } else if (isDesktop) {
     width = "1280";
   } else {
-    width = "80";
+    width = "130";
   }
 
   let myImage = new CloudinaryImage(getPublicId, cloudConfig, urlConfig);

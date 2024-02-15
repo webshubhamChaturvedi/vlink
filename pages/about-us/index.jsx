@@ -20,6 +20,7 @@ import Metatag from "app/components/metaTag";
 const GetInTouchModal = dynamic(() =>
   import("/app/components/common/GetInTouchModal")
 );
+import TestimonialData from "app/components/warehouse/TestimonialData";
 
 export default function AboutUs({ aboutUsData, award, testimonials }) {
   const [modalScheduleCall, setModalScheduleCall] = useState(false);
@@ -92,10 +93,7 @@ export default function AboutUs({ aboutUsData, award, testimonials }) {
           clickPopup={setModalScheduleCall}
         />
       </div>
-      <Testimonial
-        section_title={testimonials?.Testimonial}
-        section_content={testimonials?.testimonial_content}
-      />
+      <TestimonialData testimonials={testimonials} isNewTestimonial={true} />
       <Journey
         data={aboutUsData?.Our_Journey}
         head="Team"

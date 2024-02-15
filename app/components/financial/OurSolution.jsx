@@ -27,10 +27,10 @@ const OurSolution = ({ section_title, section_content }) => {
         <div className="grid grid-cols-1 gap-8 md:mt-[45px] mt-[30px]">
           {items.map((item, index) => (
             <div
-              className="bg-white rounded-[10px] lg:p-[40px] p-[20px] flex"
+              className="bg-white rounded-[10px] lg:p-[40px] p-[20px] flex flex-wrap md:flex-nowrap"
               key={index}
             >
-              <div className="w-[100px] mr-[20px]">
+              <div className="md:w-[100px] w-[70px] md:mr-[20px] mb-2 ">
                 {/* <img src={apiEndpoint(item?.image_url)} alt={item?.alternativeText || item?.image_url} /> */}
                 <CloudinaryImage
                   backendImgUrl={item?.image_url}

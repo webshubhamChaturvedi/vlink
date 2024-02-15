@@ -1,0 +1,24 @@
+.gradient {
+  background: linear-gradient(90deg, #7f7d7d 50%, transparent 0) repeat-x,
+    linear-gradient(90deg, #7f7d7d 50%, transparent 0) repeat-x,
+    linear-gradient(0deg, #7f7d7d 50%, transparent 0) repeat-y,
+    linear-gradient(0deg, #7f7d7d 50%, transparent 0) repeat-y;
+  background-size: 15px 1.5px, 15px 1.5px, 1.5px 15px, 2px 15px;
+  background-position: 0 0, 0 100%, 0 0, 100% 0;
+}
+.gradient:hover {
+  position: relative;
+  background: linear-gradient(90deg, #7f7d7d 50%, transparent 0) repeat-x,
+    linear-gradient(90deg, #7f7d7d 50%, transparent 0) repeat-x,
+    linear-gradient(0deg, #7f7d7d 50%, transparent 0) repeat-y,
+    linear-gradient(0deg, #7f7d7d 50%, transparent 0) repeat-y;
+  background-size: 15px 1.5px, 15px 1.5px, 1.5px 15px, 2px 15px;
+  background-position: 0 0, 0 100%, 0 0, 100% 0;
+  /* cursor: pointer; */
+  animation: linearGradientMove 0.3s infinite linear;
+}
+@keyframes linearGradientMove {
+  100% {
+    background-position: 15px 0, -15px 100%, 0 -15px, 100% 15px;
+  }
+}

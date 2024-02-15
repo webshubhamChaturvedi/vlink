@@ -97,7 +97,7 @@ export default function BlogDetail({ res }) {
       {blogsData?.attributes?.banner && (
         <BlogBanner bannerData={blogsData?.attributes?.banner} />
       )}
-      <section className="blog_detail_page">
+      <section className="blog_detail_page mt-0 md:mt-20">
         <BlogPage data={blogsData?.attributes} relatedPost={blogs} />
       </section>
       {blogsData?.attributes?.relatedPost == true ? (
@@ -146,7 +146,7 @@ export async function getStaticProps({ params: { slug } }) {
   const [blogsData, trusted, blogs, blogdata] = await Promise.all([
     REQUEST({
       method: "GET",
-      url: `/api/blog-details?[populate][0]=section1.avatar&populate[1]=section1.image&populate[2]=section.blog_links&populate[3]=section2&populate[4]=section3.avatar&populate[5]=section4&populate[6]=blog_faq.blog_faqs&populate[7]=banner.img&populate[8]=banner.auth_img&populate[9]=tab_content.list&populate[10]=side_share.social_list.icon&populate[11]=blog_details&populate[12]=ads_block.image&populate[13]=Get_in_touch.bg_img&populate[14]=Get_in_touch.gif_popup&populate[15]=Get_in_touch.gif_bg_img&populate[16]=seo.metaImage&filters[slug][$eq]=${slug}`,
+      url: `${API_ENDPOINTS.BLOG_DETAILS}&filters[slug][$eq]=${slug}`,
     }),
     REQUEST({
       method: "GET",

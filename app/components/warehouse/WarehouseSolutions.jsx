@@ -22,7 +22,7 @@ export default function WarehouseSolutions({ data }) {
           </p>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 pt-8 gap-10">
-          {data?.solution_list.map((data, key) => (
+          {data?.solution_list?.map((data, key) => (
             <div
               className={`${key}_one`}
               key={`${key}_one`}

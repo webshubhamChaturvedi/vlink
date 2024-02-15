@@ -2,22 +2,21 @@
 // import { chunk } from "lodash";
 import CloudinaryImage from "../../common/CloudinaryImage";
 
-export default function OurClientsTable({ data = [] }) {
+export default function OurClientsTable({ data = [], caseClient = false }) {
   // const items = chunk(data, 3); // 3 items per row
   return (
-    <div className="w-full" id="our-clients">
-      <div className="grid grid-cols-3 row">
+    <div className={`w-full`} id="our-clients">
+      {/* <div className="grid grid-cols-3 row">
         <div className="col h-8 md:p-[2rem] p-[.6rem]"></div>
         <div className="col h-8 md:p-[2rem] p-[.6rem]"></div>
         <div className="col h-8 md:p-[2rem] p-[.6rem]"></div>
-      </div>
+      </div> */}
 
-      {/* {items?.length > 0 &&
-        items?.map((item, key) => ( */}
-      <div className="grid grid-cols-3 row">
+      <div className={`${caseClient ? "gap-5" : ""} grid lg:grid-cols-3 grid-cols-2 row`}>
         {data.map(({ src, alt, width, height }, key) => (
           <div
-            className={`border-[1px] border-[rgb(209_213_219_/_1)] col p-[.6rem] md:p-[2rem] transition-all duration-300 ease-in hover:shadow-shadowGrid ${
+            key={key}
+            className={`group ${caseClient ? "px-4 py-6 bg-[#fff] flex items-center justify-center rounded-[15px] h-[140px]" : `border-[1px] border-[rgb(209_213_219_/_1)] col p-[.6rem] md:p-[2rem] transition-all duration-300 ease-in hover:shadow-shadowGrid ${
               key === 0
                 ? "border-l-0"
                 : key === 2
@@ -29,25 +28,23 @@ export default function OurClientsTable({ data = [] }) {
                 : key === 6
                 ? "border-l-0"
                 : ""
-            }`}
-            key={key}
+            }`} `}
           >
             <CloudinaryImage
               backendImgUrl={src}
-              className="md:h-auto  w-[100px]"
+              className="h-full object-contain grayscale group-hover:filter-none group-hover:scale-105 transition-all duration-1000 ease-out transform"
               alt={alt}
               type="icon"
             />
           </div>
         ))}
       </div>
-      {/* ))} */}
 
-      <div className="grid grid-cols-3 row">
+      {/* <div className="grid grid-cols-3 row">
         <div className="col h-8 md:p-[2rem] p-[.6rem]"></div>
         <div className="col h-8 md:p-[2rem] p-[.6rem]"></div>
         <div className="col h-8 md:p-[2rem] p-[.6rem]"></div>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -32,14 +32,7 @@ export default function RelatedPost({ relateddata }) {
                   key={key}
                   className="rounded-[4px] hover:shadow-[0px_0px_40px_0px_rgba(0,_80,_213,_0.08)]"
                 >
-                  <div
-                    className="w-full h-[220px] bg-cover bg-no-repeat"
-                    // style={{
-                    //   backgroundImage: `url(${apiEndpoint(
-                    //     data?.attributes?.section1?.image?.data?.attributes?.url
-                    //   )})`,
-                    // }}
-                  >
+                  <div className="w-full h-[220px] bg-cover bg-no-repeat">
                     <Link
                       href={data?.id ? "/blog/" + data?.attributes?.slug : "#"}
                     >
@@ -81,7 +74,10 @@ export default function RelatedPost({ relateddata }) {
                         </span>
                       )}
                     </span>
-                    <h6 className="text-[#0A0D31] text-[20px] font-[600] font_numito mb-5 line-clamp-0 ">
+                    <h6
+                      className="text-[#0A0D31] text-[20px] font-[600] font_numito mb-5 line-clamp-0 "
+                      title={data?.attributes?.h1_black}
+                    >
                       <Link
                         href={
                           data?.id ? "/blog/" + data?.attributes?.slug : "#"

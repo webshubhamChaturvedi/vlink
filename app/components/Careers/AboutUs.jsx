@@ -18,7 +18,7 @@ export default function AboutUs({ section }) {
           height={230}
         />
         <Image
-          src={`https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_480/v1691474277/group_dinner_204b226a87.png`}
+          src={`https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_480/v1691474277/group_dinner_204b226a87.png`}
           fill
           sizes="100%"
           alt="group-dinner"

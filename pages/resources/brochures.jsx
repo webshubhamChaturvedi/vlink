@@ -51,9 +51,16 @@ export default function Brochures({ brochure, trusted, list }) {
         />
         <meta
           name="og:description"
-          content={brochure?.description || "Vlink Description"}
+          content={
+            brochure?.Seo?.metaDescription ||
+            brochure?.description ||
+            "Vlink Description"
+          }
         />
-        <meta name="og:title" content={brochure?.title || "Vlink"} />
+        <meta
+          name="og:title"
+          content={brochure?.Seo?.metaTitle || brochure?.title || "Vlink"}
+        />
 
         <meta
           property="og:url"
@@ -62,7 +69,10 @@ export default function Brochures({ brochure, trusted, list }) {
 
         <link rel="canonical" href={canonicalUrl} />
         <Metatag
-          content={apiEndpoint(brochure?.image?.data?.attributes?.url)}
+          content={apiEndpoint(
+            brochure?.Seo?.metaImage?.data?.attributes?.url ||
+              brochure?.image?.data?.attributes?.url
+          )}
         />
         <link
           rel="preconnect"

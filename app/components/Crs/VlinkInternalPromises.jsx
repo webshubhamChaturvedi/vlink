@@ -43,13 +43,6 @@ export default function VlinkResponsabilities({
       </div>
       <div className={`bg-[#F7FAFF] relative lg:w-[50%]`}>
         {section_title?.image?.data[0]?.attributes?.url ? (
-          // <img
-          //   src={apiEndpoint(section_title?.image?.data[0]?.attributes?.url)??"/"}
-          //   // fill sizes="100%"
-          //   alt={section_title?.image?.data[0]?.attributes?.alternativeText || section_title?.image?.data[0]?.attributes?.name}
-          //   className={`absolute`}
-          //   style={{ height: "100%", width: "100%", objectFit: "cover"}}
-          // />
           <CloudinaryImage
             backendImgUrl={
               section_title?.image?.data[0]?.attributes?.url ?? "/"
@@ -58,12 +51,6 @@ export default function VlinkResponsabilities({
             className={`absolute h-full w-full object-cover`}
           />
         ) : (
-          // <img
-          //   src={apiEndpoint(section_title?.image?.data?.attributes?.url) ?? "/"}
-          //   // fill sizes="100%"
-          //   alt={section_title?.image?.data?.attributes?.alternativeText || section_title?.image?.data?.attributes?.name}
-          //   className={`absolute`}
-          //   style={{ height: "100%", width: "100%", objectFit: "cover"}}
           <CloudinaryImage
             backendImgUrl={section_title?.image?.data?.attributes?.url ?? "/"}
             alt={section_title?.image?.data?.attributes?.alternativeText}

@@ -51,14 +51,18 @@ export default function MachineLearningAI({
         <meta
           property="og:title"
           content={
-            dedicatedTeamsData?.title
-              ? dedicatedTeamsData?.title
-              : `Vlink — Services`
+            dedicatedTeamsData?.Seo?.metaTitle ||
+            dedicatedTeamsData?.title ||
+            `Vlink — Services`
           }
         />
         <meta
           property="og:description"
-          content={dedicatedTeamsData?.description || "Vlink Description"}
+          content={
+            dedicatedTeamsData?.Seo?.metaDescription ||
+            dedicatedTeamsData?.description ||
+            "Vlink Description"
+          }
         />
         <meta
           property="og:url"
@@ -67,7 +71,8 @@ export default function MachineLearningAI({
 
         <Metatag
           content={apiEndpoint(
-            dedicatedTeamsData?.team_section1?.image?.data?.attributes?.url
+            dedicatedTeamsData?.Seo?.metaImage?.data?.attributes.url ||
+              dedicatedTeamsData?.team_section1?.image?.data?.attributes?.url
           )}
         />
         <link rel="canonical" href={canonicalUrl} />

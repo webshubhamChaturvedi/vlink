@@ -1,8 +1,6 @@
 import Head from "next/head";
-import Testimonial from "app/components/Home/Testimonials";
 import GetInTouchForm from "app/components/common/GetInTouchForm";
 import SectionHeader from "app/components/common/SectionHeader";
-// import { useEffect, useState } from "react";
 import API_ENDPOINTS from "app/helpers/apiEndpoint";
 import REQUEST from "app/helpers/http.service";
 import CertificateBar from "app/components/Home/CertificateBar";
@@ -22,6 +20,7 @@ import LINK from "app/components/common/LINK";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import CloudinaryImage from "../../app/components/common/CloudinaryImage";
 import Metatag from "app/components/metaTag";
+import TestimonialData from "app/components/warehouse/TestimonialData";
 
 export default function DataAnalytics({
   dataAnalyticsData,
@@ -60,18 +59,23 @@ export default function DataAnalytics({
         <meta
           property="og:title"
           content={
-            dataAnalyticsData?.title
-              ? dataAnalyticsData?.title
-              : `Vlink — Services`
+            dataAnalyticsData?.Seo?.metaTitle ||
+            dataAnalyticsData?.title ||
+            `Vlink — Services`
           }
         />
         <meta
           property="og:description"
-          content={dataAnalyticsData?.description || "Vlink Description"}
+          content={
+            dataAnalyticsData?.Seo?.metaDescription ||
+            dataAnalyticsData?.description ||
+            "Vlink Description"
+          }
         />
         <Metatag
           content={apiEndpoint(
-            dataAnalyticsData?.section1?.image?.data?.attributes?.url
+            dataAnalyticsData?.Seo?.metaImage?.data?.attributes?.url ||
+              dataAnalyticsData?.section1?.image?.data?.attributes?.url
           )}
         />
         <meta
@@ -91,7 +95,7 @@ export default function DataAnalytics({
               <div className="col-span-9 pr-0 lg:pr-[65px]">
                 <h2 className="xl:text-[40px] lg:text-[32px] text-[28px] xl:leading-[62px] lg:leading-[42px] font-[700] text-[#222222] md:mb-5 mb-3">
                   {dataAnalyticsData?.section2?.title_black}
-                  <span className="text-[#62207E]">
+                  <span className="text-[#62207E] ml-2">
                     {dataAnalyticsData?.section2?.title_purple}
                   </span>
                 </h2>
@@ -166,7 +170,7 @@ export default function DataAnalytics({
             <div className="grid grid-cols-2 gap-7">
               <div className="col-span-2 text-center mb-5">
                 <h6 className="font-sans xl:text-[40px] lg:text-[32px] text-[24px] xl:leading-[62px] lg:leading-[42px] font-[700] text-[#222222]">
-                  <span className="text-[#62207E]">
+                  <span className="text-[#62207E] mr-2">
                     {dataAnalyticsData?.section7?.h1_purple}
                   </span>
                   {dataAnalyticsData?.section7?.h1_black}
@@ -209,7 +213,7 @@ export default function DataAnalytics({
           </div>
           <div className="relative md:basis-1/3 h-fit">
             <img
-              className="z-10 absolute top-0 right-0 translate-x-1/6 -translate-y-12"
+              className="z-10 absolute top-0 right-0 translate-x-1/6 -translate-y-12 md:block hidden"
               src="/img/OurDevelopersCircle.svg"
               alt="Vlink OurDevelopersCircle"
               width={450}
@@ -234,10 +238,7 @@ export default function DataAnalytics({
           </div>
         </div>
       </Container>
-      <Testimonial
-        section_title={testimonials?.Testimonial}
-        section_content={testimonials?.testimonial_content}
-      />
+      <TestimonialData testimonials={testimonials} isNewTestimonial={true} />
       <Faq section={dataAnalyticsData?.section11} />
       <GetInTouchForm />
     </div>

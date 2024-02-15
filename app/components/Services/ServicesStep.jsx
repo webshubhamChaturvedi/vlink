@@ -1,6 +1,6 @@
 export default function ServicesStep({ steps }) {
   return (
-    <section className="col-span-2 grid sm:grid-cols-2 gap-4 lg:pl-6">
+    <section className="lg:col-span-8 col-span-12 grid sm:grid-cols-2 gap-4 lg:pl-6">
       {steps && steps.length ?steps.map((step, key) => (
         <div key={key} className="mb-4 sm:mb-0">
           <p className="xl:text-5xl lg:text-[32px] text-[28px] text-black font-bold font-sans">

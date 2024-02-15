@@ -1,11 +1,11 @@
 import React from "react";
-import Image from "next/image";
-import { apiEndpoint } from "app/scripts/fetch";
 import CloudinaryImage from "../common/CloudinaryImage";
+import { createMarkup } from "app/scripts/utils";
 
 const GridCards = ({ list }) => {
   return (
     <div className="w-full lg:!ml-9 !ml-0">
+      {console.log(list, "lis")}
       <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 gap-7 md:p-4 lg:p-0 h-full">
         {list?.map((item, index) => (
           <div
@@ -19,12 +19,6 @@ const GridCards = ({ list }) => {
             <div className="flex flex-col lg:flex-row items-center h-full px-6 py-6 lg:py-4 gap-[10px]">
               <div className="shrink-0">
                 {item?.icon && (
-                  // <Image
-                  //   src={apiEndpoint(item.icon)}
-                  //   alt={item?.alt}
-                  //   width={57}
-                  //   height={57}
-                  // />
                   <CloudinaryImage
                     backendImgUrl={item.icon}
                     alt={item?.alt}
@@ -41,9 +35,14 @@ const GridCards = ({ list }) => {
                 >
                   {item.h1}
                 </p>
-                <p className="h-22 text-sm font-sans font-[400] text-[14px] text-[#353535]">
-                  {item.p}
-                </p>
+                <div
+                  className="h-22 text-sm font-sans font-[400] text-[14px] text-[#353535] anchorInPage"
+                  dangerouslySetInnerHTML={createMarkup(
+                    item?.descriptionEditor
+                  )}
+                >
+                  {/* {item.p} */}
+                </div>
               </div>
             </div>
           </div>

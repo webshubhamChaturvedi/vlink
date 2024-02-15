@@ -7,14 +7,29 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-// import dynamic from 'next/dynamic';
-// const ReCAPTCHA = dynamic(() => import('react-google-recaptcha'));
+import { useRouter } from "next/router";
+import { timeZoneCityToCountry } from "app/helpers/timeZoneCityToCountry";
 
 const ModalForwadFriends = ({ isOpen, setIsOpen }) => {
   const captcha = useRef(null);
   const [captchaError, setCaptchaError] = useState(false);
   const [emailTo, setEmailTo] = useState(true);
   const [emailFrom, setEmailFrom] = useState(true);
+
+  const { asPath } = useRouter();
+
+  let userCity;
+  let userCountry;
+  let userTimeZone;
+  if (Intl) {
+    userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var tzArr = userTimeZone.split("/");
+    userCity = tzArr[tzArr.length - 1];
+    timeZoneCityToCountry.map((coun, key) => (
+      <>{(userCountry = coun[userCity])}</>
+    ));
+  }
+
   function onChangeCaptcha(value) {
     if (captcha.current.getValue() && captcha.current.getValue() != "") {
       setCaptchaError(false);
@@ -38,6 +53,8 @@ const ModalForwadFriends = ({ isOpen, setIsOpen }) => {
       to: "",
       message: "",
       sub: "",
+      countryName: userCountry,
+      sourceCode: asPath,
     },
   });
   const toast = useSelector((state) => state?.toast);
@@ -47,14 +64,19 @@ const ModalForwadFriends = ({ isOpen, setIsOpen }) => {
         email
       )
     );
-    const isValidFrom= (email) =>
+  const isValidFrom = (email) =>
     setEmailFrom(
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
         email
       )
     );
   const submitHandler = async (data) => {
-    if (captcha.current.getValue() && captcha.current.getValue() != "" && emailFrom && emailTo) {
+    if (
+      captcha.current.getValue() &&
+      captcha.current.getValue() != "" &&
+      emailFrom &&
+      emailTo
+    ) {
       try {
         const formData = {
           ...data,
@@ -111,7 +133,7 @@ const ModalForwadFriends = ({ isOpen, setIsOpen }) => {
             </div>
             <div className="flex flex-col items-center justify-center">
               <div className="flex flex-col items-center justify-center">
-                <h1 className="text-md text-gray-800 my-2">
+                <h1 className="text-[20px] text-gray-800 my-2">
                   Forward to a friend
                 </h1>
                 <form
@@ -134,7 +156,7 @@ const ModalForwadFriends = ({ isOpen, setIsOpen }) => {
                   )}
                   {!emailFrom && (
                     <span className="mt-2 font-normal text-sm text-red-700">
-                      {"email must be a valid email"}
+                      {"Email must be a valid"}
                     </span>
                   )}
                   <input
@@ -153,7 +175,7 @@ const ModalForwadFriends = ({ isOpen, setIsOpen }) => {
                   )}
                   {!emailTo && (
                     <span className="mt-2 font-normal text-sm text-red-700">
-                      {"email must be a valid email"}
+                      {"Email must be a valid"}
                     </span>
                   )}
                   <input
@@ -177,6 +199,22 @@ const ModalForwadFriends = ({ isOpen, setIsOpen }) => {
                       This field is required
                     </span>
                   )}
+
+                  <input
+                    type="text"
+                    placeholder="countryName"
+                    {...register("countryName")}
+                    name="countryName"
+                    className="hidden"
+                  />
+                  <input
+                    type="text"
+                    placeholder="SourceCode"
+                    {...register("sourceCode")}
+                    name="sourceCode"
+                    className="hidden"
+                  />
+
                   <div
                     id="botonera"
                     className="pt-5 flex flex-row items-center justify-center"

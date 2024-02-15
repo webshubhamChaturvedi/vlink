@@ -66,16 +66,26 @@ export default function Whitepapers({ whitepaper, trusted, list }) {
         />
         <meta
           name="og:description"
-          content={whitepaper?.description || "Vlink Description"}
+          content={
+            whitepaper?.Seo?.metaDescription ||
+            whitepaper?.description ||
+            "Vlink Description"
+          }
         />
-        <meta name="og:title" content={whitepaper?.title || "Vlink"} />
+        <meta
+          name="og:title"
+          content={whitepaper?.Seo?.metaTitle || whitepaper?.title || "Vlink"}
+        />
 
         <meta
           property="og:url"
           content={`${process.env.NEXT_PUBLIC_BASE_URL}${asPath}`}
         />
         <Metatag
-          content={apiEndpoint(whitepaper?.image?.data?.attributes?.url)}
+          content={apiEndpoint(
+            whitepaper?.Seo?.metaImage?.data?.attributes?.url ||
+              whitepaper?.image?.data?.attributes?.url
+          )}
         />
 
         <link rel="canonical" href={canonicalUrl} />

@@ -1,0 +1,13 @@
+.react-tel-input.phonenumber .form-control {
+    width: 100% !important;
+    border-radius: 0px !important;
+    border: 0px;
+    background: transparent;
+    height: 100%;
+}
+.react-tel-input.phonenumber .form-control:focus {
+    outline-offset: 0px !important;
+    box-shadow: none !important;
+    outline: none !important;
+outline-color: transparent;
+}

@@ -35,7 +35,7 @@ export default function DedicatedDevelopmentTeam({ section }) {
         <h5 className="xl:text-4xl lg:text-[32px] text-[22px] font-bold text-center max-w-[700px] m-auto md:mb-[45px] mb-[25px] md:leading-[48px]">
           {section?.h1_black}
           <span
-            className="text-company whitespace-pre-line"
+            className="text-company whitespace-pre-line ml-1"
             style={{ margin: "0 0 0 10px" }}
           >
             {section?.h1_purple}

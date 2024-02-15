@@ -24,7 +24,7 @@ import Metatag from "app/components/metaTag";
 import SectionHeader from "app/components/common/SectionHeader";
 
 export default function ItStaffService({ res }) {
-  const { itStaff, trusted } = JSON.parse(res);
+  const { itStaff, trusted, testimonial } = JSON.parse(res);
 
   const [modalScheduleCall, setModalScheduleCall] = useState(false);
 
@@ -51,11 +51,17 @@ export default function ItStaffService({ res }) {
 
         <meta
           property="og:title"
-          content={itStaff?.title ? itStaff?.title : `Vlink — Services`}
+          content={
+            itStaff?.Seo?.metaTitle || itStaff?.title || `Vlink — Services`
+          }
         />
         <meta
           property="og:description"
-          content={itStaff?.description || "Vlink Description"}
+          content={
+            itStaff?.Seo?.metaDescription ||
+            itStaff?.description ||
+            "Vlink Description"
+          }
         />
         <meta
           property="og:url"
@@ -63,7 +69,10 @@ export default function ItStaffService({ res }) {
         />
 
         <Metatag
-          content={apiEndpoint(itStaff?.hero.image?.data?.attributes?.url)}
+          content={apiEndpoint(
+            itStaff?.Seo?.metaImage?.data?.attributes.url ||
+              itStaff?.hero.image?.data?.attributes?.url
+          )}
         />
         <link rel="canonical" href={canonicalUrl} />
       </Head>
@@ -98,7 +107,7 @@ export default function ItStaffService({ res }) {
 
       <Benefits benefits={itStaff?.benefits} />
 
-      <TestimonialData customers={itStaff?.customer} />
+      <TestimonialData testimonials={testimonial} isNewTestimonial={true} />
 
       <DataResources resources={itStaff?.resouce} />
 
@@ -118,7 +127,7 @@ export default function ItStaffService({ res }) {
 }
 
 export async function getStaticProps() {
-  const [itStaff, trusted] = await Promise.all([
+  const [itStaff, trusted, testimonial] = await Promise.all([
     REQUEST({
       method: "GET",
       url: API_ENDPOINTS.IT_SERVICE_SERVICE,
@@ -127,10 +136,15 @@ export async function getStaticProps() {
       method: "GET",
       url: API_ENDPOINTS.TRUSTED_BY_STARTUPS,
     }),
+    REQUEST({
+      method: "GET",
+      url: API_ENDPOINTS.TESTIMONIALS,
+    }),
   ]);
   const res = JSON.stringify({
     itStaff: itStaff?.data?.data?.attributes,
     trusted: trusted?.data?.data?.attributes,
+    testimonial: testimonial?.data?.data?.attributes,
   });
   return {
     props: { res },

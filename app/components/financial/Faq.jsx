@@ -17,7 +17,8 @@ const Faq = ({ faqs }) => {
             FAQs
           </p>
           <h5 className="xl:text-4xl lg:text-[32px] text-[22px] font-bold">
-            Frequently Asked <span className="text-company">Questions</span>
+            Frequently Asked{" "}
+            <span className="text-company ml-1.5">Questions</span>
           </h5>
         </div>
         <div className="grid grid-cols-12">

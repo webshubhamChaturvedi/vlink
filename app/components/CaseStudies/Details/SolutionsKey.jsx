@@ -3,8 +3,11 @@ import { apiEndpoint } from "app/scripts/fetch";
 import LeftIconList from "app/components/common/LeftIconList";
 import Image from "next/image";
 import CloudinaryImage from "../../common/CloudinaryImage";
+import ModalDownload from "app/components/common/ModalDownload";
+import React, { useState } from "react";
 
-export default function SolutionsKey({ section }) {
+export default function SolutionsKey({ section, downloadLink }) {
+  const [modalDownload, setModalDownload] = useState(false);
   return (
     <Container className="md:py-[55px] py-[30px] bg-['#F5F5F5'">
       <div className="flex flex-col md:flex-row md:justify-around">
@@ -21,7 +24,7 @@ export default function SolutionsKey({ section }) {
             list={section?.section3_detail}
             customIcon={"check-secondary-icon.svg"}
           />
-          <div className="flex px-6 py-2">
+          <div className="flex px-6 py-2 cursor-pointer">
             <div className="flex-shrink-0 h-auto">
               <Image
                 width={15}
@@ -31,19 +34,19 @@ export default function SolutionsKey({ section }) {
                 alt={"download-arrow-company"}
               />
             </div>
-            <p className={`pl-3 text-company `}>{section?.button_text}</p>
+            <p
+              className={`pl-3 text-company `}
+              onClick={() => {
+                setModalDownload(true);
+              }}
+            >
+              {section?.button_text}
+            </p>
           </div>
         </div>
         <div className="relative md:basis-1/3 h-fit ">
           <div className="image-container">
             {section?.image?.data?.attributes?.url && (
-              // <img
-              //   src={apiEndpoint(section?.image?.data?.attributes?.url) ?? "/"}
-              //   fill
-              //   sizes="100%"
-              //   alt={section?.image?.data?.attributes?.alternativeText || section?.image?.data?.attributes?.name}
-              //   className={`relative image md:h-2/3 !w-full `}
-              // />
               <CloudinaryImage
                 backendImgUrl={section?.image?.data?.attributes?.url ?? "/"}
                 className={`relative image md:h-2/3 !w-full  object-fill`}
@@ -54,6 +57,14 @@ export default function SolutionsKey({ section }) {
           </div>
         </div>
       </div>
+      {modalDownload && (
+        <ModalDownload
+          isOpen={modalDownload}
+          setIsOpen={setModalDownload}
+          title={"Download Report"}
+          downloadLink={downloadLink}
+        />
+      )}
     </Container>
   );
 }

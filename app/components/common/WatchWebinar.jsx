@@ -7,23 +7,49 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import WebinarIframeModal from "./WebinarIframeModal";
-// import dynamic from 'next/dynamic';
-// const ReCAPTCHA = dynamic(() => import('react-google-recaptcha'));
-export default function WatchWebinar({ data = {}, key,video }) {
+import { useRouter } from "next/router";
+import { timeZoneCityToCountry } from "app/helpers/timeZoneCityToCountry";
+
+export default function WatchWebinar({ data = {}, key, video }) {
   const captcha = useRef(null);
   const [email, setEmail] = useState(true);
   const [captchaError, setCaptchaError] = useState(false);
-  const [showVideo,SetShowVideo] = useState(false);
+  const [showVideo, SetShowVideo] = useState(false);
   const [active, setActive] = useState(false);
+
+  const { asPath } = useRouter();
+
+  let userCity;
+  let userCountry;
+  let userTimeZone;
+  if (Intl) {
+    userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var tzArr = userTimeZone.split("/");
+    userCity = tzArr[tzArr.length - 1];
+    timeZoneCityToCountry.map((coun, key) => (
+      <>{(userCountry = coun[userCity])}</>
+    ));
+  }
+
   function onChangeCaptcha(value) {
     if (captcha.current.getValue() && captcha.current.getValue() != "") {
       setCaptchaError(false);
     }
   }
+  const nameRegex = /^[A-Za-z\s]+$/;
+  const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
   const Schema = yup.object().shape({
     company: yup.string().required(),
-    email: yup.string().email().required("Email is required"),
-    name: yup.string().required("Full name  is required"),
+    email: yup
+      .string()
+      .required("Email is required")
+      .matches(emailRegex, "Email must be a valid"),
+    name: yup
+      .string()
+      .required("Full name  is required")
+      .matches(nameRegex, "Name can not contain number and special character"),
   });
   const {
     register,
@@ -36,22 +62,23 @@ export default function WatchWebinar({ data = {}, key,video }) {
       company: "",
       name: "",
       email: "",
+      countryName: userCountry,
+      sourceCode: asPath,
     },
   });
   const toast = useSelector((state) => state?.toast);
-  const isValidEmail = (email) =>
-    setEmail(
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-        email
-      )
-    );
+
   const SubmitHandler = async (data) => {
-    if (captcha.current.getValue() && captcha.current.getValue() != "" && email) {
+    if (
+      captcha.current.getValue() &&
+      captcha.current.getValue() != "" &&
+      email
+    ) {
       try {
         const formData = {
           ...data,
         };
-        setActive(!active)
+        setActive(!active);
         const res = await REQUEST({
           method: "POST",
           url: API_ENDPOINTS.SAVE_WEBINAR_FORM,
@@ -63,7 +90,7 @@ export default function WatchWebinar({ data = {}, key,video }) {
           captcha.current.reset();
           reset();
           SetShowVideo(true);
-          setActive(active)
+          setActive(active);
         } else toast.error(res?.data?.error?.message);
       } catch (err) {
         toast.error("failed");
@@ -74,7 +101,7 @@ export default function WatchWebinar({ data = {}, key,video }) {
   };
 
   return (
-    <div className="bg-[#fff] drop-shadow-[0px_0px_15px_rgba(0,0,0,0.1)] p-[1px]" >
+    <div className="bg-[#fff] drop-shadow-[0px_0px_15px_rgba(0,0,0,0.1)] p-[1px]">
       <h4 className="font-[600] text-[20px] leading-[27px] text-[#002856] px-[18px] py-4 bg-[rgb(0,40,86,0.04)]">
         Watch the webinar video
       </h4>
@@ -90,7 +117,7 @@ export default function WatchWebinar({ data = {}, key,video }) {
             />
             {errors.name && (
               <span className="mt-2 font-normal text-sm text-red-700">
-                This field is required
+                {errors?.name?.message}
               </span>
             )}
           </div>
@@ -99,23 +126,15 @@ export default function WatchWebinar({ data = {}, key,video }) {
               type="text"
               name="email"
               {...register("email")}
-              onChange={(e) => {
-                isValidEmail(e.target.value);
-              }}
               placeholder="Work Email*"
               className="!bg-white w-full border-[1px] border-[#d1d5db] rounded-[0.125rem] p-[0.75rem] text-[0.875rem] leading-[1.25rem]"
             />
-            
-          {errors.email && (
-            <span className="mt-2 font-normal text-sm text-red-700">
-            {errors.email?.message}
-            </span>
-          )}
-          {!email && (
-            <span className="mt-2 font-normal text-sm text-red-700">
-              {"email must be a valid email"}
-            </span>
-          )}
+
+            {errors.email && (
+              <span className="mt-2 font-normal text-sm text-red-700">
+                {errors.email?.message}
+              </span>
+            )}
           </div>
           <div className="mb-4">
             <input
@@ -131,6 +150,20 @@ export default function WatchWebinar({ data = {}, key,video }) {
               </span>
             )}
           </div>
+          <input
+            type="text"
+            placeholder="countryName"
+            {...register("countryName")}
+            name="countryName"
+            className="hidden"
+          />
+          <input
+            type="text"
+            placeholder="SourceCode"
+            {...register("sourceCode")}
+            name="sourceCode"
+            className="hidden"
+          />
           <div className="mt-2 mb-4">
             <ReCAPTCHA
               ref={captcha}
@@ -144,6 +177,7 @@ export default function WatchWebinar({ data = {}, key,video }) {
             )}
           </div>
           <button
+            id="WatchNow"
             type="submit"
             disabled={active}
             className="font-[600] text-[16px] tracking-[-0.4px] uppercase text-[#fff] bg-[#62207E] rounded-[2px] h-[44px] text-center w-full font-sans"
@@ -153,8 +187,11 @@ export default function WatchWebinar({ data = {}, key,video }) {
         </form>
       </div>
       {showVideo && (
-        <WebinarIframeModal isOpen={showVideo} setIsOpen={SetShowVideo} video={video}/> 
-   
+        <WebinarIframeModal
+          isOpen={showVideo}
+          setIsOpen={SetShowVideo}
+          video={video}
+        />
       )}
     </div>
   );

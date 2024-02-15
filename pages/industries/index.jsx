@@ -1,7 +1,6 @@
 import Head from "next/head";
 import SuccessStories from "app/components/Home/SuccesStories";
 import Testimonial from "app/components/Home/Testimonials";
-import OurClients from "app/components/Home/OurClients";
 import GetInTouchForm from "app/components/common/GetInTouchForm";
 import SectionHeader from "app/components/common/SectionHeader";
 import IndustryVerticals from "app/components/Industries/IndustryVerticals";
@@ -14,6 +13,7 @@ import Blogs from "app/components/Home/Blogs";
 import { useRouter } from "next/router";
 import { apiEndpoint } from "app/scripts/fetch";
 import Metatag from "app/components/metaTag";
+import TestimonialData from "app/components/warehouse/TestimonialData";
 
 export default function Industries({ res }) {
   const { asPath } = useRouter();
@@ -43,7 +43,6 @@ export default function Industries({ res }) {
             "Vlink Description"
           }
         />
-
         <meta
           property="og:title"
           content={
@@ -62,7 +61,6 @@ export default function Industries({ res }) {
           property="og:url"
           content={`${process.env.NEXT_PUBLIC_BASE_URL}${asPath}`}
         />
-
         <Metatag
           content={apiEndpoint(
             industriesData?.seo?.metaImage?.data?.attributes?.url ||
@@ -87,10 +85,7 @@ export default function Industries({ res }) {
         section_content={stories}
         section_title={industriesData?.success_story}
       />
-      <Testimonial
-        section_title={testimonial?.Testimonial}
-        section_content={testimonial?.testimonial_content}
-      />
+      <TestimonialData testimonials={testimonial} isNewTestimonial={true} />
       <div className="pt-[55px]">
         <Blogs
           section_title={industriesData?.industry_insights}

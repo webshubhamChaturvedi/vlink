@@ -25,8 +25,8 @@ export default function OurDevelopers({ section }) {
         </div>
         <div className="relative lg:basis-1/3 h-fit">
           <Image
-            className="z-10 absolute top-0 right-0 translate-x-1/6 -translate-y-12"
-            src="https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_100/Our_Developers_Circle_4ea58bb9f2.svg"
+            className="z-10 absolute top-0 right-0 translate-x-1/6 -translate-y-12 md:block hidden"
+            src="https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_100/Our_Developers_Circle_4ea58bb9f2.svg"
             alt="Vlink OurDevelopersCircle"
             width={450}
             height={350}

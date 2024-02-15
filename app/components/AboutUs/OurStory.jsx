@@ -4,12 +4,12 @@ import { apiEndpoint } from "app/scripts/fetch";
 import CloudinaryImage from "../common/CloudinaryImage";
 
 export default function OurStory({ section }) {
-  // const { title, p, h1_black, h1_purple, image } = section
   return (
-    <Container className="flex flex-col md:flex-row py-6 items-center">
+    <Container className="flex flex-col md:flex-row py-6 items-center mt-16 ">
       <div className="md:basis-1/2 space-y-4">
         <h3 className="flex items-center">
           {section?.title}
+
           <span className="ml-6 font-bold inline-block w-[59px] h-[2px] bg-[#353535]"></span>
         </h3>
         <h1 className="text-[28px] md:text-[55px] font-extrabold leading-[42px] md:leading-[68px] !mt-0">

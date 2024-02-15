@@ -4,7 +4,6 @@ import REQUEST from "app/helpers/http.service";
 import API_ENDPOINTS from "app/helpers/apiEndpoint";
 import { useRouter } from "next/router";
 import SuccessStories from "app/components/Home/SuccesStories";
-import Testimonial from "app/components/Home/Testimonials";
 import OurServicesCard from "app/components/Services/OurServicesCard";
 import GetInTouchForm from "app/components/common/GetInTouchForm";
 import SectionHeader from "app/components/common/SectionHeader";
@@ -13,6 +12,7 @@ import CertificateBar from "app/components/Home/CertificateBar";
 import HeroSection from "app/components/common/HeroSection";
 import { apiEndpoint } from "app/scripts/fetch";
 import Metatag from "app/components/metaTag";
+import TestimonialData from "app/components/warehouse/TestimonialData";
 
 export default function Services({
   serviceData,
@@ -44,11 +44,19 @@ export default function Services({
 
         <meta
           property="og:title"
-          content={serviceData?.title ? serviceData?.title : `Vlink — Services`}
+          content={
+            serviceData?.Seo?.metaTitle ||
+            serviceData?.title ||
+            `Vlink — Services`
+          }
         />
         <meta
           property="og:description"
-          content={serviceData?.description || "Vlink Description"}
+          content={
+            serviceData?.Seo?.metaDescription ||
+            serviceData?.description ||
+            "Vlink Description"
+          }
         />
 
         <meta
@@ -57,7 +65,10 @@ export default function Services({
         />
 
         <Metatag
-          content={apiEndpoint(serviceData?.image?.data[0]?.attributes?.url)}
+          content={apiEndpoint(
+            serviceData?.Seo?.metaImage?.data?.attributes?.url ||
+              serviceData?.image?.data[0]?.attributes?.url
+          )}
         />
         <link rel="canonical" href={canonicalUrl} />
       </Head>
@@ -89,10 +100,7 @@ export default function Services({
             section_content={stories}
           />
         </div>
-        <Testimonial
-          section_title={testimonial?.Testimonial}
-          section_content={testimonial?.testimonial_content}
-        />
+        <TestimonialData testimonials={testimonial} isNewTestimonial={true} />
         <div className="lg:pt-0">
           <GetInTouchForm />
         </div>

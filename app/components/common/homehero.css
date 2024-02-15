@@ -1,0 +1,45 @@
+.homehero .slick-dots li.slick-active {
+    background: #FFFFFF;
+}
+.homehero .slick-dots li button:before, .homehero .slick-dots li.slick-active button:before {
+    color: transparent;
+}
+.homehero .slick-dots li {
+    background: #FFFFFF70;
+    border-radius: 100%;
+}
+/* .arrow_shap::after {
+    content: "";
+    position: absolute;
+    right: -18px;
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    border-width: 5px 5px 0px 0px;
+    border-radius: 5px;
+    transform: translateY(-50%) rotate(45deg);
+    background: #fff;
+    box-shadow: 0px 0px 20px 0px #00000026;
+    top: 50%;
+    z-index: -1;
+} */
+#triangle-right {
+	width: 0;
+    right: -26px;
+    height: 0;
+    border-top: 15px solid #b8b3b30d;
+    border-left: 30px solid #fff;
+    border-bottom: 15px solid #b8b3b30f;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.homehero .slick-initialized .slick-slide {padding: 0px;}
+
+@media screen and (max-width:992px) {
+    .homehero .slick-dots li,
+    .homehero .slick-dots li button,
+    .homehero .slick-dots li button:before {
+        width: 10px;height: 10px;
+    }
+}

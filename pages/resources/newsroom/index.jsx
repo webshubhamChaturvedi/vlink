@@ -44,9 +44,18 @@ export default function NewsRoom({
         />
         <meta
           name="og:description"
-          content={newsRoomData?.description || "Vlink Description"}
+          content={
+            newsRoomData?.Seo?.metaDescription ||
+            newsRoomData?.description ||
+            "Vlink Description"
+          }
         />
-        <meta name="og:title" content={newsRoomData?.title || "Vlink"} />
+        <meta
+          name="og:title"
+          content={
+            newsRoomData?.Seo?.metaTitle || newsRoomData?.title || "Vlink"
+          }
+        />
 
         <meta
           property="og:url"
@@ -54,7 +63,10 @@ export default function NewsRoom({
         />
 
         <Metatag
-          content={apiEndpoint(newsRoomData?.image?.data?.attributes?.url)}
+          content={apiEndpoint(
+            newsRoomData?.Seo?.metaImage?.data?.attributes?.url ||
+              newsRoomData?.image?.data?.attributes?.url
+          )}
         />
         <link
           rel="preconnect"

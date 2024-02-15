@@ -93,7 +93,7 @@ export default function LcaPage({ ress }) {
         <link rel="canonical" href={canonicalUrl} />
       </Head>
       <SectionHeader list={header} />
-      <section className="md:py-[55px] py-[30px]">
+      <section className="md:py-[55px] py-[30px] mt-20">
         <div className="container">
           <h1 className="font-bold xl:text-4xl lg:text-[32px] text-[22px] mb-3 font-sans text-center">
             {lca?.h1} <span className="text-company">{lca?.purple_text}</span>

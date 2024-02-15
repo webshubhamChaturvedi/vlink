@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { apiEndpoint } from "app/scripts/fetch";
 import Metatag from "app/components/metaTag";
+import TestimonialData from "app/components/warehouse/TestimonialData";
 
 export default function MediaEntertainment({ res }) {
   const dispatch = useDispatch();
@@ -32,7 +33,6 @@ export default function MediaEntertainment({ res }) {
 
   const { industriesLearningData, offering, trusted, testimonial, stories } =
     JSON.parse(res);
-
   if (industriesLearningData?.error) {
     return <div>{industriesLearningData?.error}</div>;
   }
@@ -52,14 +52,18 @@ export default function MediaEntertainment({ res }) {
         <meta
           property="og:title"
           content={
-            industriesLearningData?.title
-              ? industriesLearningData?.title
-              : `Vlink`
+            industriesLearningData?.Seo?.metaTitle ||
+            industriesLearningData?.title ||
+            `Vlink`
           }
         />
         <meta
           property="og:description"
-          content={industriesLearningData?.description || "Vlink Description"}
+          content={
+            industriesLearningData?.Seo?.metaDescription ||
+            industriesLearningData?.description ||
+            "Vlink Description"
+          }
         />
         <meta
           property="og:url"
@@ -68,7 +72,8 @@ export default function MediaEntertainment({ res }) {
 
         <Metatag
           content={apiEndpoint(
-            industriesLearningData?.section1?.image?.data?.attributes?.url
+            industriesLearningData?.Seo?.metaImage?.data?.attributes?.url ||
+              industriesLearningData?.section1?.image?.data?.attributes?.url
           )}
         />
         <link rel="canonical" href={canonicalUrl} />
@@ -99,15 +104,7 @@ export default function MediaEntertainment({ res }) {
         section_title={industriesLearningData?.success_story}
         section_content={stories}
       />
-      <Testimonial
-        section_title={testimonial?.Testimonial}
-        section_content={testimonial?.testimonial_content}
-      />
-      {/* 
-      
-   
-    
-     */}
+      <TestimonialData testimonials={testimonial} isNewTestimonial={true} />
       <GetInTouchForm />
     </div>
   );

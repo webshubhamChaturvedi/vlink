@@ -1,0 +1,15 @@
+.bg-colorr {
+    background-color: transparent;
+}
+.react-datepicker-wrapper {
+    width: 100%;display: block !important;
+}
+.react-tel-input .form-control {
+    width: 100% !important;
+    border-radius: 10px 10px 10px 10px !important;
+}
+.react-tel-input .flag-dropdown {
+    border-radius: 10px 0 0 10px !important;
+    border: 1px solid #E9E9E9 !important;
+}
+.hidden.mystyle {display: flex;}

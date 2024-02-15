@@ -83,10 +83,10 @@ export default function TopBlog({ data }) {
                       {items?.description}
                     </p>
                     <div className="flex justify-between mb-3">
-                      <div className="text-[#0C2139] text-[14px] flex  items-center">
+                      <div className="text-[#0C2139] text-[14px] flex  sm:items-center items-start">
                         <FontAwesomeIcon
                           icon={faUser}
-                          className="font-[14px] w-[14px] mr-1"
+                          className="font-[14px] w-[14px] mr-1 sm:mt-0 mt-[6px]"
                         />
                         {items?.auth_name}
                       </div>

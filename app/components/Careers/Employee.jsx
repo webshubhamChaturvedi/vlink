@@ -41,7 +41,7 @@ export default function Employee({ section }) {
                 <div className="container mx-auto px-4">
                   <h5 className="font-[700] xl:text-4xl lg:text-[32px] text-[22px] text-[#030303] text-center lg:mb-[100px] mb-[40px]">
                     Employee
-                    <span className="text-[#62207E]">Testimonials</span>
+                    <span className="text-[#62207E] ml-2">Testimonials</span>
                   </h5>
                   <div className="grid lg:grid-cols-12 border-[#337294] border-b ">
                     <div className="lg:col-span-8 col-span-12 sm:pl-12 lg:pr-[80px] pl-8 lg:text-left text-center relative">

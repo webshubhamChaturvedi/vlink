@@ -32,13 +32,14 @@ export default function Help({ help, isHiring = false }) {
         </div>
       </div>
       <div className="container md:py-[55px] py-[30px] lg:px-[5%] pb-0 md-pb-5">
-        {help?.help_block?.map((block, key) => (
+        {help?.help_block?.map((block, key, arr) => (
           <div
             key={`${key}_one`}
             id="ggg"
-            className={`group transition duration-300 ease-in-out flex items-center md:flex-nowrap flex-wrap md:justify-around rounded-[60px] pt-4 md:pt-0 px-[40px] md:mb-14 mb-3 relative ${
+            className={`group transition duration-300 ease-in-out flex items-center md:flex-nowrap flex-wrap md:justify-around rounded-[60px] pt-4 md:pt-0 px-[40px] relative ${
               key % 2 === 1 ? "flex-row-reverse" : ""
-            }`}
+            } ${arr.length - 1 === key
+              ? "" : "md:mb-14 mb-3"}`}
           >
             <div
               className="md:basis-7/12 w-full md:mb-0 mb-5"

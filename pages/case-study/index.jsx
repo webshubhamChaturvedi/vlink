@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
-import Testimonial from "app/components/Home/Testimonials";
 import GetInTouchForm from "app/components/common/GetInTouchForm";
 import SectionHeader from "app/components/common/SectionHeader";
 import HeroSection from "app/components/common/HeroSection";
@@ -9,6 +9,16 @@ import REQUEST from "app/helpers/http.service";
 import CertificateBar from "app/components/Home/CertificateBar";
 import { useRouter } from "next/router";
 import Metatag from "app/components/metaTag";
+import GetInTouchModal from "app/components/common/GetInTouchModal";
+import BlockChain from "app/components/common/BlockChain";
+import CloudModernization from "app/components/warehouse/CloudModernization";
+import OurClients from "app/components/Home/OurClients";
+import TestimonialData from "app/components/warehouse/TestimonialData";
+import OurAchievements from "app/components/common/OurAchievements";
+import Integration from "app/components/common/Integration";
+import "./case-study.css";
+import AnimatedTitle from "app/components/common/AnimatedTitle";
+import { Example } from "app/components/common/Example";
 
 export default function CaseStudy({
   caseStudyData,
@@ -16,16 +26,35 @@ export default function CaseStudy({
   trusted,
   testimonials,
 }) {
+  const [modalScheduleCall, setModalScheduleCall] = useState(false);
   const header = [{ label: "Home", link: "/" }, { label: "Case Studies" }];
   const router = useRouter();
   const canonicalUrl = (
     `${process.env.NEXT_PUBLIC_BASE_URL}` +
     (router.asPath === "/" ? "" : router.asPath)
   ).split("?")[0];
+  useEffect(() => {
+    if (typeof document !== undefined) {
+      const sidebarContentEl = document.querySelector("#some-id");
+      const buttonnn = document.querySelectorAll(".buttonOpen");
+      buttonnn.forEach((box) => {
+        box.addEventListener("click", function () {
+          sidebarContentEl.classList.add("mystyle");
+        });
+      });
+      const removeButton1 = document.querySelectorAll(".buttonremove1");
+      removeButton1.forEach((box) => {
+        box.addEventListener("click", function () {
+          sidebarContentEl.classList.remove("mystyle");
+        });
+      });
+    }
+  }, []);
 
   if (caseStudyData?.error) {
     return <div>{caseStudyData?.error}</div>;
   }
+
   return (
     <div>
       <Head>
@@ -43,19 +72,60 @@ export default function CaseStudy({
         <link rel="canonical" href={canonicalUrl} />
       </Head>
       <SectionHeader list={header} />
-      <HeroSection data={caseStudyData} />
+      <HeroSection
+        isSupply={true}
+        data={caseStudyData?.HeroSection}
+        isSingleCase={true}
+        isWhiteBtn={true}
+        setModalCall={setModalScheduleCall}
+      />
       <CertificateBar
         isTrusted={true}
         section={Object.keys(trusted)?.length ? trusted : null}
       />
+
+      <BlockChain
+        isTxtClr={"#ffffff"}
+        isCaseOffering={true}
+        isGradient={true}
+        blockchain={caseStudyData?.Offerings}
+        showDownload={true}
+      />
+      <div className="md:pb-[55px] pb-[30px]">
+        <CloudModernization
+          data={caseStudyData?.ourExperts}
+          issupplyChain={true}
+          isBlockChain={true}
+          isCaseCloud={true}
+          isTxtClr={"#353535"}
+        />
+      </div>
+
+      <Integration data={caseStudyData?.Integration} />
+
+      <OurClients
+        section={caseStudyData?.ourClients}
+        isCaseClient={true}
+        setModalScheduleCall={setModalScheduleCall}
+      />
+
       <div className="md:py-[55px] py-[30px]">
         <CaseStudiesList section_title={caseStudyData} list={list} />
       </div>
-      <Testimonial
-        section_title={testimonials?.Testimonial}
-        section_content={testimonials?.testimonial_content}
-      />
+
+      <OurAchievements data={caseStudyData?.Achievements} />
+
+      <TestimonialData testimonials={testimonials} isNewTestimonial={true} />
+
       <GetInTouchForm />
+
+      {modalScheduleCall && (
+        <GetInTouchModal
+          // modalData={modalData?.attributes}
+          isOpen={modalScheduleCall}
+          setIsOpen={setModalScheduleCall}
+        />
+      )}
     </div>
   );
 }

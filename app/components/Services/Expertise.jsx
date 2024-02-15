@@ -4,13 +4,9 @@ import CloudinaryImage from "../common/CloudinaryImage";
 
 export default function Expertise({ data }) {
   return (
-    <section
-      className="md:py-[55px] py-[30px] bg-right-top bg-[length:600px_600px] bg-no-repeat"
-      // style={{
-      //   backgroundImage: `url(${apiEndpoint(data?.bg_img?.data?.attributes?.url)})`}}
-    >
+    <section className="md:py-[55px] py-[30px] bg-right-top bg-[length:600px_600px] bg-no-repeat">
       <div className="container relative">
-        <div className=" inline-block md:absolute top-0 right-0 z-[-1] w-[500px] mb-3">
+        <div className=" inline-block md:absolute top-0 right-0 z-[-1] lg:w-[500px] mb-3">
           <CloudinaryImage
             backendImgUrl={`/uploads/expert_bg_fa899e2e09.png`}
             className="absolute top-[18%] right-[15%] md:block hidden"

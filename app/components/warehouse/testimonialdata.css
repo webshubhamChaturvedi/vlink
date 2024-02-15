@@ -1,0 +1,18 @@
+.testimonialdata .slick-dots li.slick-active {
+    background: #0050d5;
+}
+.testimonialdata .slick-dots li button:before, .testimonialdata .slick-dots li.slick-active button:before {
+    color: transparent;
+}
+.testimonialdata .slick-dots li {
+    background: #b8b8b8;
+    border-radius: 100%;
+}
+*:focus-visible {outline: none;}
+/* .testimonialdata .slick-slider .slick-list {
+    overflow: visible;
+} */
+/* .testimonialdata {
+    overflow: hidden;
+} */
+/* .testimonialdata .slick-track {height: 100%;} */

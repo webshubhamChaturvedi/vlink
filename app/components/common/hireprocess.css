@@ -1,0 +1,4 @@
+.dashed_border::after {background: linear-gradient(90deg,#7f7d7d 50%,transparent 0) repeat-x,linear-gradient(90deg,#7f7d7d 50%,transparent 0) repeat-x,linear-gradient(0deg,#7f7d7d 50%,transparent 0) repeat-y,linear-gradient(0deg,#7f7d7d 50%,transparent 0) repeat-y;
+    background-size: 15px 1.5px,15px 1.5px,1.5px 15px,2px 15px;
+    background-position: 0 0,0 100%,0 0,100% 0;
+}

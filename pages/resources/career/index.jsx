@@ -32,6 +32,7 @@ export default function Industries({ res }) {
   const country = useSelector((state) => state?.country);
   const dispatch = useDispatch();
   const { careersData, jobs } = JSON.parse(res);
+
   const weWork = {
     id: 1,
     h1_black: "We Work With The ",
@@ -279,7 +280,6 @@ export default function Industries({ res }) {
       <FindYourDreamJob country={country} section={jobs} loading={loading} />
       <SendResume country={country} />
       <WeWork section={weWork} />
-      {/* <VlinkerVoices data={careersData?.section4} /> */}
       <div className="md:mb-[55px] mb-[30px]">
         <Employee section={careersData?.section5} />
       </div>

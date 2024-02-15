@@ -54,11 +54,19 @@ export default function WhitepaperDetail({
         </title>
         <meta
           name="description"
-          content={whitepaperDetail?.description || "Vlink Description"}
+          content={
+            whitepaperDetail?.Seo?.metaDescription ||
+            whitepaperDetail?.description ||
+            "Vlink Description"
+          }
         />
         <meta
           name="og:title"
-          content={whitepaperDetail?.title ? whitepaperDetail?.title : `Vlink`}
+          content={
+            whitepaperDetail?.Seo?.metaTitle ||
+            whitepaperDetail?.title ||
+            `Vlink`
+          }
         />
 
         <meta
@@ -69,8 +77,10 @@ export default function WhitepaperDetail({
         <link rel="canonical" href={canonicalUrl} />
         <Metatag
           content={
-            apiEndpoint(whitepaperDetail?.image?.data?.attributes?.url) ||
-            "Vlink Image"
+            apiEndpoint(
+              whitepaperDetail?.Seo?.metaImage?.data?.attributes?.url ||
+                whitepaperDetail?.image?.data?.attributes?.url
+            ) || "Vlink Image"
           }
         />
       </Head>
@@ -78,7 +88,7 @@ export default function WhitepaperDetail({
         <SectionHeader list={header} />
       </>
       <section
-        className={`md:py-16 py-[30px] xl:px-[4rem] ${
+        className={`md:py-16 py-[30px] xl:px-[4rem] mt-20 ${
           changeTimeZone(new Date(), "America/New_York") <
           changeTimeZone(new Date(whitepaperDetail?.date), "America/New_York")
             ? "bg-[#f1f4f9]"
@@ -252,7 +262,7 @@ export default function WhitepaperDetail({
             className="md:py-10 py-[30px] lg:px-[4rem]  bg-cover bg-center bg-no-repeat"
             style={{
               backgroundImage:
-                "url(https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_991/v1691420145/webinar_video_i_f001d5a7ea.png",
+                "url(https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_991/v1691420145/webinar_video_i_f001d5a7ea.png",
             }}
           >
             <div className="container mx-auto px-4">
@@ -263,6 +273,7 @@ export default function WhitepaperDetail({
                       To learn more, Watch the webinar video
                     </h5>
                     <button
+                      id="watchWebinar"
                       onClick={() => {
                         setModalWebinar(true);
                       }}
@@ -365,7 +376,7 @@ export async function getStaticProps({ params: { slug } }) {
   const [whitepaperDetail, trusted, techStories] = await Promise.all([
     REQUEST({
       method: "GET",
-      url: `/api/webinar-details/?[populate][0]=image&[populate][1]=section&populate[2]=banner_btn.icon&populate[3]=host_participant&populate[4]=host_participant.image&filters[slug][$eq]=${slug}`,
+      url: `${API_ENDPOINTS.WEBINAR_DETAILS}&filters[slug][$eq]=${slug}`,
     }),
     REQUEST({
       method: "GET",
@@ -373,7 +384,7 @@ export async function getStaticProps({ params: { slug } }) {
     }),
     REQUEST({
       method: "GET",
-      url: "/api/webinar-details?[populate][0]=image&pagination[page]=1&pagination[pageSize]=3",
+      url: `${API_ENDPOINTS.WEBINAR_DETAIL}&pagination[page]=1&pagination[pageSize]=3`,
     }),
   ]);
   return {

@@ -6,7 +6,7 @@ import { createMarkup } from "./../../scripts/utils";
 
 export default function Results({results}) {
   return (
-    <section className='lg:py-[55px] py-[35px] bg-no-repeat bg-cover bg-left lg:mb-[55px] mb-[35px]'
+    <section className='lg:py-[55px] py-[35px] bg-no-repeat bg-cover bg-left'
     style={{ backgroundImage: `url(${apiEndpoint(results?.bgImage?.data?.attributes?.url)})`}}>
         <Container>
             <div className="lg:pb-[55px] pb-[35px]">
@@ -24,12 +24,12 @@ export default function Results({results}) {
                     <p className='text-[#383838] lg:text-[20px] text-[14px] font-[400]' dangerouslySetInnerHTML={createMarkup(results?.description)}></p>
                 </div>
                 <div className='lg:col-span-6 col-span-12'>
-                {/* <CloudinaryImage
+                <CloudinaryImage
                     backendImgUrl={results?.image?.data?.attributes?.url}
                     alt="arrow-right-white"
                     className="w-full"
                     type="isDesktop"
-                /> */}
+                />
                 </div>
             </div>
         </Container>

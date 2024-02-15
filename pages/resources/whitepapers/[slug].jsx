@@ -57,9 +57,20 @@ export default function WhitepaperDetail({ whitepaperDetail, trusted }) {
         />
         <meta
           name="og:description"
-          content={whitepaperDetail?.description || "Vlink Description"}
+          content={
+            whitepaperDetail?.Seo?.metaDescription ||
+            whitepaperDetail?.description ||
+            "Vlink Description"
+          }
         />
-        <meta name="og:title" content={whitepaperDetail?.title || "Vlink"} />
+        <meta
+          name="og:title"
+          content={
+            whitepaperDetail?.Seo?.metaTitle ||
+            whitepaperDetail?.title ||
+            "Vlink"
+          }
+        />
 
         <meta
           property="og:url"
@@ -67,7 +78,8 @@ export default function WhitepaperDetail({ whitepaperDetail, trusted }) {
         />
         <Metatag
           content={apiEndpoint(
-            whitepaperDetail?.banner_image?.data?.attributes?.url
+            whitepaperDetail?.Seo?.metaImage?.data?.attributes?.url ||
+              whitepaperDetail?.banner_image?.data?.attributes?.url
           )}
         />
 
@@ -77,6 +89,7 @@ export default function WhitepaperDetail({ whitepaperDetail, trusted }) {
       <HeroSection
         data={{ ...whitepaperDetail, image: whitepaperDetail?.banner_image }}
         isService={true}
+        downloadLink={apiEndpoint(whitepaperDetail?.pdf?.data?.attributes?.url)}
       />
       <CertificateBar isTrusted={true} section={trusted} id={"download"} />
       <section className="white-details py-[55px]">
@@ -137,7 +150,7 @@ export async function getStaticProps({ params: { slug } }) {
   const [whitepaperDetail, trusted] = await Promise.all([
     REQUEST({
       method: "GET",
-      url: `/api/whitepaper-details/?[populate][0]=image&populate[1]=banner_btn.icon&populate[2]=banner_image&populate[3]=pdf&filters[slug][$eq]=${slug}`,
+      url: `${API_ENDPOINTS.WHITEPAPER_DETAILS}&filters[slug][$eq]=${slug}`,
     }),
     REQUEST({
       method: "GET",

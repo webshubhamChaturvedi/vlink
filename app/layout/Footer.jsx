@@ -1,21 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Container from "app/components/common/Container";
 import MailOutlineIcon from "app/components/icons/MailOutlineIcon";
 import PhoneCallOutlineIcon from "app/components/icons/PhoneCallOutlineIcon";
 import LocationOutlineIcon from "app/components/icons/LocationOutlineIcon";
-import { Button } from "flowbite-react";
 import REQUEST from "app/helpers/http.service";
 import API_ENDPOINTS from "app/helpers/apiEndpoint";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { subscribeEmail } from "app/scripts/utils";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import staticData from "../../public/staticData.json";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CloudinaryImage from "../components/common/CloudinaryImage";
 import { timeZoneCityToCountry } from "app/helpers/timeZoneCityToCountry";
+import "./footer.css";
 
 const style = {
   socialLinks: {
@@ -30,7 +32,6 @@ const style = {
     height: "45px",
     width: "100%",
     borderRadius: "4px 0px 0px 4px",
-    // font-family: 'Open Sans';
     fontStyle: "normal",
     fontWeight: 400,
     fontSize: "14px",
@@ -38,24 +39,24 @@ const style = {
   },
   subButton: {
     height: "45px",
-    borderRadius: "0px 4px 4px 0px",
+    borderRadius: "0px 4px 4px 0px !important",
   },
   checkbox: {
     height: "22px",
     width: "22px",
+    boxShadow: "none",
   },
 };
 
 export default function Footer() {
   const footerData = staticData?.footer?.attributes;
-  const [formData, setFormData] = useState({});
-  const [privacyData, setPrivacyData] = useState(true);
   const [showLocations, setShowLocations] = useState(false);
   const [active, setActive] = useState(false);
-  const [validemail, setValidEmail] = useState(false);
-  const router = useRouter();
-  const toast = useSelector((state) => state?.toast);
-
+  const [email, setEmail] = useState(true);
+  const [isDefaultChecked, setIsDefaultChecked] = useState(true);
+  const handleCheckboxChange = (e) => {
+    setIsDefaultChecked(e.target.checked);
+  };
   const { asPath } = useRouter();
 
   let userCity;
@@ -69,23 +70,44 @@ export default function Footer() {
       <>{(userCountry = coun[userCity])}</>
     ));
   }
+  const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  const onChange = (e) => {
-    // isValidEmail(e.target.value);
-    const { value, name } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
+  const Schema = yup.object().shape({
+    countryName: yup.string().required(),
+    email: yup
+      .string()
+      .required("Email is required")
+      .matches(emailRegex, "Email must be a valid"),
+    type: yup.string().required("Type is required"),
+    subscribeCheckbox: yup
+      .boolean()
+      .oneOf([true], "Please accept the Privacy Policy"),
+  });
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: yupResolver(Schema),
+    defaultValues: {
+      email: "",
       countryName: userCountry,
-      sourceCode: asPath,
       type: "newsletter",
-    }));
-  };
-
-  const SubmitHandler = async (e) => {
-    e.preventDefault();
-    if (formData?.email) {
+      sourceCode: asPath,
+      subscribeCheckbox: isDefaultChecked,
+    },
+  });
+  const toast = useSelector((state) => state?.toast);
+  const SubmitHandler = async (data) => {
+    if (email) {
       try {
+        const formData = {
+          ...data,
+        };
         setActive(!active);
         const res = await REQUEST({
           method: "POST",
@@ -93,31 +115,15 @@ export default function Footer() {
           data: { data: formData },
         });
         if (res?.status === 200) {
-          setFormData({ email: "" });
-          subscribeEmail({ ...footerData });
           toast.success("Submitted successfully");
-
-          setTimeout(function () {
-            setActive(active);
-          }, 2000);
-        }
+          reset();
+          setActive(active);
+        } else toast.error(res?.data?.error?.message);
       } catch (err) {
         toast.error("failed");
       }
-    } else {
-      setValidEmail(true);
-      // toast.error("Enter a valid email");
     }
   };
-  // const isValidEmail = (email) =>
-  //   setEmail(
-  //     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-  //       email
-  //     )
-  //   );
-  useEffect(() => {
-    setShowLocations(false);
-  }, [router]);
 
   const linkData = useMemo(() => {
     return [
@@ -170,6 +176,10 @@ export default function Footer() {
                 label: footerData?.footer_section4?.email3,
                 href: `mailto:${footerData?.footer_section4?.email3}`,
               },
+              {
+                label: footerData?.footer_section4?.email4,
+                href: `mailto:${footerData?.footer_section4?.email4}`,
+              },
             ],
           },
           {
@@ -187,12 +197,17 @@ export default function Footer() {
                 label: footerData?.footer_section4?.phone_n03,
                 href: `tel:${footerData?.footer_section4?.phone_n03}`,
               },
+              {
+                label: footerData?.footer_section4?.phone_no4,
+                href: `tel:${footerData?.footer_section4?.phone_no4}`,
+              },
             ],
           },
         ],
       },
     ];
   }, [footerData]);
+
   const Row = ({ children, className = "" }) => (
     <div className={`grid grid-cols-12 ${className}`}>{children}</div>
   );
@@ -203,7 +218,6 @@ export default function Footer() {
       {children}
     </div>
   );
-  // console.log(footerData.footer_section5.awardImg, "footerdata");
   return (
     <>
       <footer className="relative z-40 bg-secondary bg-footer-texture-new bg-cover bg-center print-delete">
@@ -239,7 +253,27 @@ export default function Footer() {
                             <ul className="font-light mb-2 ml-2 flex flex-col gap-3 text-[13px]">
                               {subitem.children.map((link, key) => (
                                 <li key={key}>
-                                  <Link href={link.href}>{link.label}</Link>
+                                  <Link
+                                    href={link.href}
+                                    className="flex items-center"
+                                  >
+                                    {" "}
+                                    {console.log(link.label, "link.label")}
+                                    <span
+                                      className={`${
+                                        link.label == "+1 (860) 247-1400"
+                                          ? "us flag mr-1"
+                                          : link.label == "+91 (124) 426-0818"
+                                          ? "india flag mr-1"
+                                          : link.label == "+62 (811) 151-9851"
+                                          ? "indonasia flag mr-1"
+                                          : link.label == "+1 289-633-4046"
+                                          ? "canada flag mr-1"
+                                          : ""
+                                      }`}
+                                    ></span>{" "}
+                                    {link.label}
+                                  </Link>
                                 </li>
                               ))}
                             </ul>
@@ -376,47 +410,84 @@ export default function Footer() {
                   Get insights from experts on building & Scaling technology
                   teams
                 </p>
-                <div className="flex mt-6 mb-2">
+                <form
+                  className="space-y-3"
+                  onSubmit={handleSubmit(SubmitHandler)}
+                >
+                  <div className="flex mt-6 mb-2">
+                    <input
+                      type="text"
+                      placeholder="Email"
+                      {...register("email")}
+                      name="email"
+                      style={style.input}
+                    />
+                    <button
+                      id="Subscribe"
+                      type="submit"
+                      disabled={active}
+                      style={style.subButton}
+                      className="bg-company"
+                    >
+                      <span className="flex items-center rounded-md text-sm px-4">
+                        SUBSCRIBE
+                      </span>
+                    </button>
+                  </div>
+                  {errors.email && (
+                    <span className="mt-2 font-semibold text-sm text-red-700">
+                      {errors.email?.message}
+                    </span>
+                  )}
                   <input
-                    type="email"
-                    value={formData?.email}
-                    onChange={onChange}
-                    name="email"
-                    placeholder="Enter Email Id"
-                    style={style.input}
+                    type="text"
+                    placeholder="countryName"
+                    {...register("countryName")}
+                    name="countryName"
+                    className="hidden"
                   />
-                  <Button
-                    className="bg-company"
-                    style={style.subButton}
-                    onClick={(e) => SubmitHandler(e)}
-                    disabled={active}
-                  >
-                    <span className="mr-0">Subscribe</span>
-                  </Button>
-                </div>
-                {validemail && (
-                  <span className="font-normal text-sm text-red-700 block mb-6">
-                    {"email must be a valid"}
-                  </span>
-                )}
-                <div className="flex mb-8 mt-6">
                   <input
-                    type="checkbox"
-                    checked={privacyData}
-                    onChange={() => setPrivacyData((prev) => !prev)}
-                    className="cursor-pointer"
-                    id="subscribe"
+                    type="text"
+                    placeholder="SourceCode"
+                    {...register("sourceCode")}
+                    name="sourceCode"
+                    className="hidden"
                   />
-                  <label
-                    className="text-xs font-light ml-3"
-                    htmlFor="subscribe"
-                  >
-                    By subscribing I accept the
-                    <Link href="/privacy-policy" className="underline">
-                      Privacy Policy
-                    </Link>
-                  </label>
-                </div>
+                  <div className="mb-[30px_!important] mt-[10px_!important]">
+                    <label className="flex items-center space-x-1">
+                      <Controller
+                        name="subscribeCheckbox"
+                        control={control}
+                        render={({ field }) => (
+                          <input
+                            type="checkbox"
+                            className="form-checkbox rounded-full text-[#fff] bg-[#fff] border-[#fff]"
+                            {...field}
+                            onChange={(e) => {
+                              field.onChange(e);
+                              handleCheckboxChange(e);
+                            }}
+                            defaultChecked={isDefaultChecked}
+                          />
+                        )}
+                      />
+                      <span className="text-[#fff] text-[12px] font-sans font-[400]">
+                        By subscribing I accept the
+                        <Link
+                          href="/privacy-policy"
+                          className="underline ml-2 inline-block"
+                        >
+                          Privacy Policy
+                        </Link>
+                      </span>
+                    </label>
+                    {errors.subscribeCheckbox && (
+                      <span className="mt-2 font-semibold text-sm text-red-700">
+                        {errors?.subscribeCheckbox?.message}
+                      </span>
+                    )}
+                  </div>
+                </form>
                 <ul className="mt-2 flex flex-col gap-4">
                   <li className="flex gap-4">
                     {footerData?.social_media?.map((data, key) => (
@@ -462,7 +533,7 @@ export default function Footer() {
           <hr className="border-gray-600 my-8"></hr>
           <div className="flex flex-col space-y-2 sm:space-y-0 sm:flex-row items-start lg:items-center justify-between font-light text-sm">
             <p className="w-full sm:w-1/3 lg:w-fit ">© All rights reserved</p>
-            <ul className="flex flex-row gap-2 lg:gap-4">
+            <ul className="flex flex-row gap-2 lg:gap-4 mr-20">
               <li className="cursor-pointer">
                 <Link href="/privacy-policy">Terms & Conditions </Link>
                 <span className=" ml-2">|</span>

@@ -1,0 +1,14 @@
+.integration-img {
+    height: 400px;
+}
+
+@media screen and (max-width:1285px) {
+    .integration-img {
+        height: 300px;
+    }
+}
+@media screen and (max-width:1224px) {
+    .integration-img {
+        height: auto;
+    }
+}

@@ -325,7 +325,7 @@ export default function FindYourDreamJob({ country, section, loading }) {
                       {filterJobs?.length > 0
                         ? filterJobs?.length
                         : section?.length}
-                      jobs available
+                      &nbsp;jobs available
                     </h2>
                   </div>
                 </div>
@@ -430,7 +430,7 @@ export default function FindYourDreamJob({ country, section, loading }) {
                   <iframe
                     src="https://hr-1.in/Home/go?path=5b4d7a"
                     width="1400"
-                    height="800"
+                    height="1200"
                     data-mce-fragment="1"
                   ></iframe>
                 </div>

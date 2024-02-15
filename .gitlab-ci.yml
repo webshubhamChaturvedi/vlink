@@ -6,9 +6,11 @@ cache:
 stages:
   - build
   - deploy
+  - build_stg
+  - deploy_stg
 
 clear cloudflare cache for strapi and build:
-  image: node:16
+  image: node:20
   stage: build
   script:
     - echo "NEXT_PUBLIC_API_URL="https://backend.vlinkinfo.com"" >> .env
@@ -48,3 +50,45 @@ deploy to s3 and invalidate cloudfront cache:
     - aws cloudfront create-invalidation --distribution-id E330P3UOTZZ3RD --path "/*"
   only:
     - development
+
+clear cloudflare cache for strapi and build staging:
+  image: node:20
+  stage: build_stg
+  script:
+    - echo "NEXT_PUBLIC_API_URL="https://backendstg.vlinkinfo.com"" >> .env
+    - echo "NEXT_PUBLIC_CLIENT_SIDE_GOOGLE_CAPTCHA="6LeKtY0kAAAAAEcniSpxK7MihZFEvz-Xx0a42gU4"" >> .env
+    - echo "NEXT_PUBLIC_SEVER_SIDE_GOOGLE_CAPTCHA="6LeKtY0kAAAAAHKwwDEloNr0Cw_fit6clwHLU5us"" >> .env
+    - echo "NEXT_PUBLIC_ZOHO="https://zoho-lead.vlinkinfo.com/api/"" >> .env
+    - echo "NEXT_PUBLIC_BASE_URL="https://stg.vlinkinfo.com"" >> .env
+    - echo "NEXT_PUBLIC_SENTRY_DSN="https://439c7d1ec50141fc9d859981b7f7ae08@o4504789904130048.ingest.sentry.io/4504789928050688"" >> .env
+    - echo "SENTRY_URL="https://sentry.io/"" >> .env
+    - echo "SENTRY_ORG="vlink-india"" >> .env
+    - echo "SENTRY_PROJECT="javascript-nextjs"" >> .env
+    - echo "SENTRY_AUTH_TOKEN="fd5b104896fa426692989380d454edde5dddb66f4a424a36bec3d8770d433590"" >> .env
+    - >
+      curl -s -X DELETE
+      "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache"
+      -H "X-Auth-Email: $CLOUDFLARE_AUTH_EMAIL"
+      -H "X-Auth-Key: $CLOUDFLARE_AUTH_KEY"
+      -H "Content-Type: application/json"
+      --data '{"purge_everything":true}'
+    - yarn config set cache-folder .yarn
+    - yarn install --pure-lockfile --cache-folder .yarn
+    - yarn build
+  artifacts:
+    paths:
+      - ./out
+  only:
+    - staging
+
+deploy to s3 and invalidate cloudfront cache for staging:
+  stage: deploy_stg
+  image:
+    name: amazon/aws-cli
+    entrypoint: [""]
+  script:
+    - echo "Uploading to s3://$S3_STG_BUCKET"
+    - aws s3 sync --delete ./out/ s3://$S3_STG_BUCKET/
+    - aws cloudfront create-invalidation --distribution-id E1VS2UZZT3RZZG --path "/*"
+  only:
+    - staging

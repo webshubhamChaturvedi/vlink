@@ -52,16 +52,17 @@
   
   
   .border-process {
-    width: 2px;
+    width: 8px;
     height: 100%;
     position: absolute;
-    background-color: #1246D5;
+    background-color: #0050D521;
+    /* background-color: #1246D5; */
     top: 0;
-    right: 0px;
+    right: -4px;
   }
   
   .single-event-container.right .border-process {
-    left: -2px;
+    left: -4px;
   }
   
   .circle-date {

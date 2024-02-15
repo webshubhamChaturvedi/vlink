@@ -1,0 +1,8 @@
+.solutation_div {width: 48%;}
+
+@media screen and (max-width: 1300px) {
+    .solutation_div {width: 47%;}
+}
+@media screen and (max-width: 1028px) {
+    .solutation_div {width: 100%;}
+}

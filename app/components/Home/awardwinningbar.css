@@ -1,0 +1,14 @@
+.awardwinningbar .slick-initialized .slick-slide > div {
+    margin-bottom: 0px !important;
+}
+.awardwinningbar .slick-initialized .slick-slide {
+    padding: 0px 10px;
+}
+.awardslider {
+    width: calc(100% - 320px);
+}
+@media screen and (max-width:1024px) {
+    .awardslider {
+        width: 100%;
+    }
+}

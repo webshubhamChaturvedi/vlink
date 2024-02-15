@@ -52,15 +52,30 @@ export default function NewsroomDetail({ res }) {
         />
         <meta
           name="og:description"
-          content={newsroomDetail?.description || "Vlink Description"}
+          content={
+            newsroomDetail?.Seo?.metaDescription ||
+            newsroomDetail?.description ||
+            "Vlink Description"
+          }
         />
-        <meta name="og:title" content={newsroomDetail?.title || "Vlink"} />
+        <meta
+          name="og:title"
+          content={
+            newsroomDetail?.Seo?.metaTitle || newsroomDetail?.title || "Vlink"
+          }
+        />
 
         <meta
           property="og:url"
           content={`${process.env.NEXT_PUBLIC_BASE_URL}${asPath}`}
         />
-        <Metatag content={`https://www.vlinkinfo.com/img/logopng.png`} />
+        <Metatag
+          content={
+            apiEndpoint(
+              newsroomDetail?.Seo?.metaImage?.data?.attributes?.url
+            ) || `https://www.vlinkinfo.com/img/logopng.png`
+          }
+        />
 
         <link rel="canonical" href={canonicalUrl} />
       </Head>
@@ -114,7 +129,7 @@ export async function getStaticProps({ params: { slug } }) {
   const [newsroomDetail, trusted] = await Promise.all([
     REQUEST({
       method: "GET",
-      url: `/api/newsroom-stories?[populate][0]=image&filters[slug][$eq]=${slug}`,
+      url: `${API_ENDPOINTS.NEWSROOMS_STORIES}&filters[slug][$eq]=${slug}`,
     }),
     REQUEST({
       method: "GET",

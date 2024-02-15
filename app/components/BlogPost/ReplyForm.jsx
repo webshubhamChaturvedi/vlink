@@ -116,7 +116,7 @@ export default function ReplyForm({}) {
             )}
             {!email && (
               <span className="mt-2 font-normal text-sm text-red-700">
-                {"email must be a valid email"}
+                {"Email must be a valid"}
               </span>
             )}
           </div>

@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import LINK from "app/components/common/LINK";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-
+import CloudinaryImage from "../../common/CloudinaryImage";
 export default function WhyHireDevelopers({ section }) {
   const router = useRouter();
   return (
@@ -30,7 +30,7 @@ export default function WhyHireDevelopers({ section }) {
           />
           <div className="flex md:flex-none flex-wrap space-x-2 justify-between items-center">
             <p
-              className={`text-[#001231] md:text-[18px] lg:text-lg  text-left `}
+              className={`text-[#001231] md:text-[18px] lg:text-lg  text-left  mb-3 md:mb-0`}
             >
               {section?.p}
             </p>
@@ -53,13 +53,24 @@ export default function WhyHireDevelopers({ section }) {
         </div>
         <div className="relative lg:basis-1/3 h-fit">
           <div className="image-container">
-            <Image
-              src={"/img/BestQuality.svg"}
+            {/* <Image
+              src={apiEndpoint(section?.image?.data?.attributes?.url)}
               fill
               sizes="100%"
               alt={"Best Quality"}
               className={`relative image !w-full`}
-            />
+            /> */}
+            {section?.image?.data?.attributes?.url && (
+              <CloudinaryImage
+                backendImgUrl={section?.image?.data?.attributes?.url}
+                className="relative image !w-full"
+                alt={
+                  section?.image?.data?.attributes.alternativeText ||
+                  "Best Quality"
+                }
+                type="smallimg"
+              />
+            )}
           </div>
         </div>
       </div>

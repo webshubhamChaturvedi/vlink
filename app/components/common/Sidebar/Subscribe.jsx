@@ -1,7 +1,7 @@
-import API_ENDPOINTS from 'app/helpers/apiEndpoint';
-import REQUEST from 'app/helpers/http.service';
-import { useState } from 'react';
-import Card from '../Card'
+import API_ENDPOINTS from "app/helpers/apiEndpoint";
+import REQUEST from "app/helpers/http.service";
+import { useState } from "react";
+import Card from "../Card";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -31,27 +31,26 @@ export default function Subscribe() {
         email
       )
     );
-  const SubmitHandler = async (data) =>{
-    if(email){
-    try {
-        
-      const formData = {
-        ...data
-      };
-      const res = await REQUEST({
-      method: "POST",
-      url: API_ENDPOINTS.SAVE_SUBSCRIBE,
-      data:{ data: formData},
-    });
-    if (res?.status === 200) {
-      toast.success("Submitted successfully");
-      reset();
-    } else toast.error(res?.data?.error?.message);
-  } catch (err) {
-    toast.error("failed");
-  }
-}
-}
+  const SubmitHandler = async (data) => {
+    if (email) {
+      try {
+        const formData = {
+          ...data,
+        };
+        const res = await REQUEST({
+          method: "POST",
+          url: API_ENDPOINTS.SAVE_SUBSCRIBE,
+          data: { data: formData },
+        });
+        if (res?.status === 200) {
+          toast.success("Submitted successfully");
+          reset();
+        } else toast.error(res?.data?.error?.message);
+      } catch (err) {
+        toast.error("failed");
+      }
+    }
+  };
 
   return (
     <Card blue={true} containerClass={"shadow-sm overflow-hidden"}>
@@ -60,7 +59,7 @@ export default function Subscribe() {
       </div>
       <form className="space-y-3" onSubmit={handleSubmit(SubmitHandler)}>
         <input
-        {...register("email")}
+          {...register("email")}
           placeholder="Email"
           name="email"
           type="email"
@@ -69,46 +68,45 @@ export default function Subscribe() {
             isValidEmail(e.target.value);
           }}
         />
-         {errors.email && (
-                  <span className="mt-2 font-normal text-sm text-red-700">
-                    {errors.email?.message}
-                  </span>
-                )}
-                {!email && (
-                  <span className="mt-2 font-normal text-sm text-red-700">
-                    {"email must be a valid email"}
-                  </span>
-                )}
-        <select name="country" className="!bg-white !rounded-[6px] w-full border-[1px] border-[#d1d5db] rounded-[0.125rem] p-[0.75rem] text-[0.875rem] leading-[1.25rem]"
-        {...register("country")}
+        {errors.email && (
+          <span className="mt-2 font-normal text-sm text-red-700">
+            {errors.email?.message}
+          </span>
+        )}
+        {!email && (
+          <span className="mt-2 font-normal text-sm text-red-700">
+            {"Email must be a valid"}
+          </span>
+        )}
+        <select
+          name="country"
+          className="!bg-white !rounded-[6px] w-full border-[1px] border-[#d1d5db] rounded-[0.125rem] p-[0.75rem] text-[0.875rem] leading-[1.25rem]"
+          {...register("country")}
         >
           <option selected hidden value="">
             Select Country
           </option>
 
-          <option value="usa"
-          >USA</option>
+          <option value="usa">USA</option>
 
-          <option 
-          value="india"
-          >INDIA</option>
+          <option value="india">INDIA</option>
 
-          <option 
-          value="uk"
-          >UK</option>
-
+          <option value="uk">UK</option>
         </select>
         {errors.country && (
-                    <span className="mt-2 font-normal text-sm text-red-700">
-                      This field is required
-                    </span>
-                  )}
+          <span className="mt-2 font-normal text-sm text-red-700">
+            This field is required
+          </span>
+        )}
         <div className="!mb-4 !mt-8">
-          <button className="bg-company text-white text-lg w-full" type='submit'>
+          <button
+            className="bg-company text-white text-lg w-full"
+            type="submit"
+          >
             SUBSCRIBE
           </button>
         </div>
       </form>
     </Card>
-  )
+  );
 }

@@ -1,0 +1,21 @@
+.successstoryimg {
+    height: 300px;
+}
+
+@media screen and (max-width:1285px) and (min-width:1024px) {
+    .successstoryimg {
+        height: 200px;
+    }
+}
+
+@media screen and (max-width:1023px) {
+    .successstoryimg {
+        height: 250px;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .successstoryimg {
+        height: auto;
+    }
+}

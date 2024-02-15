@@ -17,9 +17,9 @@ import SCMTechnologies from "app/components/common/SCMTechnologies";
 import ToolsTechnologies from "app/components/Services/ToolsTechnologies";
 import CloudModernization from "app/components/warehouse/CloudModernization";
 import Partner from "app/components/common/Partner";
-import ProcessTimeline from "app/components/common/ProcessTimeline";
 import { apiEndpoint } from "app/scripts/fetch";
 import Metatag from "app/components/metaTag";
+import TimeLine from "app/components/common/TimeLine";
 
 export default function SupplyChain({ supplyChain, trusted }) {
   const [modalScheduleCall, setModalScheduleCall] = useState(false);
@@ -53,11 +53,19 @@ export default function SupplyChain({ supplyChain, trusted }) {
 
         <meta
           property="og:title"
-          content={supplyChain?.title ? supplyChain?.title : `Vlink — Services`}
+          content={
+            supplyChain?.Seo?.metaTitle ||
+            supplyChain?.title ||
+            `Vlink — Services`
+          }
         />
         <meta
           property="og:description"
-          content={supplyChain?.description || "Vlink Description"}
+          content={
+            supplyChain?.Seo?.metaDescription ||
+            supplyChain?.description ||
+            "Vlink Description"
+          }
         />
         <meta
           property="og:url"
@@ -66,14 +74,13 @@ export default function SupplyChain({ supplyChain, trusted }) {
 
         <Metatag
           content={apiEndpoint(
-            supplyChain?.crm_solution?.image?.data?.attributes?.url
+            supplyChain?.Seo?.metaImage?.data?.attributes?.url ||
+              supplyChain?.crm_solution?.image?.data?.attributes?.url
           )}
         />
         <link rel="canonical" href={canonicalUrl} />
       </Head>
-
       <SectionHeader list={header} isBreadcrumb={true} />
-
       <HeroSection
         data={supplyChain?.hero_section}
         isSupply={true}
@@ -92,8 +99,11 @@ export default function SupplyChain({ supplyChain, trusted }) {
       <BlockChain isBlockChain={true} blockchain={supplyChain.blockchain} />
 
       <SCMSolution crm={supplyChain?.crm_solution} />
-
-      <ProcessTimeline Process={supplyChain?.Process} />
+      <TimeLine
+        Process={supplyChain?.Process}
+        isBlockProcess={true}
+        isColor={true}
+      />
 
       <SCMPartner crmPartner={supplyChain?.chooseUs} />
 
@@ -102,7 +112,7 @@ export default function SupplyChain({ supplyChain, trusted }) {
       <ToolsTechnologies
         tech={supplyChain?.tech_stack}
         isToolsTechnologies={true}
-        isWeb={'Frame works'}
+        isWeb={"Frame works"}
       />
 
       <Partner partner={supplyChain?.Partner} isPartnerSuply={true} />
@@ -114,14 +124,10 @@ export default function SupplyChain({ supplyChain, trusted }) {
       {supplyChain?.Faqs && (
         <Faq section={supplyChain?.Faqs} isFaq={true} forCSS={true} />
       )}
-
-      {/* {data?.faq?.h && <Faq section={data?.faq} />} */}
-
       <GetInTouch getintouch={supplyChain?.Get_in_touch} isStaff={true} />
 
       {modalScheduleCall && (
         <GetInTouchModal
-          // modalData={modalData?.attributes}
           isOpen={modalScheduleCall}
           setIsOpen={setModalScheduleCall}
         />

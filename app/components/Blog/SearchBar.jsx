@@ -9,8 +9,9 @@ export default function SearchBar({ blogref, add }) {
   const [newdataName, setDataName] = useState("");
   const dispatch = useDispatch();
   const blogCategories = useSelector((state) => state?.blogCategories);
-  const fixedform = useRef("");
-
+  // const fixedform = useRef("");
+  const [isScrolled, setIsScrolled] = useState(false);
+  const selectedText = useSelector((state) => state?.selectedBlog?.category);
   useEffect(() => {
     if (!Object.keys(blogCategories)?.length)
       REQUEST({
@@ -28,104 +29,94 @@ export default function SearchBar({ blogref, add }) {
   }, []);
 
   const handleScrolldown = () => {
-    if (window.scrollY <= 200) {
-      fixedform.current.classList.value =
-        "space-y-6 p-6 bg-[#fff] z-[100] w-[100%] top-[0]";
-    } else {
-      fixedform.current.classList.value =
-        "lg:fixed space-y-6 p-6 bg-[#fff] z-[100] w-[100%] top-[0]";
-    }
+    setIsScrolled(window.scrollY >= 200);
   };
 
-  const scrollBottom = () => {
-    blogref.current?.scrollIntoView({ behavior: "smooth" });
-    fixedform.current.classList.value =
-      "fixed space-y-6 p-6 bg-[#fff] z-[100] w-[100%] top-[0]";
-  };
+  // const scrollBottom = () => {};
   const handleChange = (e) => {
     blogref.current?.scrollIntoView({ behavior: "smooth" });
-    fixedform.current.classList.value =
-      "fixed space-y-6 p-6 bg-[#fff] z-[100] w-[100%] top-[0]";
-    // setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setIsScrolled(window.scrollY >= 200);
+
     dispatch({
       type: ACTION_TYPE.SELECTED_BLOG_CATEGORY,
       payload: { [e.target.name]: e.target.value },
     });
   };
   const handleChangeName = (e) => {
-    blogref.current?.scrollIntoView({ behavior: "smooth" });
-    fixedform.current.classList.value =
-      "fixed space-y-6 p-6 bg-[#fff] z-[100] w-[100%] top-[0]";
+    if (e.target.value.trim() !== null) {
+      blogref.current?.scrollIntoView({ behavior: "smooth" });
+      setIsScrolled(window.scrollY >= 200);
+    }
     setDataName((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     dispatch({
       type: ACTION_TYPE.SELECTED_BLOG_NAME,
       payload: { ...newdataName },
     });
   };
-
-  // const select = () => {
-  //   dispatch({
-  //     type: ACTION_TYPE.SELECTED_BLOG_CATEGORY,
-  //     payload: { ...data },
-  //   });
-  // };
+  const navbarClass = isScrolled
+    ? "lg:fixed space-y-6 p-6 bg-[#fff] w-[100%] top-19   z-10"
+    : "space-y-6 p-6 bg-[#fff] w-[100%] top-19";
   return (
-    <form
-      className="space-y-6 p-6  bg-[#fff]"
-      id="form_id"
-      ref={fixedform}
-    >
-      <div className="md:flex md:justify-center space-y-4 md:space-y-0 md:space-x-4 ">
-        <div className="w-full md:w-1/5">
-          <input
-            className="!bg-white w-full border-[1px] border-[#d1d5db] rounded-[0.125rem] p-[0.75rem] text-[0.875rem] leading-[1.25rem]"
-            placeholder="Name"
-            name="name"
-            onChange={handleChangeName}
-            onFocus={scrollBottom}
-            value={newdataName?.name}
-          />
+    <div className="  mt-[70px]">
+      <form
+        className={`${navbarClass} space-y-6 p-6  bg-[#fff] z-10`}
+        id="form_id"
+      >
+        <div className="md:flex md:justify-center space-y-4 md:space-y-0 md:space-x-4 ">
+          <div className="w-full md:w-1/5">
+            <input
+              className="!bg-white w-full border-[1px] border-[#d1d5db] rounded-[0.125rem] p-[0.75rem] text-[0.875rem] leading-[1.25rem]"
+              placeholder="Name"
+              name="name"
+              onChange={handleChangeName}
+              // onFocus={scrollBottom}
+              value={newdataName?.name}
+            />
+          </div>
+          <div className="w-full md:w-1/5">
+            <select
+              name="category"
+              className="bg-white"
+              onChange={handleChange}
+              value={selectedText}
+            >
+              <option value="all">All Category</option>
+              {Object?.keys(blogCategories)?.length &&
+                Object?.keys(blogCategories)?.map((data, key) => (
+                  <>
+                    <option
+                      value={blogCategories[data]?.attributes?.slug}
+                      key={key}
+                    >
+                      {blogCategories[data]?.attributes?.title}
+                    </option>
+                  </>
+                ))}
+            </select>
+          </div>
+          <div className="w-full md:w-1/5">
+            <select
+              name="sortBy"
+              className="bg-white"
+              onChange={handleChange}
+              value={data?.sortBy}
+            >
+              <option value="none">Sort by</option>
+              <option value="1">Oldest</option>
+              <option value="2">Newest</option>
+            </select>
+          </div>
+          {/* <div className="w-full md:w-1/5">
+            <button
+              className="w-full bg-primary text-white px-20 pb-2 pt-3 rounded flex space-x-6 justify-center items-center"
+              // onClick={select}
+              type="button"
+            >
+              <span style={{ minWidth: "max-content" }}>Search Blog</span>
+            </button>
+          </div> */}
         </div>
-        <div className="w-full md:w-1/5">
-          <select
-            name="category"
-            className="bg-white"
-            onChange={handleChange}
-            // value={data?.category}
-          >
-            <option value="all">All Category</option>
-            {Object?.keys(blogCategories)?.length &&
-              Object?.keys(blogCategories)?.map((data, key) => (
-                <>
-                  <option value={blogCategories[data]?.attributes?.slug} key={key}>
-                    {blogCategories[data]?.attributes?.title}
-                  </option>
-                </>
-              ))}
-          </select>
-        </div>
-        <div className="w-full md:w-1/5">
-          <select
-            name="sortBy"
-            className="bg-white"
-            onChange={handleChange}
-            value={data?.sortBy}
-          >
-            <option value="none">Sort by</option>
-            <option value="1">Oldest</option>
-            <option value="2">Newest</option>
-          </select>
-        </div>
-        <div className="w-full md:w-1/5">
-          <button
-            className="w-full bg-primary text-white px-20 pb-2 pt-3 rounded flex space-x-6 justify-center items-center"
-            // onClick={select}
-            type="button"
-          >
-            <span style={{ minWidth: "max-content" }}>Search Blog</span>
-          </button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }

@@ -53,7 +53,7 @@ export default function Benefits({ benefits }) {
                   className="max-w-[650px] inline-block font-bold bg-no-repeat backgroundsize pt-16 bg-size-60 max-w-[1000px] 
                   bg-[center_top_20%]"
                   style={{
-                    backgroundImage: `url("https://res.cloudinary.com/dwac0ziol/image/upload/v1690807050/Benefits_9b7ccd5199.png)`,
+                    backgroundImage: `url("https://res.cloudinary.com/dthpnue1d/image/upload/v1690807050/Benefits_9b7ccd5199.png)`,
                   }}
                 >
                   {benefits.title}
@@ -106,7 +106,7 @@ export default function Benefits({ benefits }) {
               </ul>
             </div>
 
-            <div className="lg:flex-1 lg:px-0 px-10">
+            <div className="lg:flex-1 lg:px-0">
               {benefits.right_list?.map((items, key) => (
                 <div
                   data-section
@@ -115,13 +115,13 @@ export default function Benefits({ benefits }) {
                   key={key}
                 >
                   <div
-                    className={` p-[40px] rounded-[10px] ${
+                    className={` p-[20px]  md:p-[40px]  rounded-[10px] ${
                       activeSection === `section1_${key}` ? "activeStyle" : ""
                     }`}
                     key={key}
                   >
                     <h6
-                      className={`text-[30px]  font-[600] flex md:flex-nowrap flex-wrap items-center mb-4 ${
+                      className={`md:text-[30px]  text-[24px] font-[600] flex md:flex-nowrap flex-wrap items-center mb-4 ${
                         activeSection === `section1_${key}`
                           ? "text-[#fff]"
                           : "text-[#171F44]"

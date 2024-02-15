@@ -12,7 +12,7 @@ export default function CaseStudiesList({ section_title, list }) {
     limit: CONSTANTS.PAGINATION_PAGE_SIZE,
     totalResult: 0,
   });
-  const { page, limit, total } = optionsPagination;
+  const { page, limit, total } = optionsPagination; 
   const loadCaseStudies = async () => {
     setLoading(true);
     setList([...list.slice((page - 1) * limit, page * limit)]);
@@ -27,17 +27,15 @@ export default function CaseStudiesList({ section_title, list }) {
   }, [page, limit, total]);
   return (
     <Container className="">
-      <div className="flex flex-wrap justify-between">
-        <div className="md:basis-1/2 space-y-3 md:mb-[45px] mb-[25px] w-full">
-          <h4 className="md:text-4xl text-[22px] font-sans font-bold mb-3">
-            Case <span className="text-company font-bold">Studies</span>
+      <div className="flex flex-wrap justify-between" id="moreCaseStudy">
+        <div className="md:basis-1/1 space-y-3 lg:pb-[55px] pb-[35px] w-full text-center">
+          <h4 className="xl:text-4xl lg:text-[32px] text-[22px] font-sans font-bold">
+            More Case Studies
           </h4>
-          <p className="pt-[0px_!important]">{section_title?.sub_title}</p>
         </div>
-        <div className="md:basis-1/2 flex md:flex-nowrap flex-wrap justify-end gap-3 w-full">
-        </div>
+        <div className="md:basis-1/2 flex md:flex-nowrap flex-wrap justify-end gap-3 w-full"></div>
       </div>
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
         {lists &&
           lists?.map((item) => (
             <SuccessStoryCard
@@ -56,6 +54,7 @@ export default function CaseStudiesList({ section_title, list }) {
         paginationOptions={optionsPagination}
         onPagination={setOptionsPagination}
         className="my-6"
+        sectionId="moreCaseStudy"
       />
     </Container>
   );

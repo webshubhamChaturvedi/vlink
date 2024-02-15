@@ -1,0 +1,47 @@
+.allcase_slider .slick-list {
+    padding-left: 10%;
+}
+
+/* .approach_slider .slick-initialized .slick-slide {padding-left: 0px;} */
+.allcase_slider .slick-slider .slick-track {
+    display: flex;
+}
+.allcase_slider .slick-initialized .slick-slide {
+    display: block;
+    height: initial;
+}
+/* .allcase .slick-initialized .slick-slide > div,
+.allcase .slick-initialized .slick-slide > div > div {
+height: 100%;
+} */
+
+.allcase_slider button.slick-arrow.slick-prev {
+    background: url("https://backend.vlinkinfo.com/uploads/ph_arrow_left_5335619d8a.png");
+    left: unset;
+    top: -80px;
+    right: 100px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 50px;
+    height: 50px;
+}
+.allcase_slider button.slick-arrow.slick-next {
+    background: url("https://backend.vlinkinfo.com/uploads/ph_arrow_left_0f4ad907a2.png");
+    top: -80px;
+    right: 40px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 50px;
+    height: 50px;
+}
+.allcase_slider .slick-prev:before, 
+.allcase_slider .slick-next:before {
+    color: transparent;
+}
+.allcase {
+    transform: skewY(5deg);
+    /* transform-origin: left; */
+}
+.allcase > div {transform: skewY(-5deg);}

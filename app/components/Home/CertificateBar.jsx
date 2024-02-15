@@ -38,13 +38,13 @@ export default function CertificateBar({ section, isTrusted = false, id }) {
             {/* {isTrusted ? (
               <div></div>
             ) : ( */}
-              <Image
-                src={`https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_100/v1691474215/award_38097a10e5.png`}
-                alt="Picture of our Logo"
-                width={width}
-                height={height}
-                loading="lazy"
-              />
+            <Image
+              src={`https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_100/v1691474215/award_38097a10e5.png`}
+              alt="Picture of our Logo"
+              width={width}
+              height={height}
+              loading="lazy"
+            />
             {/* )} */}
           </div>
           <marquee

@@ -1,10 +1,7 @@
+import React, { useState } from "react";
 import Head from "next/head";
-import SuccessStories from "app/components/Home/SuccesStories";
-import Testimonial from "app/components/Home/Testimonials";
-import GetInTouchForm from "app/components/common/GetInTouchForm";
 import SectionHeader from "app/components/common/SectionHeader";
 import HowWeWork from "app/components/Services/HowWeWork";
-import Solutions from "app/components/Teams/Solutions";
 import OurSolutions from "app/components/Industries/Learning/OurSolutions";
 import REQUEST from "app/helpers/http.service";
 import API_ENDPOINTS from "app/helpers/apiEndpoint";
@@ -14,8 +11,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { apiEndpoint } from "app/scripts/fetch";
 import Metatag from "app/components/metaTag";
+import GetInTouchModal from "app/components/common/GetInTouchModal";
+import Partner from "app/components/common/Partner";
+import Awards from "app/components/common/Awards";
+import ToolsTechnologies from "app/components/Services/ToolsTechnologies";
+import GetInTouch from "app/components/warehouse/GetInTouch";
+import Faq from "app/components/Teams/Faq";
+import DataResources from "app/components/warehouse/DataResources";
+import CollaborateFrontend from "app/components/common/CollaborateFrontend";
+import Industries from "app/components/Services/Industries";
 
 export default function IndustriesLearning({ res }) {
+  const [modalScheduleCall, setModalScheduleCall] = useState(false);
   const dispatch = useDispatch();
   const { asPath } = useRouter();
   const router = useRouter();
@@ -29,7 +36,7 @@ export default function IndustriesLearning({ res }) {
     { label: "E-learning" },
   ];
 
-  const { industriesLearningData, offering, trusted, testimonial, stories } =
+  const { industriesLearningData, trusted, testimonial, stories } =
     JSON.parse(res);
 
   if (industriesLearningData?.error) {
@@ -51,14 +58,18 @@ export default function IndustriesLearning({ res }) {
         <meta
           property="og:title"
           content={
-            industriesLearningData?.title
-              ? industriesLearningData?.title
-              : `Vlink`
+            industriesLearningData?.Seo?.metaTitle ||
+            industriesLearningData?.title ||
+            `Vlink`
           }
         />
         <meta
           property="og:description"
-          content={industriesLearningData?.description || "Vlink Description"}
+          content={
+            industriesLearningData?.Seo?.metaDescription ||
+            industriesLearningData?.description ||
+            "Vlink Description"
+          }
         />
         <meta
           property="og:url"
@@ -67,61 +78,91 @@ export default function IndustriesLearning({ res }) {
 
         <Metatag
           content={apiEndpoint(
-            industriesLearningData?.section1?.image?.data?.attributes?.url
+            industriesLearningData?.Seo?.metaImage?.data?.attributes?.url ||
+              industriesLearningData?.section1?.image?.data?.attributes?.url
           )}
         />
         <link rel="canonical" href={canonicalUrl} />
       </Head>
-      <SectionHeader list={header} />
-      <HeroSection data={industriesLearningData?.section1} />
+      <SectionHeader list={header} isBreadcrumb={true} />
+      <HeroSection
+        isSupply={true}
+        setModalCall={setModalScheduleCall}
+        data={industriesLearningData?.HeroSection}
+        isEduHero={true}
+      />
       <CertificateBar
         isTrusted={true}
         section={Object.keys(trusted)?.length ? trusted : null}
       />
-      <Solutions
-        isIndustries={true}
-        section={{
-          h1_black: industriesLearningData?.section2?.h1_black,
-          h1_purple: industriesLearningData?.section2?.h1_purple,
-          p: industriesLearningData?.section2?.p,
-          body: industriesLearningData?.section2?.body,
-          button_text: industriesLearningData?.section2?.button_text,
-        }}
-        offering={offering}
+
+      <Partner
+        isPartnerFrontend={true}
+        partner={industriesLearningData?.Services}
       />
+
+      <Awards awards={industriesLearningData?.Awards} />
+
+      <Industries
+        industries={industriesLearningData?.edTech_Services}
+        isEduInd={true}
+      />
+
+      <DataResources
+        resources={industriesLearningData?.Projects}
+        isEduProduct={true}
+      />
+
       <OurSolutions
         section_title={industriesLearningData?.section3}
         section_content={industriesLearningData?.section3?.section3_detail}
+        isEduSol={true}
       />
-      <HowWeWork section={industriesLearningData?.working_process} />
-      <SuccessStories
-        section_title={industriesLearningData?.success_story}
-        section_content={stories}
+
+      <ToolsTechnologies
+        tech={industriesLearningData?.TechStack}
+        isToolsTechnologies={true}
+        isWeb={"Frontend"}
       />
-      <Testimonial
-        section_title={testimonial?.Testimonial}
-        section_content={testimonial?.testimonial_content}
+
+      <HowWeWork
+        section={industriesLearningData?.working_process}
+        isEduHow={true}
       />
-      {/* 
-      
-   
-    
-     */}
-      <GetInTouchForm />
+
+      <CollaborateFrontend
+        crm={industriesLearningData?.edTech_Guide}
+        isEducol={true}
+      />
+
+      <DataResources resources={industriesLearningData?.Latest} />
+
+      {industriesLearningData?.Faq && (
+        <Faq section={industriesLearningData?.Faq} isFaq={true} forCSS={true} />
+      )}
+
+      <GetInTouch
+        getintouch={industriesLearningData?.GetInTouch}
+        isStaff={true}
+      />
+
+      {modalScheduleCall && (
+        <GetInTouchModal
+          // modalData={modalData?.attributes}
+          isOpen={modalScheduleCall}
+          setIsOpen={setModalScheduleCall}
+        />
+      )}
     </div>
   );
 }
 
 export async function getStaticProps() {
-  const [industriesLearningData, offering, trusted, testimonial, stories] =
+  const [industriesLearningData, trusted, testimonial, stories] =
     await Promise.all([
       REQUEST({
         method: "GET",
         url: API_ENDPOINTS.INDUSTRIES_LEARNING,
-      }),
-      REQUEST({
-        method: "GET",
-        url: API_ENDPOINTS.INDUSTRY_OFFERINGS,
       }),
       REQUEST({
         method: "GET",
@@ -138,7 +179,6 @@ export async function getStaticProps() {
     ]);
   const res = JSON.stringify({
     industriesLearningData: industriesLearningData?.data?.data?.attributes,
-    offering: offering?.data?.data?.attributes?.industry_offering,
     trusted: trusted?.data?.data?.attributes,
     testimonial: testimonial?.data?.data?.attributes,
     stories: stories?.data?.data,

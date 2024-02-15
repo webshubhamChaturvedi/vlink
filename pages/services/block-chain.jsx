@@ -20,6 +20,7 @@ import Awards from "app/components/Services/Awards";
 import GetInTouchModal from "app/components/common/GetInTouchModal";
 import { apiEndpoint } from "app/scripts/fetch";
 import Metatag from "app/components/metaTag";
+import TimeLine from "app/components/common/TimeLine";
 
 export default function BlockChain(blockChain) {
   const [modalScheduleCall, setModalScheduleCall] = useState(false);
@@ -113,10 +114,10 @@ export default function BlockChain(blockChain) {
       <Partner partner={blockChain?.blockChain?.Partner} isPartner={true} />
 
       <Awards awards={blockChain?.blockChain?.awards} />
-
-      <ProcessTimeline
+      <TimeLine
         Process={blockChain?.blockChain?.Process}
         isBlockProcess={true}
+        isColor={true}
       />
 
       <ToolsTechnologies
@@ -132,7 +133,6 @@ export default function BlockChain(blockChain) {
       />
 
       <DataResources resources={blockChain?.blockChain?.resource} />
-
       {blockChain?.blockChain?.faqs && (
         <Faq
           section={blockChain?.blockChain?.faqs}

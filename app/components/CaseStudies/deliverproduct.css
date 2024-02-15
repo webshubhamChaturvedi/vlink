@@ -1,0 +1,13 @@
+.deliverpro {
+    transform: rotate(-30deg);
+    overflow: hidden;
+    /* transform-origin: top; */
+}
+.deliverpro .image {
+    /* width: 300px; */
+}
+.deliverproducts {
+    transform: skewY(-2deg);
+    transform-box: fill-box;
+    transform-origin: left;
+}

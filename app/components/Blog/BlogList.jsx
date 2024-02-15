@@ -13,7 +13,7 @@ export default function BlogList({ section, sidebar }) {
   const [loading, setLoading] = useState(true);
   const [optionsPagination, setOptionsPagination] = useState({
     page: CONSTANTS.PAGINATION_INITIAL_PAGE,
-    limit: CONSTANTS.PAGINATION_PAGE_SIZE,
+    limit: CONSTANTS.BLOG_PAGINATION_PAGE_SIZE,
     totalResults: 0,
   });
   const { page, limit, total } = optionsPagination;
@@ -121,7 +121,8 @@ export default function BlogList({ section, sidebar }) {
           </>
         )}
       </div>
-      {optionsPagination?.totalResults > CONSTANTS.PAGINATION_PAGE_SIZE && (
+      {optionsPagination?.totalResults >
+        CONSTANTS.BLOG_PAGINATION_PAGE_SIZE && (
         <Pagination
           loading={loading}
           paginationOptions={optionsPagination}

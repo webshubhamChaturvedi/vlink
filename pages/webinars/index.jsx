@@ -15,7 +15,7 @@ import Pagination from "app/components/common/Pagination";
 import { useRouter } from "next/router";
 import Metatag from "app/components/metaTag";
 
-export default function Webinars({ webinar, trusted, list }) {
+export default function Webinars({ webinar, webinardata, trusted, list }) {
   const { asPath } = useRouter();
   const router = useRouter();
   const canonicalUrl = (
@@ -54,15 +54,29 @@ export default function Webinars({ webinar, trusted, list }) {
         />
         <meta
           name="og:description"
-          content={webinar?.description || "Vlink Description"}
+          content={
+            webinardata?.attributes?.Seo?.metaDescription ||
+            webinar?.description ||
+            "Vlink Description"
+          }
         />
-        <meta name="og:title" content={webinar?.title || "Vlink"} />
+        <meta
+          name="og:title"
+          content={
+            webinardata?.attributes?.Seo?.metaTitle || webinar?.title || "Vlink"
+          }
+        />
 
         <meta
           property="og:url"
           content={`${process.env.NEXT_PUBLIC_BASE_URL}${asPath}`}
         />
-        <Metatag content={apiEndpoint(webinar?.image?.data?.attributes?.url)} />
+        <Metatag
+          content={apiEndpoint(
+            webinardata?.attributes?.Seo?.metaImage?.data?.attributes?.url ||
+              webinar?.image?.data?.attributes?.url
+          )}
+        />
 
         <link rel="canonical" href={canonicalUrl} />
       </Head>
@@ -75,7 +89,7 @@ export default function Webinars({ webinar, trusted, list }) {
           <div className="grid md:grid-cols-1 items-center">
             <h2 className="md:text-[40px] text-[22px] text-[#030303] font-[700] md:leading-[54px] leading-[30px] md:mb-8 mb-4 colors-black">
               Register and Watch
-              <span className="text-[#62207E]">On-demand </span>
+              <span className="text-[#62207E] ml-2">On-demand </span>
             </h2>
           </div>
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-7">
@@ -134,6 +148,7 @@ export async function getStaticProps() {
   return {
     props: {
       webinar: webinar?.data?.data?.attributes?.section1,
+      webinardata: webinar?.data?.data,
       list: contentPages,
       trusted: trusted?.data?.data?.attributes,
     },

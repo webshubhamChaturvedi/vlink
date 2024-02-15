@@ -19,12 +19,13 @@ export default function ExperiencedTeam({
     },
     h1: item.h || item.text,
     p: item?.p,
+    link: item?.link,
   }));
   return (
     <Container className="md:py-[55px] py-[30px]">
       <div className="text-center md:mb-[55px] mb-[30px]">
         <h4 className="xl:text-4xl lg:text-[32px] text-[22px] font-bold md:mb-5 mb-3 md:leading-[48px] leading-[30px]">
-          <span className="text-company">{section?.h1_purple}</span>
+          <span className="text-company mr-1">{section?.h1_purple}</span>
           {section?.h1_black}
         </h4>
         {section?.body ? (

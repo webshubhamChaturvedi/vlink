@@ -72,8 +72,8 @@ export default function SuccesfulTeams({ section }) {
         </div>
         <div className="relative md:basis-1/3 h-fit">
           <img
-            className="z-10 absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4"
-            src="https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_100/how_we_work_backdrop_e040e74ada.png"
+            className="z-10 absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 md:block hidden"
+            src="https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_100/how_we_work_backdrop_e040e74ada.png"
             alt="how-we-work-backdrop"
             width={218}
             height={230}

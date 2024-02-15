@@ -27,7 +27,7 @@ const JobDetailComponent = ({ section, opening }) => {
       dates.getFullYear();
   }
   return (
-    <Container>
+    <Container className="mt-20">
       <div className="flex flex-row justify-between items-center py-6 print-delete print-pt">
         <span className="flex  flex-1 items-center">
           <Link

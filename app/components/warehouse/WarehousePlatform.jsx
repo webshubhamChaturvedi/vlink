@@ -2,18 +2,17 @@ import React, { useState, useEffect, useRef } from "react";
 import { apiEndpoint } from "app/scripts/fetch";
 import LINK from "../common/LINK";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-
+import CloudinaryImage from "app/components/common/CloudinaryImage";
 export default function WarehousePlatform({ data }) {
-
   const [scrollOpacity, setScrollOpacity] = useState(0);
   const [currentSection, setCurrentSection] = useState(0);
 
   const ref = useRef();
 
-  let isBackendWarehouse = data?.platform_list?.map((data, key) => (<></>));
+  let isBackendWarehouse = data?.platform_list?.map((data, key) => <></>);
 
   const WarehouseImagelength = Number(isBackendWarehouse.length);
-  
+
   useEffect(() => {
     if (typeof window !== "undefined" > 767) {
       const handleScroll = () => {
@@ -56,9 +55,6 @@ export default function WarehousePlatform({ data }) {
     <section>
       <div
         className="container md:pt-[55px] pt-[30px]"
-        data-aos="fade-up"
-        data-aos-easing="linear"
-        data-aos-duration="1000"
       >
         <div className="flex flex-col md:flex-row md:justify-around items-center">
           <div className="succesful-team md:basis-full">
@@ -66,9 +62,8 @@ export default function WarehousePlatform({ data }) {
               <span
                 className="inline-block font-bold text-company bg-no-repeat bg-size-60 bg-[center_bottom_80%] pt-16 max-w-[800px]"
                 style={{
-                  backgroundImage: `url(${apiEndpoint(
-                    data?.image?.data?.attributes?.url
-                  )})`,
+                  backgroundImage: `url(${apiEndpoint(data?.image?.data?.attributes?.url)})`,
+                  // backgroundImage: `url(https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_480/Case_Study_e961648fdc.png)`,
                 }}
               >
                 {data?.title}
@@ -82,7 +77,6 @@ export default function WarehousePlatform({ data }) {
           className="md:flex-nowrap flex-wrap"
           style={{
             display: "flex",
-            // height: "400vh"
           }}
           ref={ref}
         >
@@ -99,62 +93,62 @@ export default function WarehousePlatform({ data }) {
                 <div className="md:max-w-[350px] w-full md:mb-0 mb-5">
                   <h5 className="lg:text-[24px] text-[20px] font-[600] text-left mb-2 text-[#383838] xl:leading-[35px] lg:leading-[25px]">
                     {data.h1_title}
-                    <span className="text-[#0050D5]">{data.colored_text}</span>
+                    <span className="text-[#0050D5] ml-1">
+                      {data.colored_text}
+                    </span>
                   </h5>
-                  <LINK m_top={'20px'} reflink={`${data?.btn_link}`} py={'py-2'} px={'px-5'} FAIcon={faArrowRight} bgColor={'#0050D5'} textColor={'#fff'} hoverBgColor={'#fff'} HOVERTextColor={'#000'} borderColor={"#0050D5"}>
+                  {data?.btn_link && (
+                    <LINK
+                      m_top={"20px"}
+                      reflink={`${data?.btn_link}`}
+                      py={"py-2"}
+                      px={"px-5"}
+                      FAIcon={faArrowRight}
+                      bgColor={"#0050D5"}
+                      textColor={"#fff"}
+                      hoverBgColor={"#fff"}
+                      HOVERTextColor={"#000"}
+                      borderColor={"#0050D5"}
+                    >
                       {data?.btn_text}
-                </LINK>
+                    </LINK>
+                  )}
                 </div>
-                <img
-                  src={apiEndpoint(data?.image?.data?.attributes?.url)}
-                  alt=""
+                <CloudinaryImage
+                  backendImgUrl={data?.image?.data?.attributes?.url}
+                  alt={data?.image?.data?.attributes?.alternativeText}
                   className="md:hidden"
                 />
               </div>
             ))}
           </div>
-          <div
-            className="relative md:basis-7/12 w-full lg:mt-10 md:block hidden"
-            // style={{
-            //   height: "100%"
-            // }}
-          >
+          <div className="relative md:basis-7/12 w-full lg:mt-10 md:block hidden">
             {currentSection === -1 ? (
-              <img
-                src={imageUrls[0]}
-                alt="Thumbnail"
+              <CloudinaryImage
+                backendImgUrl={imageUrls[0]}
+                alt={"Thumbnail"}
                 style={{
                   opacity: scrollOpacity,
-
                   transition: "transition: all 0.5s",
-
-                  // height: "100px",
-
-                  // width: "100px",
-                  // position: "fixed",
-
                   position: "sticky",
                   top: "0px",
                 }}
               />
             ) : (
-              <img
-                src={imageUrls[currentSection]}
-                alt="Thumbnail"
-                style={{
-                  opacity: scrollOpacity,
-
-                  transition: "transition: all 0.5s",
-
-                  // height: "100px",
-
-                  // width: "100px",
-                  // position: "fixed",
-
-                  position: "sticky",
-                  top: "55px",
-                }}
-              />
+              <>
+                {imageUrls[currentSection] && (
+                  <CloudinaryImage
+                    backendImgUrl={imageUrls[currentSection]}
+                    alt={"Thumbnail"}
+                    style={{
+                      opacity: scrollOpacity,
+                      transition: "transition: all 0.5s",
+                      position: "sticky",
+                      top: "55px",
+                    }}
+                  />
+                )}
+              </>
             )}
           </div>
         </div>

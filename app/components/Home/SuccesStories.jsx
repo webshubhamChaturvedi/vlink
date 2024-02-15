@@ -15,7 +15,7 @@ const SuccessStories = ({ section_title, section_content }) => {
           <div className="md:pb-5 pb-3">
             <h5 className="text-company text-center mb-3 font-sans font-[700] xl:text-4xl lg:text-[32px] text-[22px]">
               {section_title?.h1_purple || "Success"}
-              <span className="font-bold text-black">
+              <span className="font-bold text-black ml-1.5">
                 {section_title?.h1_black || "Stories"}
               </span>
             </h5>

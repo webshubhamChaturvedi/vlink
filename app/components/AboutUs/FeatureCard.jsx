@@ -40,11 +40,6 @@ export default function FeatureCard({ data }) {
   return (
     <div className="w-full sm:basis-1/2 md:basis-1/2 lg:basis-1/3 xl:basis-1/4 p-4 d">
       <div style={style.container} className="h-full">
-        {/* <img
-          src={apiEndpoint(data?.icon?.data?.attributes?.url)}
-          style={style.image}
-          alt={data?.icon?.data?.attributes?.alternativeText || data?.icon?.data?.attributes?.name}
-        /> */}
         <CloudinaryImage
           type="icon"
           backendImgUrl={data?.icon?.data?.attributes?.url}

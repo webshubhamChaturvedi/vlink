@@ -30,7 +30,7 @@ const AvatarSecction = ({ data, classContainer, isAbout = false }) => {
           />
         ) : (
           <Image
-            src="https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_130/users_anonimus_icon_73a97d43_4b0b9e2d22.png"
+            src="https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_130/users_anonimus_icon_73a97d43_4b0b9e2d22.png"
             alt="icon"
             className="rounded-full w-12  h-12"
             width={12}

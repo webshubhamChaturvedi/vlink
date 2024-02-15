@@ -20,7 +20,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-export default function DataWarehouse({ warehouse, trusted }) {
+export default function DataWarehouse({ warehouse, trusted, testimonial }) {
   const { asPath } = useRouter();
   const [modalScheduleCall, setModalScheduleCall] = useState(false);
 
@@ -92,7 +92,7 @@ export default function DataWarehouse({ warehouse, trusted }) {
 
       <Infrastructure infrastructure={warehouse?.infrastructure} />
 
-      <TestimonialData customers={warehouse?.customers} />
+      <TestimonialData testimonials={testimonial} isNewTestimonial={true} />
 
       <DataResources resources={warehouse?.resources} />
 
@@ -112,7 +112,7 @@ export default function DataWarehouse({ warehouse, trusted }) {
 }
 
 export async function getStaticProps() {
-  const [warehouse, trusted] = await Promise.all([
+  const [warehouse, trusted, testimonial] = await Promise.all([
     REQUEST({
       method: "GET",
       url: API_ENDPOINTS.DATA_WAREHOUSE,
@@ -121,11 +121,16 @@ export async function getStaticProps() {
       method: "GET",
       url: API_ENDPOINTS.TRUSTED_BY_STARTUPS,
     }),
+    REQUEST({
+      method: "GET",
+      url: API_ENDPOINTS.TESTIMONIALS,
+    }),
   ]);
   return {
     props: {
       trusted: trusted?.data?.data?.attributes,
       warehouse: warehouse?.data?.data?.attributes,
+      testimonial: testimonial?.data?.data?.attributes,
     },
   };
 }

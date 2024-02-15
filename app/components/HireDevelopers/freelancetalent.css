@@ -1,0 +1,22 @@
+.freelance_talent button.slick-arrow {
+    background-image: linear-gradient(143.25deg, #C8FFF8 100%, rgba(200, 255, 248, 0) 100%);
+    width: 40px;
+    height: 40px;
+    border-radius: 100% !important;
+}
+.freelance_talent .slick-prev {
+    left: 0px;
+    z-index: 1;
+}
+.freelance_talent .slick-next {
+    right: 0px;
+}
+/* .slick-prev:hover, .slick-prev:focus, .slick-next:hover, .slick-next:focus {
+    background-color: #0050D5;
+} */
+.freelance_talent .slick-prev:before {
+    content: 'L';
+}
+.freelance_talent .slick-next:before {
+    content: 'R';
+}

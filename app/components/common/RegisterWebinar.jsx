@@ -9,6 +9,7 @@ import * as yup from "yup";
 import { countries } from "app/helpers/countries";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { timeZoneCityToCountry } from "app/helpers/timeZoneCityToCountry";
 
 export default function RegisterWebinar({ webinar }) {
   const captcha = useRef(null);
@@ -16,16 +17,27 @@ export default function RegisterWebinar({ webinar }) {
   const [email, setEmail] = useState(true);
   const [captchaError, setCaptchaError] = useState(false);
   const [phone, setPhone] = useState(true);
-  const [isLoading,setIsLoading] = useState(false);
-  const [isSubscribed, setIsSubscribed] = useState(true); 
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(true);
 
   const { asPath } = useRouter();
-  
+
+  let userCity;
+  let userCountry;
+  let userTimeZone;
+  if (Intl) {
+    userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var tzArr = userTimeZone.split("/");
+    userCity = tzArr[tzArr.length - 1];
+    timeZoneCityToCountry.map((coun, key) => (
+      <>{(userCountry = coun[userCity])}</>
+    ));
+  }
 
   const handleChange = () => {
-    setIsSubscribed(current => !current);
+    setIsSubscribed((current) => !current);
   };
-  
+
   function onChangeCaptcha(value) {
     if (captcha.current.getValue() && captcha.current.getValue() != "") {
       setCaptchaError(false);
@@ -48,6 +60,8 @@ export default function RegisterWebinar({ webinar }) {
       company: "",
       name: "",
       email: "",
+      countryName: userCountry,
+      sourceCode: asPath,
     },
   });
   const toast = useSelector((state) => state?.toast);
@@ -65,7 +79,7 @@ export default function RegisterWebinar({ webinar }) {
       captcha.current.getValue() != "" &&
       email
     ) {
-      setIsLoading(true)
+      setIsLoading(true);
       try {
         const formData = {
           ...data,
@@ -73,20 +87,20 @@ export default function RegisterWebinar({ webinar }) {
         const res = await REQUEST({
           method: "POST",
           url: API_ENDPOINTS.SAVE_WEBINAR_FORM,
-          data: { data: {...formData,webinar} },
+          data: { data: { ...formData, webinar } },
         });
         if (res?.status === 200) {
           toast.success("Submitted successfully");
           setCaptchaError(false);
           captcha.current.reset();
           reset();
-          setIsLoading(false)
+          setIsLoading(false);
         } else {
-          toast.error(res?.data?.error?.message)
-          setIsLoading(false)
+          toast.error(res?.data?.error?.message);
+          setIsLoading(false);
         }
       } catch (err) {
-        setIsLoading(false)
+        setIsLoading(false);
         toast.error("failed");
       }
     } else {
@@ -94,21 +108,7 @@ export default function RegisterWebinar({ webinar }) {
     }
   };
 
-  // function myFunction() {
-  //   var element = document.getElementById("red html");
-  //   element.classList.add("mystyle");
-  // }
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     document.getElementById("red").style.backgroundColor = "blue";
-  //     myFunction()
-  //   }, 4000);
-  // }, []);
-
-  
-
   return (
-    // <div className="bg-[#fff] drop-shadow-[0px_0px_15px_rgba(0,0,0,0.1)] p-[1px] rounded-[6px]" >
     <div className="bg-[#e8ebef] p-[10px] rounded-[6px]">
       <h4 className="font-[700] text-[32px] font-sans leading-[41px]  text-[#000203C2] px-[18px] pt-4 pb-3">
         Register Today
@@ -152,7 +152,7 @@ export default function RegisterWebinar({ webinar }) {
             )}
             {!email && (
               <span className="mt-2 font-normal text-sm text-red-700">
-                {"email must be a valid email"}
+                {"Email must be a valid"}
               </span>
             )}
           </div>
@@ -202,7 +202,9 @@ export default function RegisterWebinar({ webinar }) {
               <option value="Executive">Executive</option>
               <option value="Director">Director</option>
               <option value="Manager">Manager</option>
-              <option value="Individual Contributer">Individual Contributer</option>
+              <option value="Individual Contributer">
+                Individual Contributer
+              </option>
             </select>
             {errors.country && (
               <span className="mt-2 font-normal text-sm text-red-700">
@@ -219,9 +221,11 @@ export default function RegisterWebinar({ webinar }) {
               <option hidden value="">
                 Select Country
               </option>
-              {countries.map(country =>
-                <option value={country.value} key={country.value}>{country.name}</option>
-              )}
+              {countries.map((country) => (
+                <option value={country.value} key={country.value}>
+                  {country.name}
+                </option>
+              ))}
             </select>
             {errors.country && (
               <span className="mt-2 font-normal text-sm text-red-700">
@@ -230,20 +234,37 @@ export default function RegisterWebinar({ webinar }) {
             )}
           </div>
           <div className="mb-2">
-            <label htmlFor="subscribe" style={{fontFamily:"inherit"}} className="text-[14px] text-[#0000008F]">
-            <input
-              className="mr-2"
-              type="checkbox"
-              defaultChecked={true}
-              value={isSubscribed}
-              onChange={handleChange}
-              id="subscribe"
-              name="subscribe"
-            /> 
-               Send me information about upcoming webinars, new technology updates.</label>
+            <label
+              htmlFor="subscribe"
+              style={{ fontFamily: "inherit" }}
+              className="text-[14px] text-[#0000008F]"
+            >
+              <input
+                className="mr-2"
+                type="checkbox"
+                defaultChecked={true}
+                value={isSubscribed}
+                onChange={handleChange}
+                id="subscribe"
+                name="subscribe"
+              />
+              Send me information about upcoming webinars, new technology
+              updates.
+            </label>
           </div>
           <div className="mb-4">
-            <p className="text-[11px] text-[#0000008F] font-sans font-[400]">*Please un-check the box to let us know if you dont wish to receive the updates. Your details will be kept safe and secure. To know more about your data protection rights, please take a look at our <Link className="text-[#000000] hover:underline" href="/privacy-policy">privacy policy.</Link></p>
+            <p className="text-[11px] text-[#0000008F] font-sans font-[400]">
+              *Please un-check the box to let us know if you dont wish to
+              receive the updates. Your details will be kept safe and secure. To
+              know more about your data protection rights, please take a look at
+              our{" "}
+              <Link
+                className="text-[#000000] hover:underline"
+                href="/privacy-policy"
+              >
+                privacy policy.
+              </Link>
+            </p>
           </div>
           <div className="mt-2 mb-4">
             <ReCAPTCHA
@@ -257,17 +278,31 @@ export default function RegisterWebinar({ webinar }) {
               </span>
             )}
           </div>
+          <input
+            type="text"
+            placeholder="countryName"
+            {...register("countryName")}
+            name="countryName"
+            className="hidden"
+          />
+          <input
+            type="text"
+            placeholder="SourceCode"
+            {...register("sourceCode")}
+            name="sourceCode"
+            className="hidden"
+          />
           <button
             type="submit"
-            className={`font-[600] text-[16px] tracking-[-0.4px] uppercase text-[#fff] ${isLoading ? "bg-gray-500" : "bg-[#62207E]"} rounded-[2px] h-[44px] text-center w-full font-sans`}
+            className={`font-[600] text-[16px] tracking-[-0.4px] uppercase text-[#fff] ${
+              isLoading ? "bg-gray-500" : "bg-[#62207E]"
+            } rounded-[2px] h-[44px] text-center w-full font-sans`}
             disabled={isLoading}
           >
             Register Now
           </button>
         </form>
       </div>
-      {/* <iframe id="red" className="iframe-register bg-[#edeaef] h-[1200px] w-[100%]" src="https://www.airmeet.com/widgets/event/2990ba80-e036-11ed-a0f7-1fad749c585b/embedded-registration?communityId=bc84d0fe-ab16-4891-a802-ed4e5542f274&backgroundColor=6a4dff&isLightAmbience=true" frameBorder="0">
-      </iframe> */}
     </div>
   );
 }

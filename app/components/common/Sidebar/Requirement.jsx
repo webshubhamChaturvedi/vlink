@@ -1,15 +1,15 @@
 import API_ENDPOINTS from "app/helpers/apiEndpoint";
 import REQUEST from "app/helpers/http.service";
 import { Button } from "flowbite-react";
-import React,{ useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import Card from "../Card";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ReCAPTCHA from "react-google-recaptcha";
-// import dynamic from 'next/dynamic';
-// const ReCAPTCHA = dynamic(() => import('react-google-recaptcha'));
+import { useRouter } from "next/router";
+import { timeZoneCityToCountry } from "app/helpers/timeZoneCityToCountry";
 
 export default function Requirement() {
   const [email, setEmail] = useState(true);
@@ -17,15 +17,38 @@ export default function Requirement() {
   const [captchaError, setCaptchaError] = useState(false);
   const [active, setActive] = useState(false);
 
+  const { asPath } = useRouter();
+
+  let userCity;
+  let userCountry;
+  let userTimeZone;
+  if (Intl) {
+    userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var tzArr = userTimeZone.split("/");
+    userCity = tzArr[tzArr.length - 1];
+    timeZoneCityToCountry.map((coun, key) => (
+      <>{(userCountry = coun[userCity])}</>
+    ));
+  }
+
   function onChangeCaptcha(value) {
     if (captcha.current.getValue() && captcha.current.getValue() != "") {
       setCaptchaError(false);
     }
   }
+  const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const nameRegex = /^[A-Za-z\s]+$/;
+
   const Schema = yup.object().shape({
     company: yup.string().required(),
-    email: yup.string().email().required("Email is required"),
-    name: yup.string().required("Full name  is required"),
+    email: yup
+      .string("Email is required")
+      .matches(emailRegex, "Email must be a valid"),
+    name: yup
+      .string()
+      .required("Full name  is required")
+      .matches(nameRegex, "Name can not contain number and special character"),
     requirement: yup.string().required("Requirement is required"),
     message: yup.string().required("message is required"),
   });
@@ -41,23 +64,19 @@ export default function Requirement() {
       name: "",
       message: "",
       requirement: "",
-      email:"",
+      email: "",
+      countryName: userCountry,
+      sourceCode: asPath,
     },
   });
   const toast = useSelector((state) => state?.toast);
-  const isValidEmail = (email) =>
-    setEmail(
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-        email
-      )
-    );
   const SubmitHandler = async (data) => {
     if (captcha.current.getValue() && captcha.current.getValue() != "") {
       try {
         const formData = {
           ...data,
         };
-        setActive(!active)
+        setActive(!active);
         const res = await REQUEST({
           method: "POST",
           url: API_ENDPOINTS.SAVE_GOT_A_REQUIREMENTS,
@@ -68,7 +87,7 @@ export default function Requirement() {
           setCaptchaError(false);
           captcha.current.reset();
           reset();
-          setActive(active)
+          setActive(active);
         } else toast.error(res?.data?.error?.message);
       } catch (err) {
         toast.error("failed");
@@ -92,7 +111,7 @@ export default function Requirement() {
         />
         {errors.name && (
           <span className="mt-2 font-normal text-sm text-red-700">
-            This field is required
+            {errors?.name?.message}
           </span>
         )}
         <input
@@ -101,20 +120,12 @@ export default function Requirement() {
           name="email"
           type="email"
           className="!bg-white w-full border-[1px] border-[#d1d5db] rounded-[0.125rem] p-[0.75rem] font-[0.875rem] leading-[1.25rem]"
-          onChange={(e) => {
-            isValidEmail(e.target.value);
-          }}
         />
-          {errors.email && (
-                  <span className="mt-2 font-normal text-sm text-red-700">
-                    {errors.email?.message}
-                  </span>
-                )}
-                {!email && (
-                  <span className="mt-2 font-normal text-sm text-red-700">
-                    {"email must be a valid email"}
-                  </span>
-                )}
+        {errors.email && (
+          <span className="mt-2 font-normal text-sm text-red-700">
+            {errors.email?.message}
+          </span>
+        )}
 
         <input
           placeholder="Company"
@@ -132,7 +143,7 @@ export default function Requirement() {
           {...register("requirement")}
           className="!bg-white w-full border-[1px] border-[#d1d5db] rounded-[0.125rem] p-[0.75rem] text-[0.875rem] leading-[1.25rem]"
         >
-          <option  value="" hidden>
+          <option value="" hidden>
             Select Your Requirement*
           </option>
           <option value="hire-dedicated-team">Hire Dedicated team</option>

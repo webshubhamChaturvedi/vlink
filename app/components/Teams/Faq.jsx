@@ -5,15 +5,27 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { apiEndpoint } from "app/scripts/fetch";
-export default function Faq({ section, isFaq = false, id, forCSS = false }) {
+import { createMarkup } from "app/scripts/utils";
+import "./faq.css"
+
+export default function Faq({
+  section,
+  isFaq = false,
+  id,
+  forCSS = false,
+  isDeleteRightData = false,
+  isBenchFaq = false,
+}) {
   let faqlist = isFaq
     ? section?.faq_list?.map((list, key) => ({
         question: list?.question,
         answer: list?.answer,
+        descriptionEditor: list?.descriptionEditor,
       }))
     : section?.faq_detail?.map((list, key) => ({
         question: list?.question,
         answer: list?.answer,
+        descriptionEditor: list?.descriptionEditor,
       }));
 
   const router = useRouter();
@@ -25,13 +37,20 @@ export default function Faq({ section, isFaq = false, id, forCSS = false }) {
   };
 
   return (
-    <Container>
-      <div
-        className="md:py-[55px] py-[30px]"
-        data-aos="fade"
-        data-aos-easing="linear"
-      >
-        {isFaq ? (
+    <Container className="faqs-sec">
+      <div className="md:py-[55px] py-[30px]">
+        {isFaq && isBenchFaq ? (
+          <div className="">
+            <h4 className="relative font-bold text-black xl:text-4xl lg:text-[32px] text-[22px] text-center xl:leading-[45px] lg:leading-[35px] mb-3">
+              <span className="lg:text-[100px] text-[45px] font-[800] block w-[100%] lg:leading-[100px] leading-[45px] text_stock barlow text-[transparent]">
+                {"FAQs"}
+              </span>
+              <span className="w-[100%] font-bold relative mt-[-30px] block">
+                {section?.title}
+              </span>
+            </h4>
+          </div>
+        ) : isFaq ? (
           <div className="text-center">
             <h4 className="font-bold text-black xl:text-4xl lg:text-[32px] text-[22px] text-center xl:leading-[45px] lg:leading-[35px] mb-5">
               <span
@@ -51,13 +70,17 @@ export default function Faq({ section, isFaq = false, id, forCSS = false }) {
             <p className="text-primary font-semibold mb-4">{section?.h}</p>
             <h5 className="xl:text-4xl lg:text-[32px] text-[22px] font-bold">
               {section?.h1_black}
-              <span className="text-company">{section?.h1_purple}</span>
+              <span className="text-company ml-2">{section?.h1_purple}</span>
             </h5>
           </div>
         )}
 
         <div className="flex md:pt-[55px] pt-[25px] flex-wrap">
-          <div className="md:basis-3/4 md:pr-8">
+          <div
+            className={`${
+              isDeleteRightData ? "md:basis-4/4" : "lg:basis-3/4 lg:pr-8 lg:mb-0 mb-5"
+            }`}
+          >
             {faqlist?.map((item, key) => (
               <div
                 className={`shadow-[0px_0px_2px_rgba(0,_0,_0,_0.25)] ${
@@ -69,7 +92,7 @@ export default function Faq({ section, isFaq = false, id, forCSS = false }) {
                 }`}
                 key={key}
               >
-                <div className={`open=${open === key}`}>
+                <div className={`open=${open === key} ${open === key}`}>
                   <div
                     onClick={() => handleOpen(key)}
                     className={`faq-question ${
@@ -82,62 +105,114 @@ export default function Faq({ section, isFaq = false, id, forCSS = false }) {
                   >
                     {item?.question}
                   </div>
-                  <div className="faq-answer ">{item?.answer}</div>
+                  {item?.descriptionEditor 
+                  ? 
+                  <div
+                    className="faq-answer"
+                    dangerouslySetInnerHTML={createMarkup(
+                      item?.descriptionEditor
+                    )}
+                  >
+                  </div>
+                  :
+                    <div className="faq-answer ">{item?.answer}</div>
+                  }
                 </div>
               </div>
             ))}
           </div>
           {/* TODO pending card text */}
-          <Card
-            className="bg-lightGray px-7 py-10"
-            containerClass={`md:basis-1/4 basis-1/1 w-[100%] shadow-none md:pl-8 ${
-              forCSS ? "pt-0" : "pt-5"
-            }`}
-            forCSS={true}
-          >
-            <h5 className="mb-3 font-semibold">Interested Fields</h5>
-            <h5 className="text-primary mb-16 font-normal">
-              {isFaq ? (
-                section?.view_faqs?.map((item, key) => (
-                  <Link
-                    href={`${item.link !== null && item?.link}`}
-                    key={key}
-                    className="block"
-                  >
-                    {item?.text}
-                  </Link>
-                ))
-              ) : (
-                <Link
-                  href="/services/cloud-managed-infrastructure-services"
-                  className="block"
-                >
-                  Cloud Managed Services
-                </Link>
-              )}
-              {isFaq
-                ? section?.viewFaq?.map((item, key) => (
-                    <Link href={`${item?.link}`} key={key} className="block">
+          {section?.view_faqs && (
+            <Card
+              className="bg-lightGray px-7 py-10"
+              containerClass={` ${
+                isDeleteRightData
+                  ? "hidden"
+                  : "lg:basis-1/4 basis-1/1 w-[100%] shadow-none lg:pl-8"
+              } ${forCSS ? "pt-0" : "pt-5"}`}
+              forCSS={true}
+            >
+              <h5 className="mb-3 font-semibold">Interested Fields</h5>
+              <h5 className="text-primary mb-16 font-normal">
+                {isFaq ? (
+                  section?.view_faqs?.map((item, key) => (
+                    <Link
+                      href={`${item.link !== null && item?.link}`}
+                      key={key}
+                      className="block"
+                    >
                       {item?.text}
                     </Link>
                   ))
-                : ""}
-            </h5>
-            <div
-              className="flex items-center cursor-pointer"
-              onClick={() => router.push("/about-us/faq")}
-            >
-              <h4 className="font-semibold" style={{ fontSize: "18px" }}>
-                VIEW ALL FAQ
-              </h4>
-              <button
-                className="w-6 h-6 bg-primary text-white !rounded-full p-1 ml-5 flex items-center"
-                id="allFaq"
+                ) : (
+                  <Link
+                    href="/services/cloud-managed-infrastructure-services"
+                    className="block"
+                  >
+                    Cloud Managed Services
+                  </Link>
+                )}
+                {isFaq
+                  ? section?.viewFaq?.map((item, key) => (
+                      <Link href={`${item?.link}`} key={key} className="block">
+                        {item?.text}
+                      </Link>
+                    ))
+                  : ""}
+              </h5>
+              <div
+                className="flex items-center cursor-pointer"
+                onClick={() => router.push("/about-us/faq")}
               >
-                <ArrowIcon />
-              </button>
-            </div>
-          </Card>
+                <h4 className="font-semibold" style={{ fontSize: "18px" }}>
+                  VIEW ALL FAQ
+                </h4>
+                <button
+                  className="w-6 h-6 bg-primary text-white !rounded-full p-1 ml-5 flex items-center"
+                  id="allFaq"
+                >
+                  <ArrowIcon />
+                </button>
+              </div>
+            </Card>
+          )}
+
+          {section?.viewFaq && (
+            <Card
+              className="bg-lightGray px-7 py-10"
+              containerClass={` ${
+                isDeleteRightData
+                  ? "hidden"
+                  : "lg:basis-1/4 basis-1/1 w-[100%] shadow-none lg:pl-8"
+              } ${forCSS ? "pt-0" : "pt-5"}`}
+              forCSS={true}
+            >
+              <h5 className="mb-3 font-semibold">Interested Fields</h5>
+              <h5 className="text-primary mb-16 font-normal">
+                {isFaq
+                  ? section?.viewFaq?.map((item, key) => (
+                      <Link href={`${item?.link}`} key={key} className="block">
+                        {item?.text}
+                      </Link>
+                    ))
+                  : ""}
+              </h5>
+              <div
+                className="flex items-center cursor-pointer"
+                onClick={() => router.push("/about-us/faq")}
+              >
+                <h4 className="font-semibold" style={{ fontSize: "18px" }}>
+                  VIEW ALL FAQ
+                </h4>
+                <button
+                  className="w-6 h-6 bg-primary text-white !rounded-full p-1 ml-5 flex items-center"
+                  id="allFaq"
+                >
+                  <ArrowIcon />
+                </button>
+              </div>
+            </Card>
+          )}
         </div>
       </div>
     </Container>

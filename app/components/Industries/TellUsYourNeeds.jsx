@@ -11,7 +11,7 @@ export default function TellUsYourNeeds({ section }) {
       className="bg-tell-us-your-needs bg-cover bg-no-repeat pt-20 pb-16 mb-5"
       style={{
         backgroundImage:
-          "linear-gradient(0deg, rgba(74,12,100,0.96), rgba(74, 12, 100, 0.96)), url('https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_991/v1691470534/tell_us_your_needs_background_f008b0eb58.png')",
+          "linear-gradient(0deg, rgba(74,12,100,0.96), rgba(74, 12, 100, 0.96)), url('https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_991/v1691470534/tell_us_your_needs_background_f008b0eb58.png')",
       }}
     >
       <Container className="text-center text-white space-y-10">

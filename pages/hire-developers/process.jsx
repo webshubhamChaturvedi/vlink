@@ -15,7 +15,6 @@ import monitor from "./../../public/img/monitor.gif";
 import ebook from "./../../public/img/ebook.gif";
 import { useSelector } from "react-redux";
 
-
 export default function Process({
   data1,
   data2,
@@ -26,6 +25,8 @@ export default function Process({
   data6,
   data7,
 }) {
+  const { asPath } = useRouter();
+
   const {
     register,
     setValue,
@@ -45,6 +46,7 @@ export default function Process({
         email: "",
         phone: "",
       },
+      sourceCode: asPath,
     },
     mode: "onChange",
     reValidateMode: "onChange",
@@ -69,6 +71,13 @@ export default function Process({
           </h1>
           <div className="flex justify-center">
             <div className="flex flex-row md:flex-none flex-wrap justify-center py-[55px] md:w-[60%] w-[100%] md:px-[0px] px-[20px]">
+              <input
+                type="text"
+                placeholder="sourceCode"
+                {...register("sourceCode")}
+                name="sourceCode"
+                className="hidden"
+              />
               <Label
                 htmlFor="desktop"
                 className={`flex md:flex-1 md:w-[auro] w-[100%] md:mb-0 mb-[20px] space-x-2 items-center gap-2 bg-white border-[2px] h-[55px] ${
@@ -143,7 +152,7 @@ export default function Process({
           <button
             className="sm:w-[110px] w-[50%] text-center font16 font-semibold  sm:rounded-[0.25rem] rounded-[0px_!important] md:text-[14px] text-[20px] bg-[#1a56db] border-[#1a56db] text-[#fff] py-[0.5rem]"
             onClick={() => {
-              handleNext()
+              handleNext();
             }}
           >
             Next
@@ -151,88 +160,88 @@ export default function Process({
         </div>
       </div>
     );
-  }
+  };
   const SecondComponent = () => {
     return (
-          <div>
-            <div className="col-span-12 mb-10">
-              <h2 className="after:content-[''] after:w-[100px] after:h-[3px] after:absolute after:bottom-0 after:block after:bg-[#62207E] after:left-[50%] after:translate-x-[-50%] relative text-center font-extrabold md:text-[2.5rem] text-[28px] md:leading-[52px] leading-[35px] max-w-[800px] m-auto pb-4">
-                {data2?.title}
-              </h2>
-            </div>
-            <div className="col-span-12">
-              <div className=" max-full m-auto">
-                <div className="max-w-[1000px] m-auto sm:px-10 sm:py-[55px] pb-[55px]">
-                  <div className="grid grid-cols-12 gap-10">
-                    {data2?.options.length > 0 &&
-                      data2?.options?.map((option, i) => (
-                        <div
-                          key={i}
-                          className="lg:col-span-4 md:col-span-6 col-span-12"
+      <div>
+        <div className="col-span-12 mb-10">
+          <h2 className="after:content-[''] after:w-[100px] after:h-[3px] after:absolute after:bottom-0 after:block after:bg-[#62207E] after:left-[50%] after:translate-x-[-50%] relative text-center font-extrabold md:text-[2.5rem] text-[28px] md:leading-[52px] leading-[35px] max-w-[800px] m-auto pb-4">
+            {data2?.title}
+          </h2>
+        </div>
+        <div className="col-span-12">
+          <div className=" max-full m-auto">
+            <div className="max-w-[1000px] m-auto sm:px-10 sm:py-[55px] pb-[55px]">
+              <div className="grid grid-cols-12 gap-10">
+                {data2?.options.length > 0 &&
+                  data2?.options?.map((option, i) => (
+                    <div
+                      key={i}
+                      className="lg:col-span-4 md:col-span-6 col-span-12"
+                    >
+                      <div className="flex items-center">
+                        <input
+                          id={`industry-${option.id}`}
+                          checked={watch("industry.id") == option.id}
+                          type="radio"
+                          className="w-[20px] h-[20px] text-blue-600 bg-[#fff] border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                          onChange={() => {
+                            setValue("industry", {
+                              id: option.id,
+                              title: option.title,
+                            });
+                          }}
+                        />
+                        <label
+                          htmlFor={`industry-${option.id}`}
+                          className="ml-2 text-[18px] font-[400] text-[#212121] dark:text-[#212121] cursor-pointer"
+                          onChange={() => {
+                            setValue("industry", {
+                              id: option.id,
+                              title: option.title,
+                            });
+                          }}
                         >
-                          <div className="flex items-center">
-                            <input
-                              id={`industry-${option.id}`}
-                              checked={watch("industry.id") == option.id}
-                              type="radio"
-                              className="w-[20px] h-[20px] text-blue-600 bg-[#fff] border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                              onChange={() => {
-                                setValue("industry", {
-                                  id: option.id,
-                                  title: option.title,
-                                });
-                              }}
-                            />
-                            <label
-                              htmlFor={`industry-${option.id}`}
-                              className="ml-2 text-[18px] font-[400] text-[#212121] dark:text-[#212121] cursor-pointer"
-                              onChange={() => {
-                                setValue("industry", {
-                                  id: option.id,
-                                  title: option.title,
-                                });
-                              }}
-                            >
-                              {option.title}
-                            </label>
-                          </div>
-                        </div>
-                      ))}
-                  </div>
-                </div>
+                          {option.title}
+                        </label>
+                      </div>
+                    </div>
+                  ))}
               </div>
-              <div className="mt-10 text-center setposition">
-                <button
-                  onClick={() => push("/hire-developers")}
-                  type="button"
-                  className="sm:w-[110px] w-[50%] font-semibold text-center text-[#FF3D3D] border-[1px] border-[#FF3D3D] py-2 px-4 sm:mb-3 sm:rounded-[0.25rem] rounded-[0px_!important] sm:inline-block hidden"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => {
-                    handleBack()
-                  }}
-                  type="button"
-                  className="sm:w-[110px] w-[50%] sm:mx-4 font-semibold text-center text-[#62207E] border-[1px] border-[#62207E] py-2 px-4 rounded-[4px] sm:mb-3 sm:rounded-[0.25rem] rounded-[0px_!important] md:text-[14px] text-[20px] py-[0.5rem]"
-                >
-                  Previous
-                </button>
-                <button
+            </div>
+          </div>
+          <div className="mt-10 text-center setposition">
+            <button
+              onClick={() => push("/hire-developers")}
+              type="button"
+              className="sm:w-[110px] w-[50%] font-semibold text-center text-[#FF3D3D] border-[1px] border-[#FF3D3D] py-2 px-4 sm:mb-3 sm:rounded-[0.25rem] rounded-[0px_!important] sm:inline-block hidden"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => {
+                handleBack();
+              }}
+              type="button"
+              className="sm:w-[110px] w-[50%] sm:mx-4 font-semibold text-center text-[#62207E] border-[1px] border-[#62207E] py-2 px-4 rounded-[4px] sm:mb-3 sm:rounded-[0.25rem] rounded-[0px_!important] md:text-[14px] text-[20px] py-[0.5rem]"
+            >
+              Previous
+            </button>
+            <button
               disabled={!watch("industry")}
               onClick={() => {
-                handleNext()
+                handleNext();
               }}
               type="button"
               className="sm:w-[110px] w-[50%] font-semibold text-center text-[#ffffff] border-[1px] border-[#0050D5] py-2 px-4 bg-[#0050D5] rounded-[4px] sm:mr-2 sm:rounded-[0.25rem] rounded-[0px_!important] md:text-[14px] text-[20px] bg-[#1a56db] border-[#1a56db] text-[#fff] py-[0.5rem]"
             >
               Next
             </button>
-              </div>
-            </div>
           </div>
-        );
-  }
+        </div>
+      </div>
+    );
+  };
   const ThirdComponent = () => {
     const [enter, setEnter] = useState(true);
 
@@ -259,7 +268,7 @@ export default function Process({
     };
 
     useEffect(() => {
-      if (activeStep.key == "thirdStep"  && enter) {
+      if (activeStep.key == "thirdStep" && enter) {
         check_validation();
         setEnter(false);
       }
@@ -441,7 +450,7 @@ export default function Process({
             <button
               ref={btnNext}
               onClick={() => {
-                handleNext()
+                handleNext();
                 // nextStep();
                 // setProgress(progress + proportion);
               }}
@@ -456,7 +465,7 @@ export default function Process({
         </div>
       </div>
     );
-  }
+  };
   const FourthComponent = () => {
     const [enter, setEnter] = useState(true);
     const btnNext = useRef();
@@ -628,7 +637,7 @@ export default function Process({
             <button
               type="button"
               onClick={() => {
-                handleBack()
+                handleBack();
                 // previousStep();
                 // setProgress(progress - proportion);
               }}
@@ -642,7 +651,7 @@ export default function Process({
               type="button"
               ref={btnNext}
               onClick={() => {
-                handleNext()
+                handleNext();
                 // nextStep();
                 // setProgress(progress + proportion);
               }}
@@ -656,7 +665,7 @@ export default function Process({
         </div>
       </div>
     );
-  }
+  };
   const FifthComponent = () => {
     const [enter, setEnter] = useState(true);
     const [rangeValue, setRangeValue] = useState(0);
@@ -705,7 +714,7 @@ export default function Process({
           <button
             type="button"
             onClick={() => {
-              handleBack()
+              handleBack();
               // previousStep();
               // setProgress(progress - proportion);
             }}
@@ -733,7 +742,7 @@ export default function Process({
         </div>
       </div>
     );
-  }
+  };
   const SixthComponent = () => {
     const [enter, setEnter] = useState(true);
     const [tab, setTab] = useState(0);
@@ -741,7 +750,7 @@ export default function Process({
     const [countryCode, setCountryCode] = useState();
 
     useEffect(() => {
-      if (activeStep.key == "sixthStep"&& enter) {
+      if (activeStep.key == "sixthStep" && enter) {
         setCountry(getValues("location.country"));
         setTab(getValues("location.tab") || 0);
         setEnter(false);
@@ -870,9 +879,8 @@ export default function Process({
         </div>
       </>
     );
-  }
+  };
   const SeventhComponent = () => {
-
     const [mail, setMail] = useState("");
     const [phone, setPhone] = useState(watch("countryCode"));
     const [name, setName] = useState("");
@@ -1049,7 +1057,7 @@ export default function Process({
           </button>
           <button
             onClick={() => {
-              handleBack()
+              handleBack();
             }}
             type="button"
             className="sm:w-[110px] w-[50%] text-[#0050D5] border-[1px] border-[#0050D5] py-2 px-4 sm:mr-2 sm:mb-3 sm:rounded-[0.25rem] rounded-[0px_!important] md:text-[14px] text-[20px] py-[0.5rem]"
@@ -1079,80 +1087,122 @@ export default function Process({
         </div>
       </div>
     );
-  }
+  };
 
   const FinalComponent = () => {
     return (
       <div>
-      <div className="col-span-12">
-        <div id="logo" className="flex items-center justify-center mb-10">
-          <img
-            src={EnvelopeIcon.src}
-            alt={EnvelopeIcon.alternativeText || EnvelopeIcon.src}
-            width={86}
-          />
+        <div className="col-span-12">
+          <div id="logo" className="flex items-center justify-center mb-10">
+            <img
+              src={EnvelopeIcon.src}
+              alt={EnvelopeIcon.alternativeText || EnvelopeIcon.src}
+              width={86}
+            />
+          </div>
+          <h2 className="pb-4 relative text-center md:text-5xl text-[28px] font-sans font-[600] mb-4">
+            {data7?.title}
+          </h2>
+          <p className="text-center text-[20px] font-[400] font-sans">
+            {data7?.subtitle} Your message has been sent!
+          </p>
         </div>
-        <h2 className="pb-4 relative text-center md:text-5xl text-[28px] font-sans font-[600] mb-4">
-          {data7?.title}
-        </h2>
-        <p className="text-center text-[20px] font-[400] font-sans">
-          {data7?.subtitle} Your message has been sent!
-        </p>
-      </div>
-      <div className="col-span-12 mt-[55px]">
-        <div className=" text-center">
-          <button
-            type="button"
-            onClick={() => push("/hire-developers")}
-            className="text-[#ffffff] border-[1px] border-[#0050D5] py-2 px-4 bg-[#0050D5] rounded-[4px] text-[20px]"
-          >
-            <span className="flex items-center rounded-md">Go to Home</span>
-          </button>
+        <div className="col-span-12 mt-[55px]">
+          <div className=" text-center">
+            <button
+              type="button"
+              onClick={() => push("/hire-developers")}
+              className="text-[#ffffff] border-[1px] border-[#0050D5] py-2 px-4 bg-[#0050D5] rounded-[4px] text-[20px]"
+            >
+              <span className="flex items-center rounded-md">Go to Home</span>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
     );
-  }
-
+  };
 
   const [steps, setSteps] = useState([
-    { key: 'firstStep', label: 'My First Step', isDone: true, component: <FirstComponent /> },
-    { key: 'secondStep', label: 'My Second Step', isDone: false, component: <SecondComponent /> },
-    { key: 'thirdStep', label: 'My Third Step', isDone: false, component: <ThirdComponent /> },
-    { key: 'fourthStep', label: 'My Fourth Step', isDone: false, component: <FourthComponent /> },
-    { key: 'fifthStep', label: 'My Fifth Step', isDone: false, component: <FifthComponent /> },
-    { key: 'sixthStep', label: 'My Sixth Step', isDone: false, component: <SixthComponent /> },
-    { key: 'seventhStep', label: 'My Seventh Step', isDone: false, component: <SeventhComponent /> },
-    { key: 'finalStep', label: 'My Final Step', isDone: false, component: <FinalComponent /> },
+    {
+      key: "firstStep",
+      label: "My First Step",
+      isDone: true,
+      component: <FirstComponent />,
+    },
+    {
+      key: "secondStep",
+      label: "My Second Step",
+      isDone: false,
+      component: <SecondComponent />,
+    },
+    {
+      key: "thirdStep",
+      label: "My Third Step",
+      isDone: false,
+      component: <ThirdComponent />,
+    },
+    {
+      key: "fourthStep",
+      label: "My Fourth Step",
+      isDone: false,
+      component: <FourthComponent />,
+    },
+    {
+      key: "fifthStep",
+      label: "My Fifth Step",
+      isDone: false,
+      component: <FifthComponent />,
+    },
+    {
+      key: "sixthStep",
+      label: "My Sixth Step",
+      isDone: false,
+      component: <SixthComponent />,
+    },
+    {
+      key: "seventhStep",
+      label: "My Seventh Step",
+      isDone: false,
+      component: <SeventhComponent />,
+    },
+    {
+      key: "finalStep",
+      label: "My Final Step",
+      isDone: false,
+      component: <FinalComponent />,
+    },
   ]);
-
 
   const [activeStep, setActiveStep] = useState(steps[0]);
 
   const handleNext = () => {
     if (steps[steps.length - 1].key === activeStep.key) {
-      alert('You have completed all steps.');
+      alert("You have completed all steps.");
       return;
     }
 
-    const index = steps.findIndex(x => x.key === activeStep.key);
-    setSteps(prevStep => prevStep.map(x => {
-      if (x.key === activeStep.key) x.isDone = true;
-      return x;
-    }))
+    const index = steps.findIndex((x) => x.key === activeStep.key);
+    setSteps((prevStep) =>
+      prevStep.map((x) => {
+        if (x.key === activeStep.key) x.isDone = true;
+        return x;
+      })
+    );
     setActiveStep(steps[index + 1]);
-  }
+  };
 
   const handleBack = () => {
-    const index = steps.findIndex(x => x.key === activeStep.key);
+    const index = steps.findIndex((x) => x.key === activeStep.key);
     if (index === 0) return;
 
-    setSteps(prevStep => prevStep.map(x => {
-      if (x.key === activeStep.key) x.isDone = false;
-      return x;
-    }))
+    setSteps((prevStep) =>
+      prevStep.map((x) => {
+        if (x.key === activeStep.key) x.isDone = false;
+        return x;
+      })
+    );
     setActiveStep(steps[index - 1]);
-  }
+  };
 
   return (
     <>
@@ -1207,11 +1257,23 @@ export default function Process({
             </span>
           </span>
         </div>
-        <ul className="nav bg-gray-200 w-full rounded-full flex" id="progressbar">
+        <ul
+          className="nav bg-gray-200 w-full rounded-full flex"
+          id="progressbar"
+        >
           {steps.map((step, i) => {
-            return <li key={i} className={`${activeStep.key === step.key ? 'active h-1.5 bg-primary flex-1' : 'flex-1'} ${step.isDone ? 'done h-1.5 bg-primary flex-1' : ''}`}>
-              {/* <div className="bg-primary rounded-full h-1.5">Step {i + 1}<br /><span>{step.label}</span></div> */}
-            </li>
+            return (
+              <li
+                key={i}
+                className={`${
+                  activeStep.key === step.key
+                    ? "active h-1.5 bg-primary flex-1"
+                    : "flex-1"
+                } ${step.isDone ? "done h-1.5 bg-primary flex-1" : ""}`}
+              >
+                {/* <div className="bg-primary rounded-full h-1.5">Step {i + 1}<br /><span>{step.label}</span></div> */}
+              </li>
+            );
           })}
         </ul>
         <div className="container">
@@ -1220,24 +1282,25 @@ export default function Process({
             className="py-10 md:overflow-y-visible md:overflow-x-visible overflow-y-scroll overflow-x-hidden scrollwidth"
             style={{ height: "80vh" }}
           >
-            {/* {console.log("activeStep", activeStep.component())} */}
-            {activeStep.key == "firstStep" ? 
-            <FirstComponent /> 
-            : activeStep.key == "secondStep" ?
-            <SecondComponent />
-            : activeStep.key == "thirdStep" ? 
-            <ThirdComponent />
-            : activeStep.key == "fourthStep" ? 
-            <FourthComponent />
-            : activeStep.key == "fifthStep" ? 
-            <FifthComponent />
-            : activeStep.key == "sixthStep" ? 
-            <SixthComponent />
-            : activeStep.key == "seventhStep" ? 
-            <SeventhComponent />
-            : activeStep.key == "finalStep" ? 
-            <FinalComponent />
-            : ""}
+            {activeStep.key == "firstStep" ? (
+              <FirstComponent />
+            ) : activeStep.key == "secondStep" ? (
+              <SecondComponent />
+            ) : activeStep.key == "thirdStep" ? (
+              <ThirdComponent />
+            ) : activeStep.key == "fourthStep" ? (
+              <FourthComponent />
+            ) : activeStep.key == "fifthStep" ? (
+              <FifthComponent />
+            ) : activeStep.key == "sixthStep" ? (
+              <SixthComponent />
+            ) : activeStep.key == "seventhStep" ? (
+              <SeventhComponent />
+            ) : activeStep.key == "finalStep" ? (
+              <FinalComponent />
+            ) : (
+              ""
+            )}
             {/* <div className="btn-component flex justify-center mt-12 setposition">
               <input type="button" value="Back" onClick={handleBack} disabled={steps[0].key === activeStep.key} className={`${steps[0].key === activeStep.key ? "cursor-not-allowed" : "cursor-pointer" } font-semibold sm:w-[110px] w-[50%] text-center py-2 px-4 sm:mr-4 sm:rounded-[0.25rem] rounded-[0px_!important] md:text-[14px] text-[20px] py-[0.5rem]`}
                 style={{ color: "#62207E", border: "1px solid #62207E" }} />

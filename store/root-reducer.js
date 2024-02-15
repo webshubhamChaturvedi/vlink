@@ -368,12 +368,12 @@ const rootReducer = (state = initialState, action) => {
       };
       return state;
 
-      case ACTION_TYPE.SELECTED_BLOG_CATEGORY:
-        state = {
-          ...state,
-          selectedBlog: { ...state.selectedBlog, ...action.payload },
-        };
-        return state;
+    case ACTION_TYPE.SELECTED_BLOG_CATEGORY:
+      state = {
+        ...state,
+        selectedBlog: { ...state.selectedBlog, ...action.payload },
+      };
+      return state;
 
     case ACTION_TYPE.JOB_DETAIL:
       state = {
@@ -387,12 +387,12 @@ const rootReducer = (state = initialState, action) => {
         country: action.payload,
       };
       return state;
-      case ACTION_TYPE.LCA_PAGE:
-        state = {
-          ...state,
-          lca: action.payload,
-        };
-        return state;
+    case ACTION_TYPE.LCA_PAGE:
+      state = {
+        ...state,
+        lca: action.payload,
+      };
+      return state;
     default:
       return state;
   }

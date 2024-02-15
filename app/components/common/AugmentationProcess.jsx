@@ -39,11 +39,11 @@ export default function AugmentationProcess({ section, setModalCall = true }) {
                 >
                   <div className={`work-item process-div`} data-aos="fade">
                     {index === 0 ? (
-                      <div className="progress_line"></div>
+                      <div className="progress_line  hidden  lg:block"></div>
                     ) : index === 1 ? (
-                      <div className="progress_line"></div>
+                      <div className="progress_line hidden  lg:block"></div>
                     ) : index === 2 ? (
-                      <div className="progress_line"></div>
+                      <div className="progress_line hidden  lg:block"></div>
                     ) : index === 3 ? (
                       <div className="progress_line_l"></div>
                     ) : (
@@ -67,6 +67,7 @@ export default function AugmentationProcess({ section, setModalCall = true }) {
                     >
                       {index === 3 ? (
                         <button
+                          id={item?.num.split(" ").join("")}
                           onClick={setModalCall}
                           className={`w-[200px] h-[50px] leading-[50px] md:mt-1 mt-5 bg-white hover:bg-white text-[#0050D5_!important] border border-[#0050D5_!important] white_btn relative rounded group overflow-hidden text-center inline-block bg-[${item?.bg_color}]`}
                         >
@@ -78,7 +79,7 @@ export default function AugmentationProcess({ section, setModalCall = true }) {
                                 src={apiEndpoint(
                                   `/uploads/phone_icon_9b7047c6f9.png`
                                 )}
-                                alt=""
+                                alt="phone icon"
                               />
                             </span>
                           </span>

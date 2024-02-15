@@ -9,7 +9,7 @@ export default function OurWay({ section }) {
       <Container className="flex flex-col md:flex-row md:py-[55px] py-[30px] items-center gap-10">
         <div className="lg:basis-1/2 ">
           <h6 className="xl:text-4xl lg:text-[32px] text-[22px] font-bold mb-5 xl:leading-[50px] lg:leading-[40px] leading-[35px]">
-            <span className="text-company block mb-2">
+            <span className="text-company block mb-2 mr-1">
               {section?.h1_purple}
             </span>
             {section?.h1_black}

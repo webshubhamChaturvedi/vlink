@@ -21,18 +21,18 @@ module.exports = {
         instagram: "url('/img/bg-instagram.png')",
         "footer-texture": "url('/img/footer-texture.png')",
         "why-vlink-texture":
-          "url('https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_480/v1691389090/why_vlink_texture_3061c0a333.svg')",
+          "url('https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_480/v1691389090/why_vlink_texture_3061c0a333.svg')",
         "ball-texture":
-          "url('https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_340/ball_texture_68d3cde068.svg')",
+          "url('https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_340/ball_texture_68d3cde068.svg')",
         "form-texture": "url('/img/form-texture.svg')",
         "form-background":
           "url('/img/form-texture.svg'),url('/img/form-background.png')",
         "ceo-texture": "url('/img/ceo-texture.svg')",
         "blog-page-texture": " url('/img/blog-page-texture.png')",
         "how-we-work-background":
-          "linear-gradient(0deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)),url('https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_100/v1690806569/how_we_work_background_121a0cc7f6.png')",
+          "linear-gradient(0deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)),url('https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_100/v1690806569/how_we_work_background_121a0cc7f6.png')",
         "how-we-work-texture":
-          "url('https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_600/v1690806569/how_we_work_texture_9031e937c4.png')",
+          "url('https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_600/v1690806569/how_we_work_texture_9031e937c4.png')",
         "our-team":
           "url('/img/our-team-left.png'),url('/img/our-team-right.png')",
         "our-history": "url('/img/our-history-background.svg')",
@@ -40,7 +40,7 @@ module.exports = {
         "tell-us-your-needs":
           "linear-gradient(0deg, rgba(74,12,100,0.96), rgba(74, 12, 100, 0.96)),url('/img/tell-us-your-needs-background.png')",
         "dedicated-teams":
-          "linear-gradient(0deg, rgba(236, 244, 254, 0.95), rgba(236, 244, 254, 0.95)),url('https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_420/dedicated_teams_background_909547b7ee.png')",
+          "linear-gradient(0deg, rgba(236, 244, 254, 0.95), rgba(236, 244, 254, 0.95)),url('https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_420/dedicated_teams_background_909547b7ee.png')",
         "our-solutions":
           "linear-gradient(0deg, rgba(236, 244, 254, 0.95), rgba(236, 244, 254, 0.95)),url('/img/our_solutions_background.png')",
         "vlink-apart": "url('/img/stunning-ball.svg')",

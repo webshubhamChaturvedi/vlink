@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import ReplyForm from "app/components/BlogPost/ReplyForm";
-import ShareSection from "app/components/BlogPost/ShareSection";
 import Card from "app/components/common/Card";
 import Container from "app/components/common/Container";
 import Sidebar from "app/components/common/Sidebar";
@@ -19,6 +17,8 @@ import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import Image from "next/image";
+import REQUEST from "app/helpers/http.service";
+import API_ENDPOINTS from "app/helpers/apiEndpoint";
 
 export default function BlogPage({ data, relatedPost }) {
   const { asPath, push } = useRouter();
@@ -95,14 +95,18 @@ export default function BlogPage({ data, relatedPost }) {
   const handleScroll = (blogContentRef, e) => {
     const good = tableRef.current;
     const el = good.getElementsByClassName("table_content");
-    // Remove active class from other elements
+    const sideBar = document.getElementById("innerScroll");
+
     for (var i = 0; i < el.length; i++) {
       el[i].classList.remove("active-blog");
     }
     var element = document.getElementById(blogContentRef);
     e.target.classList.add("active-blog");
+    let textHeight = e.target.clientHeight;
+    let currentPos = e.target.offsetTop - textHeight - 40;
+    sideBar.scrollTo({ top: currentPos, behavior: "smooth" });
     element.scrollIntoView({
-      block: "start",
+      block: "center",
       behavior: "smooth",
     });
   };
@@ -126,44 +130,80 @@ export default function BlogPage({ data, relatedPost }) {
         heading.setAttribute("id", slugify(heading.innerText));
       }
     }
+
+    if (typeof document !== undefined) {
+      const sidebarContentEl = document.querySelector("#some-id");
+      const buttonnn = document.querySelectorAll(".buttonOpen");
+      buttonnn.forEach((box) => {
+        box.addEventListener("click", function () {
+          sidebarContentEl.classList.add("mystyle");
+        });
+      });
+      const removeButton1 = document.querySelectorAll(".buttonremove1");
+      removeButton1.forEach((box) => {
+        box.addEventListener("click", function () {
+          sidebarContentEl.classList.remove("mystyle");
+        });
+      });
+    }
   }, []);
 
   // function createMarkup() {
   //   return {__html: 'First &middot; Second'};
   // }
 
+  const [adsdata, setAdsdata] = useState({});
+
+  const getBlogAds = async () => {
+    try {
+      const data = await REQUEST({
+        method: "GET",
+        url: API_ENDPOINTS.BLOG_ADS,
+      });
+      setAdsdata(data?.data?.data?.attributes);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getBlogAds();
+  }, []);
+
   return (
     <div className="bg-blog-page-texture bg-blog-position bg-no-repeat">
       <Container className="md:py-[55px] py-[30px] relative">
         <div
           className={`sm:grid xl:grid-cols-12 ${
-            data?.blog_details.length > 0 ? "gap-20" : "gap-10"
+            data?.blog_details.length > 0 ? "gap-10" : "gap-10"
           } justify-center`}
         >
           {data?.tab_content && (
-            <aside className="col-span-3">
+            <aside className="col-span-2">
               <div className="stickthis">
                 <span className="block text-[20px] text-[#002856] font-[600]">
                   {data?.tab_content?.title}
                 </span>
                 <span className="block w-[100px] h-[1px] bg-[rgba(12,_33,_57,_0.31)] mt-1"></span>
-                <ul className="pt-[20px_!important]" ref={tableRef}>
-                  {data?.tab_content?.list.length > 0 &&
-                    data?.tab_content?.list.map((item, index) => (
-                      <li className="list-none mb-3" key={index}>
-                        <Link
-                          onClick={(e) => {
-                            item?.link && handleScroll(item?.link, e);
-                          }}
-                          // href={`${item?.link}`}
-                          href="javascript:void(0)"
-                          className="table_content block text-[16px] underline text-[#535353] font-[400]"
-                        >
-                          {item?.text}
-                        </Link>
-                      </li>
-                    ))}
-                </ul>
+                <div className=" overflow-y-auto" id="innerScroll">
+                  <ul className="pt-[20px_!important]" ref={tableRef}>
+                    {data?.tab_content?.list.length > 0 &&
+                      data?.tab_content?.list.map((item, index) => (
+                        <li className="list-none mb-3" key={index}>
+                          <Link
+                            onClick={(e) => {
+                              item?.link && handleScroll(item?.link, e);
+                            }}
+                            // href={`${item?.link}`}
+                            href="javascript:void(0)"
+                            className="table_content block text-[13px] underline text-[#535353] font-[400]"
+                          >
+                            {item?.text}
+                          </Link>
+                        </li>
+                      ))}
+                  </ul>
+                </div>
                 {data?.side_share && (
                   <>
                     <span className="block w-[100px] h-[0px] bg-[rgba(12,_33,_57,_0.31)] mt-10 mb-5"></span>
@@ -250,7 +290,7 @@ export default function BlogPage({ data, relatedPost }) {
                     >
                       <div className="flex items-center humb text-[#716F6F] text-[16px] font-[600]">
                         <Image
-                          src="https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_20/carbon_view_8b9a9bb12d"
+                          src="https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_20/carbon_view_8b9a9bb12d"
                           alt="eye icon"
                           className="mr-2"
                           height={18}
@@ -266,7 +306,7 @@ export default function BlogPage({ data, relatedPost }) {
                             className="mr-2 w-[18px] h-[18px] object-cover"
                           /> */}
                           <Image
-                            src="https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_20/Clock_Circle_66a6f2972b"
+                            src="https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_20/Clock_Circle_66a6f2972b"
                             className="mr-2 w-[18px] h-[18px] object-cover"
                             height={18}
                             width={18}
@@ -314,7 +354,9 @@ export default function BlogPage({ data, relatedPost }) {
                             </p>
                             <h5 className="xl:text-4xl lg:text-[32px] text-[22px] font-bold">
                               Frequently Asked
-                              <span className="text-company">Questions</span>
+                              <span className="text-company ml-1.5">
+                                Questions
+                              </span>
                             </h5>
                           </div>
                           <div className="xl:col-span-12 col-span-12">
@@ -324,7 +366,11 @@ export default function BlogPage({ data, relatedPost }) {
                                   key={key}
                                   className="border-[rgba(0,0,0,.1)] border-b-[1px]"
                                 >
-                                  <div className={`open=${open === key}`}>
+                                  <div
+                                    className={`open=${open === key} ${
+                                      open === key
+                                    }`}
+                                  >
                                     <div
                                       onClick={() => handleOpen(key)}
                                       className={`faq-question`}
@@ -390,7 +436,11 @@ export default function BlogPage({ data, relatedPost }) {
                                   key={key}
                                   className="border-[rgba(0,0,0,.1)] border-b-[1px]"
                                 >
-                                  <div className={`open=${open === key}`}>
+                                  <div
+                                    className={`open=${open === key} ${
+                                      open === key
+                                    }`}
+                                  >
                                     <div
                                       onClick={() => handleOpen(key)}
                                       className={`faq-question`}
@@ -416,21 +466,58 @@ export default function BlogPage({ data, relatedPost }) {
             </article>
           )}
 
-          {data?.ads_block.length > 0 && (
-            <aside className="col-span-2">
-              {data?.ads_block?.map((items, key) => (
-                <div key={key} className="stickthis">
-                  <img
-                    src={apiEndpoint(items?.image?.data?.attributes?.url)}
-                    alt=""
-                  />
-                  <p>
-                    <a href={items?.link} className="inline-block">
-                      {items?.title}
-                    </a>
+          {data?.tab_content && (
+            <aside className="col-span-3">
+              {data?.ads_block.length > 0 &&
+                data?.ads_block?.map((items, key) => (
+                  <div
+                    key={key}
+                    className="bg-[#EDEEEF] p-[20px] rounded-[7px]"
+                  >
+                    <img
+                      src={apiEndpoint(items?.image?.data?.attributes?.url)}
+                      alt=""
+                    />
+                    <p>
+                      <a
+                        href={items?.link}
+                        className="block bg-[#730BA1] px-2 py-2 text-center text-white rounded-[5px]"
+                      >
+                        {items?.title}
+                      </a>
+                    </p>
+                  </div>
+                ))}
+
+              <div className="stickthis">
+                <div
+                  className="p-[20px] rounded-[7px] mt-4 text-center"
+                  style={{ backgroundColor: adsdata?.bgColor }}
+                >
+                  <h6 className="text-[24px] text-[#000000] font-[800] tracking-[-1px]">
+                    {adsdata?.mainTitle}
+                  </h6>
+                  <p className="text-[26px] text-[#000000] font-[500] mb-2">
+                    {adsdata?.mainDescription}
                   </p>
+                  <h6 className="text-[22px] text-[#730BA1] font-[600] tracking-[-1px]">
+                    {adsdata?.title}
+                  </h6>
+                  <p className="text-[16px] text-[#333333] font-[400]">
+                    {adsdata?.description}
+                  </p>
+                  <button
+                    id="ScheduleACall"
+                    // id={adsdata?.buttonText.split(" ").join("")}
+                    type="button"
+                    className={`buttonOpen 
+                    block w-[100%] mt-3 block bg-[#730BA1] px-2 py-2 
+                    text-center text-white rounded-[5px] shadow-[10px_10px_40px_0px_#00000040]`}
+                  >
+                    {adsdata?.buttonText}
+                  </button>
                 </div>
-              ))}
+              </div>
             </aside>
           )}
 

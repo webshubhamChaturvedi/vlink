@@ -61,14 +61,18 @@ export default function IndustriesFinancial({ res }) {
         <meta
           property="og:title"
           content={
-            industriesLearningData?.title
-              ? industriesLearningData?.title
-              : `Vlink`
+            industriesLearningData?.Seo?.metaTitle ||
+            industriesLearningData?.title ||
+            `Vlink`
           }
         />
         <meta
           property="og:description"
-          content={industriesLearningData?.description || "Vlink Description"}
+          content={
+            industriesLearningData?.Seo?.metaDescription ||
+            industriesLearningData?.description ||
+            "Vlink Description"
+          }
         />
         <meta
           property="og:url"
@@ -77,7 +81,8 @@ export default function IndustriesFinancial({ res }) {
 
         <Metatag
           content={apiEndpoint(
-            industriesLearningData?.section1?.image?.data?.attributes?.url
+            industriesLearningData?.Seo?.metaImage?.data?.attributes?.url ||
+              industriesLearningData?.section1?.image?.data?.attributes?.url
           )}
         />
       </Head>

@@ -1,0 +1,14 @@
+.barlow {font-family: 'Barlow', sans-serif;}
+.text_stock {-webkit-text-stroke: 1px #0E0E0E1A;}
+.text_stocks {-webkit-text-stroke: 1px #FFFFFF42;}
+
+    .section {
+        list-style-type: none;
+  counter-reset: css-counter 0;
+    }
+    .wrapper {
+        counter-increment: css-counter 1;
+    }
+    .wrapper:before {
+        content: counter(css-counter);
+    }

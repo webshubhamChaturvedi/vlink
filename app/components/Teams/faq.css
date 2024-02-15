@@ -1,0 +1,5 @@
+.faqs-sec ol, .faqs-sec ul, .faqs-sec menu {
+    list-style: inherit;
+    margin: inherit;
+    padding: inherit;
+}

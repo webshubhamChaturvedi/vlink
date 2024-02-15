@@ -32,11 +32,17 @@ import Faq from "app/components/Teams/Faq";
 import GetInTouch from "app/components/warehouse/GetInTouch";
 import "./case-study.css";
 import Solutions from "app/components/common/Solutions";
+import TestimonialNew from "app/components/CaseStudies/TestimonialNew";
+import Session from "app/components/CaseStudies/Session";
+import AllCase from "app/components/CaseStudies/AllCase";
+import DeliverProjects from "app/components/CaseStudies/DeliverProjects";
+import ProcessTimeline from "app/components/common/ProcessTimeline";
+import TimeLine from "app/components/common/TimeLine";
+import GetInTouchModal from "app/components/common/GetInTouchModal";
 
 export default function CaseStudy({ res }) {
   const { caseStudyData, leanData, trusted } = JSON.parse(res);
-
-  // const [trusted, setTrustedData] = useState();
+  const [modalScheduleCall, setModalScheduleCall] = useState(false);
   const header = [
     { label: "Home", link: "/" },
     { label: "Case Studies", link: "/case-studies" },
@@ -79,10 +85,13 @@ export default function CaseStudy({ res }) {
       {caseStudyData?.caseStudyOld == true ? (
         <>
           <SectionHeader list={header} />
-
           <div>
             {caseStudyData?.section ? (
-              <HeroSection isCaseStudy={true} data={caseStudyData?.section} />
+              <HeroSection
+                isCaseStudy={true}
+                data={caseStudyData?.section}
+                downloadLink={caseStudyData?.Download_link}
+              />
             ) : (
               ""
             )}
@@ -106,7 +115,12 @@ export default function CaseStudy({ res }) {
             ""
           )}
           {caseStudyData?.section3 ? (
-            <SolutionsKey section={caseStudyData?.section3} />
+            <SolutionsKey
+              section={caseStudyData?.section3}
+              downloadLink={apiEndpoint(
+                caseStudyData?.pdf?.data?.attributes?.url
+              )}
+            />
           ) : (
             ""
           )}
@@ -133,7 +147,11 @@ export default function CaseStudy({ res }) {
       {caseStudyData?.caseStudyNew == true ? (
         <>
           <SectionHeader list={header} isBreadcrumb={true} />
-          <HeroSection data={caseStudyData?.heroSection} isCase={true} />
+          <HeroSection
+            data={caseStudyData?.heroSection}
+            isCase={true}
+            downloadLink={caseStudyData?.pdf?.data?.attributes?.url}
+          />
 
           {Object.keys(trusted)?.length ? (
             <CertificateBar
@@ -145,31 +163,48 @@ export default function CaseStudy({ res }) {
           )}
 
           <HeadText headText={caseStudyData?.Expectations} />
-
-          <ClientNeed clientneed={caseStudyData?.Services} />
-
           <div
+            className="pb-[400px] bg-cover bg-no-repeat bg-top bg-local relative"
             style={{
-              backgroundImage: `linear-gradient(144.54deg, #0A549F 2.16%, #95BC55 107.79%)`,
+              backgroundImage: `linear-gradient(144.54deg, #0A549F 20%, #95BC55 107.79%)`,
             }}
           >
-            <Challenges challenges={caseStudyData?.Challenges} />
+            <div
+              className="bg-no-repeat bg-[right_-300px]"
+              style={{ backgroundImage: `url()` }}
+            >
+              <img
+                src="https://backend.vlinkinfo.com/uploads/bg_gra_cab2cffc58.png"
+                alt=""
+                className="bg-gra"
+              />
+
+              <ClientNeed clientneed={caseStudyData?.Services} />
+
+              <Challenges challenges={caseStudyData?.Challenges} />
+            </div>
 
             <Solutions solutions={caseStudyData?.Solutions} />
+
+            <TestimonialNew testimonial={caseStudyData?.Testimonial} />
           </div>
 
           <ThemesElement themeselement={caseStudyData?.themesElement} />
 
-          <DevelopmentSteps steps={caseStudyData?.process} />
+          <TimeLine Process={caseStudyData?.process} isBlockProcess={true} />
 
           <TechStack techstack={caseStudyData?.techStack} />
 
           <Results results={caseStudyData?.results} />
 
-          <CloudModernization
-            data={caseStudyData?.sessions}
-            isCaseCloud={true}
+          <Session
+            setModalCall={setModalScheduleCall}
+            session={caseStudyData?.Session}
           />
+
+          <AllCase allcase={caseStudyData?.Gamification} />
+
+          <DeliverProjects deliverproducts={caseStudyData?.Results} />
 
           <DataResources resources={caseStudyData?.casestudy} />
 
@@ -178,6 +213,14 @@ export default function CaseStudy({ res }) {
           )}
 
           <GetInTouch getintouch={caseStudyData?.getInTouch} isStaff={true} />
+
+          {modalScheduleCall && (
+            <GetInTouchModal
+              // modalData={modalData?.attributes}
+              isOpen={modalScheduleCall}
+              setIsOpen={setModalScheduleCall}
+            />
+          )}
         </>
       ) : (
         ""
@@ -190,7 +233,7 @@ export async function getStaticProps({ params: { slug } }) {
   const [caseStudyData, trusted] = await Promise.all([
     REQUEST({
       method: "GET",
-      url: `/api/case-study-details?[populate][0]=section.image&populate[1]=section1.image&populate[2]=section2.image&populate[3]=section3.section3_detail&populate[4]=section3.image&populate[5]=section4.section4_detail.image&populate[6]=section5.section5_detail&populate[7]=section6&populate[8]=section7&populate[9]=section.banner_btn.icon&populate[10]=pdf&[populate][12]=heroSection.bgImg&[populate][13]=heroSection.image&[populate][14]=heroSection.banner_btn.icon&[populate][15]=heroSection.hero_tech.icon&[populate][16]=Expectations.image&[populate][17]=Services.serviceList&[populate][18]=Services.ReasonList&[populate][19]=Challenges.image&[populate][20]=Solutions.images.image&[populate][21]=themesElement.coloursList&[populate][22]=themesElement.fontFamily&[populate][23]=themesElement.styleName&[populate][24]=process.stepsList&[populate][25]=techStack.kitList.image&[populate][26]=techStack.featureList&[populate][27]=techStack.techApiList.image&[populate][28]=results.image&[populate][29]=results.bgImage&[populate][30]=sessions.image&[populate][31]=sessions.cloud_btn.icon&[populate][32]=casestudy.image&[populate][33]=casestudy.block.image&[populate][34]=casestudy.block.btn_icon&[populate][35]=getInTouch.bg_img&[populate][36]=getInTouch.gif_popup&[populate][37]=getInTouch.gif_bg_img&[populate][38]=getInTouch.gif_bg_img&[populate][39]=faqs.image&[populate][40]=faqs.viewFaqIcon&[populate][41]=faqs.viewFaq&[populate][42]=faqs.faq_list&[populate][43]=seo.test_image&[populate][44]=seoMeta.metaImage&[populate][45]=seoMeta.metaSocial.image&[populate][46]=techStack.uiuxlist.image&[populate][47]=Challenges.ReasonList&[populate][48]=Testimonial.icon&[populate][49]=Session.Images&[populate][50]=Gamification.Images&[populate][51]=Results.ResultList&[populate][52]=Results.Images&filters[slug][$eq]=${slug}`,
+      url: `${API_ENDPOINTS.CASE_STUDY_DETAILS}&filters[slug][$eq]=${slug}`,
     }),
     REQUEST({
       method: "GET",

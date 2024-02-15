@@ -18,7 +18,7 @@ export default function BlogBanner({ bannerData }) {
   }, []);
   return (
     <section
-      className=" bg-cover bg-center bg-no-repeat bg-[red]"
+      className=" bg-cover bg-center bg-no-repeat bg-[red] pt-20"
       style={{
         // backgroundImage: `url(${apiEndpoint(bannerData?.bgImg?.data?.attributes?.url)})`,
         backgroundImage: `linear-gradient(140deg, ${bannerData?.bgColor} 0%, ${bannerData?.bgColor2} 75%)`,
@@ -35,7 +35,7 @@ export default function BlogBanner({ bannerData }) {
                 {bannerData?.h1}
               </h1>
               <span className="w-[230px] h-[3px] bg-[#FFD100] block mt-[20px]"></span>
-              <div className="mt-10">
+              <div className="mt-5 md:mt-10">
                 <p className="text-[14px] font-[600] text-[rgba(255,_255,_255,_0.8)] mb-3">
                   {bannerData?.auth_title}
                 </p>
@@ -71,11 +71,11 @@ export default function BlogBanner({ bannerData }) {
                     <span className=" inline-block ml-1 mr-1">
                       {luxonDate.day.toLocaleString({
                         minimumIntegerDigits: 2,
-                      })}
+                      })}{" "}
                       {luxonDate.toFormat("MMM")} {luxonDate.toFormat("yyyy")}
                     </span>
                     <span className=" inline-block ml-1 mr-1">
-                      {bannerData?.read_time}
+                      {/* {bannerData?.read_time} */}
                     </span>
                   </div>
                 </div>

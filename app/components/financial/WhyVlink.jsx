@@ -10,7 +10,6 @@ const WhyVlink = ({ section, setModalScheduleCall = true }) => {
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <div className="lg:mb-0 mb-4">
-            {/* <img src="/img/fintech-software-development.png" alt="Fintech Software" /> */}
             <CloudinaryImage
               backendImgUrl={
                 "/uploads/fintech_software_development_72eaa4bbe0.png"
@@ -26,7 +25,7 @@ const WhyVlink = ({ section, setModalScheduleCall = true }) => {
               </p>
               <h4 className="font-bold text-black xl:text-4xl lg:text-[32px] text-[22px] mb-3">
                 {section?.h1_black}
-                <span className="text-company">{section?.h1_purple}</span>
+                <span className="text-company  mr-1">{section?.h1_purple}</span>
                 {section?.h1_black_secondary}
               </h4>
               <p className="text-[#545454] text-[16px] font-sans">
@@ -68,6 +67,7 @@ const WhyVlink = ({ section, setModalScheduleCall = true }) => {
                 {section?.banner_text}
               </span>
               <button
+                id={section?.banner_button_text.split(" ").join("")}
                 onClick={setModalScheduleCall}
                 className="ml-1 min-inline-size bg-[#FFFFFF] py-[10px] px-[20px] text-[#550377] lg:text-[18px] text-[14px] font-sans font-[600]"
               >

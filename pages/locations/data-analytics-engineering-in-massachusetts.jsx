@@ -1,6 +1,5 @@
 import Head from "next/head";
 import SuccessStories from "app/components/Home/SuccesStories";
-import Testimonial from "app/components/Home/Testimonials";
 import GetInTouchForm from "app/components/common/GetInTouchForm";
 import SectionHeader from "app/components/common/SectionHeader";
 import API_ENDPOINTS from "app/helpers/apiEndpoint";
@@ -17,6 +16,7 @@ import { useRouter } from "next/router";
 import CloudinaryImage from "../../app/components/common/CloudinaryImage";
 import Image from "next/image";
 import Metatag from "app/components/metaTag";
+import TestimonialData from "app/components/warehouse/TestimonialData";
 export default function Massachusets({
   massachusetsData,
   trusted,
@@ -130,7 +130,7 @@ export default function Massachusets({
               <div
                 className={`w-[32%] bg-no-repeat  bg-cover bg-center hidden md:block`}
                 style={{
-                  backgroundImage: `url("https://res.cloudinary.com/dwac0ziol/image/upload/c_fill,g_faces,w_991/v1690806058/Microsoft_Teams_image_12_2201b5e48c.jpg")`,
+                  backgroundImage: `url("https://res.cloudinary.com/dthpnue1d/image/upload/c_fill,g_faces,w_991/v1690806058/Microsoft_Teams_image_12_2201b5e48c.jpg")`,
                 }}
               ></div>
             </div>
@@ -278,10 +278,7 @@ export default function Massachusets({
         section_content={stories}
       />
       <OurDevelopers section={massachusetsData?.team_section8} />
-      <Testimonial
-        section_title={testimonials?.Testimonial}
-        section_content={testimonials?.testimonial_content}
-      />
+      <TestimonialData testimonials={testimonials} isNewTestimonial={true} />
       <div className="pt-12">
         <Blogs section_title={blogTitle} homeBlog={blogData} />
       </div>

@@ -31,13 +31,6 @@ export default function Member({
         containerClass="member-card bg-lighterGray rounded-lg shadow-lg h-full relative"
         className="text-center p-4"
       >
-        {/* <img
-          src={image.src}
-          alt={image.alt || image.src}
-          width={image.width}
-          height={image.height}
-          className="rounded-lg  m-auto mt-[-70px] relative"
-        /> */}
         <CloudinaryImage
           backendImgUrl={image.src}
           className="rounded-lg  m-auto mt-[-70px] relative  w-72 h-72"
@@ -60,10 +53,12 @@ export default function Member({
         </span>
 
         <div className="left-0 right-0 bottom-6 flex items-center justify-center text-primary space-x-3">
-          <Link href={linkedin} target="_blank" rel="noreferrer">
-            <span className="hidden">LinkedIn</span>
-            <MemberLinkedinIcon height={44} width={44} />
-          </Link>
+          {!linkedin.includes("#") && (
+            <Link href={linkedin} target="_blank" rel="noreferrer">
+              <span className="hidden">LinkedIn</span>
+              <MemberLinkedinIcon height={44} width={44} />
+            </Link>
+          )}
           <Link href={`mailto:${email}`} target="_blank" rel="noreferrer">
             <MemberEmailIcon height={44} width={44} />
           </Link>

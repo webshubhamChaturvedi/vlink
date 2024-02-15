@@ -44,7 +44,6 @@ export default function SCMPartner({ crmPartner }) {
               </p>
             </div>
           ))}
-          {/* <img src="/img/supply-chain/Ellipse274.png" alt="" className="absolute bottom-0 right-0 max-w-[300px] max-h-[300px]" /> */}
         </div>
       </Container>
     </section>

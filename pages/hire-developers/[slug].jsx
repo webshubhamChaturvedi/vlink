@@ -18,14 +18,16 @@ import HeroSection from "app/components/common/HeroSection";
 import { getPages } from "app/scripts/utils";
 import { useRouter } from "next/router";
 import { apiEndpoint } from "app/scripts/fetch";
+import ServiceOfferings from "app/components/Home/ServiceOfferings";
+import TechStacks from "app/components/Home/TechStacks/TechStacks";
 import Metatag from "app/components/metaTag";
+import TestimonialData from "app/components/warehouse/TestimonialData";
 
 export default function HireDevelopers({ res }) {
   const router = useRouter();
 
   const { hireDeveloperData, trusted, testimonials, successNumber } =
     JSON.parse(res);
-
   const { slug } = router.query;
   const { asPath } = useRouter();
   const canonicalUrl = (
@@ -47,12 +49,18 @@ export default function HireDevelopers({ res }) {
         <meta
           property="og:title"
           content={
-            hireDeveloperData?.title ? hireDeveloperData?.title : `Vlink`
+            hireDeveloperData?.seo?.metaTitle ||
+            hireDeveloperData?.title ||
+            `Vlink`
           }
         />
         <meta
           property="og:description"
-          content={hireDeveloperData?.description || "Vlink Description"}
+          content={
+            hireDeveloperData?.seo?.metaDescription ||
+            hireDeveloperData?.description ||
+            "Vlink Description"
+          }
         />
         <meta
           property="og:url"
@@ -61,7 +69,8 @@ export default function HireDevelopers({ res }) {
 
         <Metatag
           content={apiEndpoint(
-            hireDeveloperData?.section1?.image?.data?.attributes?.url
+            hireDeveloperData?.seo?.metaImage?.data?.attributes?.url ||
+              hireDeveloperData?.section1?.image?.data?.attributes?.url
           )}
         />
         <link rel="canonical" href={canonicalUrl} />
@@ -70,17 +79,31 @@ export default function HireDevelopers({ res }) {
       <HeroSection
         data={hireDeveloperData?.section1}
         isHireDeveloperDetail={true}
+        typeButton={true}
       />
       <CertificateBar section={trusted} isTrusted={true} />
-      <div className="md:mb-[55px]">
-        <ExperiencedTeam
-          section={hireDeveloperData?.section2}
-          isDetail={true}
-        />
+      <div>
+        {hireDeveloperData?.dev_service_offering ? (
+          <ServiceOfferings
+            section_title={hireDeveloperData?.dev_service_offering}
+            section_content={hireDeveloperData?.developer_service}
+          />
+        ) : (
+          <ExperiencedTeam
+            section={hireDeveloperData?.section2}
+            isDetail={true}
+          />
+        )}
       </div>
+      {hireDeveloperData?.dev_tech_stacks?.length > 0 && (
+        <TechStacks
+          section_title={hireDeveloperData?.dev_tech_header}
+          section_content={hireDeveloperData?.dev_tech_stacks}
+        />
+      )}
       <WhyHireDevelopers section={hireDeveloperData?.section3} />
-
       <SuccesfulNumber data={successNumber} isHireDevelopers={true} />
+
       <StepsToHire section={hireDeveloperData?.section4} />
       <WeWork section={hireDeveloperData?.section5} />
       <DedicatedDevelopmentTeam section={hireDeveloperData?.section6} />
@@ -88,10 +111,7 @@ export default function HireDevelopers({ res }) {
         section_title={hireDeveloperData?.section7}
         section_content={hireDeveloperData?.section8}
       />
-      <Testimonial
-        section_title={testimonials?.Testimonial}
-        section_content={testimonials?.testimonial_content}
-      />
+      <TestimonialData testimonials={testimonials} isNewTestimonial={true} />
       <Faq
         section={{
           ...hireDeveloperData?.section9,

@@ -5,7 +5,6 @@ import SectionHeader from "app/components/common/SectionHeader";
 import API_ENDPOINTS from "app/helpers/apiEndpoint";
 import REQUEST from "app/helpers/http.service";
 import CertificateBar from "app/components/Home/CertificateBar";
-import Testimonial from "app/components/Home/Testimonials";
 import Faq from "app/components/HireDevelopers/Faq";
 import WhyHireDevelopers from "app/components/HireDevelopers/WhyHireDevelopers";
 import BestQuality from "app/components/HireDevelopers/BestQuality";
@@ -17,6 +16,7 @@ import HeroSection from "app/components/common/HeroSection";
 import { useRouter } from "next/router";
 import { apiEndpoint } from "app/scripts/fetch";
 import Metatag from "app/components/metaTag";
+import TestimonialData from "app/components/warehouse/TestimonialData";
 
 export default function HireDevelopers({
   hireDeveloperData,
@@ -34,22 +34,34 @@ export default function HireDevelopers({
     <div>
       <Head>
         <title>
-          {hireDeveloperData?.title ? hireDeveloperData?.title : `VLink`}
+          {hireDeveloperData?.Seo?.metaTitle ||
+            hireDeveloperData?.title ||
+            `VLink`}
         </title>
         <meta
           name="description"
-          content={hireDeveloperData?.description || "Vlink Description"}
+          content={
+            hireDeveloperData?.Seo?.metaDescription ||
+            hireDeveloperData?.description ||
+            "Vlink Description"
+          }
         />
 
         <meta
           property="og:title"
           content={
-            hireDeveloperData?.title ? hireDeveloperData?.title : `Vlink`
+            hireDeveloperData?.Seo?.metaTitle ||
+            hireDeveloperData?.title ||
+            `VLink`
           }
         />
         <meta
           property="og:description"
-          content={hireDeveloperData?.description || "Vlink Description"}
+          content={
+            hireDeveloperData?.Seo?.metaDescription ||
+            hireDeveloperData?.description ||
+            "Vlink Description"
+          }
         />
         <meta
           property="og:url"
@@ -58,13 +70,18 @@ export default function HireDevelopers({
 
         <Metatag
           content={apiEndpoint(
-            hireDeveloperData?.section1?.image?.data?.attributes?.url
+            hireDeveloperData?.Seo?.metaImage?.data?.attributes?.url ||
+              hireDeveloperData?.section1?.image?.data?.attributes?.url
           )}
         />
         <link rel="canonical" href={canonicalUrl} />
       </Head>
       <SectionHeader list={header} />
-      <HeroSection data={hireDeveloperData?.section1} isService={true} />
+      <HeroSection
+        data={hireDeveloperData?.section1}
+        isService={true}
+        typeButton={true}
+      />
       <CertificateBar
         section={Object.keys(trusted)?.length ? trusted : null}
         isTrusted={true}
@@ -83,16 +100,11 @@ export default function HireDevelopers({
         section={hireDeveloperData?.section6}
         isHireDevelopers={true}
       />
-      {/* <DedicatedDevelopmentTeam section={hireDeveloperData?.section6} /> */}
       <HireDevelopersPricing
         section_title={hireDeveloperData?.section7}
         section_content={hireDeveloperData?.hireDevPrices}
       />
-      {/* <Faq section={hireDeveloperData?.section9} /> */}
-      <Testimonial
-        section_title={testimonials?.Testimonial}
-        section_content={testimonials?.testimonial_content}
-      />
+      <TestimonialData testimonials={testimonials} isNewTestimonial={true} />
       <Faq section={hireDeveloperData?.section8} />
       <GetInTouchForm />
     </div>

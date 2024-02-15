@@ -23,85 +23,105 @@ export default function SCMTechnologies({ SCMTechnologies }) {
             {SCMTechnologies?.description}
           </p>
         </div>
-        <div className="flex flex-wrap "
-        style={{
-            backgroundImage: `url(${apiEndpoint(SCMTechnologies?.bg_image?.data?.attributes?.url)})`
-        }}>
+        <div
+          className="flex flex-wrap "
+          style={{
+            backgroundImage: `url(${apiEndpoint(
+              SCMTechnologies?.bg_image?.data?.attributes?.url
+            )})`,
+          }}
+        >
           <div className="lg:basis-4/12 w-full flex flex-wrap items-center">
             {SCMTechnologies?.tech_list.map((items, key) =>
               key === 0 ? (
-                <div className="flex lg:flex-nowrap flex-wrap lg:flex-row-reverse lg:mb-0 mb-8" key={key}>
-                    <span className="bg-[#00A6FF] lg:w-[140px] w-[100px] h-[100px] rounded-[100%] flex items-center justify-center lg:mb-0 mb-4 lg:mx-0 mx-auto">
-                        <CloudinaryImage
-                                backendImgUrl={items?.image?.data?.attributes?.url}
-                                className="w-[65px] h-[65px]"
-                                alt={items?.image?.data?.attributes?.alternativeText}
-                                type="icon"
-                                />
-                    </span>
-                    <div className="w-[100%] lg:text-right text-center text-[#fff] lg:mr-[30px] lg:ml-2">
-                        <h6 className="text-[22px] font-[600]">{items?.title}</h6>
-                        <p className="text-[14px]">{items?.description}</p>
-                    </div>
+                <div
+                  className="flex lg:flex-nowrap flex-wrap lg:flex-row-reverse lg:mb-0 mb-8"
+                  key={key}
+                >
+                  <span className="bg-[#00A6FF] lg:w-[140px] w-[100px] h-[100px] rounded-[100%] flex items-center justify-center lg:mb-0 mb-4 lg:mx-0 mx-auto">
+                    <CloudinaryImage
+                      backendImgUrl={items?.image?.data?.attributes?.url}
+                      className="w-[65px] h-[65px]"
+                      alt={items?.image?.data?.attributes?.alternativeText}
+                      type="icon"
+                    />
+                  </span>
+                  <div className="w-[100%] lg:text-right text-center text-[#fff] lg:mr-[30px] lg:ml-2">
+                    <h6 className="text-[22px] font-[600]">{items?.title}</h6>
+                    <p className="text-[14px]">{items?.description}</p>
+                  </div>
                 </div>
               ) : key === 1 ? (
-                <div className="flex lg:flex-nowrap flex-wrap lg:flex-row-reverse lg:mb-0 mb-8" key={key}>
-                    <div className="bg-[#00A6FF] lg:w-[140px] w-[100px] h-[100px] rounded-[100%] flex items-center justify-center lg:mb-0 mb-4 lg:mx-0 mx-auto">
-                        <CloudinaryImage
-                                backendImgUrl={items?.image?.data?.attributes?.url}
-                                className="w-[65px] h-[65px]"
-                                alt={items?.image?.data?.attributes?.alternativeText}
-                                type="icon"
-                                />
-                    </div>
-                    <div className="w-[100%] lg:text-right text-center text-[#fff] lg:mr-[30px] lg:ml-2">
-                        <h6 className="text-[22px] font-[600]">{items?.title}</h6>
-                        <p className="text-[14px]">{items?.description}</p>
-                    </div>
+                <div
+                  className="flex lg:flex-nowrap flex-wrap lg:flex-row-reverse lg:mb-0 mb-8"
+                  key={key}
+                >
+                  <div className="bg-[#00A6FF] lg:w-[140px] w-[100px] h-[100px] rounded-[100%] flex items-center justify-center lg:mb-0 mb-4 lg:mx-0 mx-auto">
+                    <CloudinaryImage
+                      backendImgUrl={items?.image?.data?.attributes?.url}
+                      className="w-[65px] h-[65px]"
+                      alt={items?.image?.data?.attributes?.alternativeText}
+                      type="icon"
+                    />
+                  </div>
+                  <div className="w-[100%] lg:text-right text-center text-[#fff] lg:mr-[30px] lg:ml-2">
+                    <h6 className="text-[22px] font-[600]">{items?.title}</h6>
+                    <p className="text-[14px]">{items?.description}</p>
+                  </div>
                 </div>
               ) : (
                 <></>
               )
             )}
           </div>
-          <div className="lg:basis-4/12 w-full ">
+          <div className="lg:basis-4/12 w-full hidden lg:block ">
             <CloudinaryImage
-                                backendImgUrl={SCMTechnologies?.centerImage?.data?.attributes?.url}
-                                alt={SCMTechnologies?.centerImage?.data?.attributes?.alternativeText}
-                                type="isTablet"
-                                />
+              backendImgUrl={
+                SCMTechnologies?.centerImage?.data?.attributes?.url
+              }
+              alt={
+                SCMTechnologies?.centerImage?.data?.attributes?.alternativeText
+              }
+              type="isTablet"
+            />
           </div>
           <div className="lg:basis-4/12 w-full flex flex-wrap items-center">
             {SCMTechnologies?.tech_list.map((items, key) =>
               key === 2 ? (
-                <div className="flex lg:flex-nowrap flex-wrap lg:mb-0 mb-8" key={key}>
-                    <span className="bg-[#00A6FF] lg:w-[140px] w-[100px] h-[100px] rounded-[100%] flex items-center justify-center lg:mb-0 mb-4 lg:mx-0 mx-auto">
-                        <CloudinaryImage
-                                backendImgUrl={items?.image?.data?.attributes?.url}
-                                className="w-[65px] h-[65px]"
-                                alt={items?.image?.data?.attributes?.alternativeText}
-                                type="icon"
-                                />
-                    </span>
-                    <div className="w-[100%] lg:text-left text-center text-[#fff] lg:ml-[30px]">
-                        <h6 className="text-[22px] font-[600]">{items?.title}</h6>
-                        <p className="text-[14px]">{items?.description}</p>
-                    </div>
+                <div
+                  className="flex lg:flex-nowrap flex-wrap lg:mb-0 mb-8"
+                  key={key}
+                >
+                  <span className="bg-[#00A6FF] lg:w-[140px] w-[100px] h-[100px] rounded-[100%] flex items-center justify-center lg:mb-0 mb-4 lg:mx-0 mx-auto">
+                    <CloudinaryImage
+                      backendImgUrl={items?.image?.data?.attributes?.url}
+                      className="w-[65px] h-[65px]"
+                      alt={items?.image?.data?.attributes?.alternativeText}
+                      type="icon"
+                    />
+                  </span>
+                  <div className="w-[100%] lg:text-left text-center text-[#fff] lg:ml-[30px]">
+                    <h6 className="text-[22px] font-[600]">{items?.title}</h6>
+                    <p className="text-[14px]">{items?.description}</p>
+                  </div>
                 </div>
               ) : key === 3 ? (
-                <div className="flex lg:flex-nowrap flex-wrap lg:mb-0 mb-8" key={key}>
-                    <div className="bg-[#00A6FF] lg:w-[140px] w-[100px] h-[100px] rounded-[100%] flex items-center justify-center lg:mb-0 mb-4 lg:mx-0 mx-auto">
-                        <CloudinaryImage
-                                backendImgUrl={items?.image?.data?.attributes?.url}
-                                className="w-[65px] h-[65px]"
-                                alt={items?.image?.data?.attributes?.alternativeText}
-                                type="icon"
-                                />
-                    </div>
-                    <div className="w-[100%] lg:text-left text-center text-[#fff] lg:ml-[30px]">
-                        <h6 className="text-[22px] font-[600]">{items?.title}</h6>
-                        <p className="text-[14px]">{items?.description}</p>
-                    </div>
+                <div
+                  className="flex lg:flex-nowrap flex-wrap lg:mb-0 mb-8"
+                  key={key}
+                >
+                  <div className="bg-[#00A6FF] lg:w-[140px] w-[100px] h-[100px] rounded-[100%] flex items-center justify-center lg:mb-0 mb-4 lg:mx-0 mx-auto">
+                    <CloudinaryImage
+                      backendImgUrl={items?.image?.data?.attributes?.url}
+                      className="w-[65px] h-[65px]"
+                      alt={items?.image?.data?.attributes?.alternativeText}
+                      type="icon"
+                    />
+                  </div>
+                  <div className="w-[100%] lg:text-left text-center text-[#fff] lg:ml-[30px]">
+                    <h6 className="text-[22px] font-[600]">{items?.title}</h6>
+                    <p className="text-[14px]">{items?.description}</p>
+                  </div>
                 </div>
               ) : (
                 <></>

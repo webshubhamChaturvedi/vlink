@@ -13,9 +13,17 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import "styles/Home.module.css";
+import CloudinaryImage from "../../app/components/common/CloudinaryImage";
+import API_ENDPOINTS from "app/helpers/apiEndpoint";
+import CONSTANTS from "app/scripts/constants";
+import Pagination from "app/components/common/Pagination";
 
-export default function PodcastDetail({ res }) {
-  const { podcastDetail, episodes, techStories } = JSON.parse(res);
+export default function PodcastDetail({
+  podcastDetail,
+  episodes,
+  techStories,
+}) {
+  // const { podcastDetail, episodes, techStories } = JSON.parse(res);
   const router = useRouter();
   const { asPath } = useRouter();
   const canonicalUrl = (
@@ -130,6 +138,25 @@ export default function PodcastDetail({ res }) {
       await setShowPlayer(true);
     })();
   }, []);
+
+  const [podcasts, setPodcasts] = useState();
+  const [optionsPagination, setOptionsPagination] = useState({
+    page: CONSTANTS.PAGINATION_INITIAL_PAGE,
+    limit: 4,
+    totalResults: 0,
+  });
+  const { page, limit, total } = optionsPagination;
+
+  useEffect(() => {
+    setLoading(true);
+    setPodcasts([...episodes.slice((page - 1) * limit, page * limit)]);
+    setOptionsPagination({
+      ...optionsPagination,
+      totalResults: episodes.length,
+    });
+    setLoading(false);
+  }, [page, limit]);
+
   return (
     <div>
       <Head>
@@ -141,11 +168,17 @@ export default function PodcastDetail({ res }) {
 
         <meta
           property="og:title"
-          content={podcastDetail?.title ? podcastDetail?.title : `Vlink`}
+          content={
+            podcastDetail?.Seo?.metaTitle || podcastDetail?.title || `Vlink`
+          }
         />
         <meta
           property="og:description"
-          content={podcastDetail?.description || "Vlink Description"}
+          content={
+            podcastDetail?.Seo?.metaDescription ||
+            podcastDetail?.description ||
+            "Vlink Description"
+          }
         />
         <meta
           property="og:url"
@@ -155,7 +188,9 @@ export default function PodcastDetail({ res }) {
         <Metatag
           content={
             apiEndpoint(
-              podcastDetail?.playlist_data?.playlist_img?.data?.attributes?.url
+              podcastDetail?.Seo?.metaImage?.data?.attributes?.url ||
+                podcastDetail?.playlist_data?.playlist_img?.data?.attributes
+                  ?.url
             ) || "Vlink Image"
           }
         />
@@ -163,7 +198,7 @@ export default function PodcastDetail({ res }) {
         <link rel="canonical" href={canonicalUrl} />
       </Head>
       <SectionHeader list={header} />
-      <section className="font-['Open_Sans'] py-10">
+      <section className="font-['Open_Sans'] py-10 mt-16">
         <div className="container mx-auto px-4">
           <div className="md:mb-[45px] mb-[25px]">
             <label className="md:text-[18px] text-[16px] font-[700] text-[#030303] md:leading-[27px] leading-[20px] mb-2 block">
@@ -184,27 +219,17 @@ export default function PodcastDetail({ res }) {
                     className={`md:flex rounded-[10px] overflow-hidden md:p-0  bg-[#0050D5]`}
                   >
                     <div className="lg:basis-4/12 md:basis-4/12 episodes-content-img  items-center min-h-full">
-                      {/* <figure
-                        className={`md:m-0 mx-auto w-[300px] md:rounded-[6px] rounded-[6px] h-[277.5px] bg-no-repeat   bg-cover`}
-                        style={{
-                          backgroundImage: `url('${apiEndpoint(
-                            podcastDetail?.playlist_data?.playlist_img?.data
-                              ?.attributes?.url
-                          )}')`,
-                        }}
-                      ></figure> */}
-                      <img
-                        src={apiEndpoint(
+                      <CloudinaryImage
+                        backendImgUrl={
                           podcastDetail?.playlist_data?.playlist_img?.data
                             ?.attributes?.url
-                        )}
+                        }
                         alt={
                           podcastDetail?.playlist_data?.playlist_img?.data
-                            ?.attributes?.alternativeText ||
-                          podcastDetail?.playlist_data?.playlist_img?.data
-                            ?.attributes?.name
+                            ?.attributes?.alternativeText
                         }
                         className="w-[100%] rounded-tl-[10px] md:rounded-bl-[10px] md:rounded-tr-[0px] rounded-tr-[10px]"
+                        type="icon"
                       />
                     </div>
                     <div className="lg:basis-8/12 md:basis-8/12 episodes-content-block  p-5 w-full md:mt-[10px] md:m-0">
@@ -233,27 +258,17 @@ export default function PodcastDetail({ res }) {
                     className={`md:flex rounded-[10px] overflow-hidden p-4 md:p-0  bg-[#0000008a]`}
                   >
                     <div className="lg:basis-4/12 md:basis-4/12 episodes-content-img  items-center min-h-full">
-                      {/* <figure
-                        className={`md:m-0 mx-auto w-[300px] md:rounded-[6px] blur rounded-[6px] h-[277.5px] bg-no-repeat   bg-cover`}
-                        style={{
-                          backgroundImage: `url('${apiEndpoint(
-                            podcastDetail?.playlist_data?.playlist_img?.data
-                              ?.attributes?.url
-                          )}')`,
-                        }}
-                      ></figure> */}
-                      <img
-                        src={apiEndpoint(
+                      <CloudinaryImage
+                        backendImgUrl={
                           podcastDetail?.playlist_data?.playlist_img?.data
                             ?.attributes?.url
-                        )}
+                        }
                         alt={
                           podcastDetail?.playlist_data?.playlist_img?.data
-                            ?.attributes?.alternativeText ||
-                          podcastDetail?.playlist_data?.playlist_img?.data
-                            ?.attributes?.name
+                            ?.attributes?.alternativeText
                         }
                         className="w-[100%] rounded-tl-[10px] md:rounded-bl-[10px] md:rounded-tr-[0px] rounded-tr-[10px]"
+                        type="smallimg"
                       />
                     </div>
                     <div className="lg:basis-8/12 md:basis-8/12 episodes-content-block  md:p-5 w-full mt-[10px] md:m-0">
@@ -346,9 +361,9 @@ export default function PodcastDetail({ res }) {
                     More Episodes
                   </h4>
                   <ul className="mb-5 episodes-lists">
-                    {episodes &&
-                      episodes.length > 0 &&
-                      episodes.map(
+                    {podcasts &&
+                      podcasts.length > 0 &&
+                      podcasts.map(
                         (
                           {
                             attributes: {
@@ -364,18 +379,17 @@ export default function PodcastDetail({ res }) {
                           <Link href={`/podcast/${slug}`} key={slug}>
                             <li className="cursor-pointer drop-shadow-[0px_0px_12px_rgba(0,0,0,0.1)] md:flex items-start mt-5 border-transparent hover:border-[#62207E] border-2  rounded-[10px] bg-[#fff]">
                               <div className="lg:basis-4/12 md:basis-4/12 episodes-content-img flex items-center min-h-full">
-                                <img
-                                  src={apiEndpoint(
+                                <CloudinaryImage
+                                  backendImgUrl={
                                     playlist_data?.playlist_img?.data
                                       ?.attributes?.url
-                                  )}
+                                  }
                                   alt={
                                     playlist_data?.playlist_img?.data
-                                      ?.attributes?.alternativeText ||
-                                    playlist_data?.playlist_img?.data
-                                      ?.attributes?.name
+                                      ?.attributes?.alternativeText
                                   }
                                   className="w-[100%] rounded-tl-[10px] md:rounded-bl-[10px] md:rounded-tr-[0px] rounded-tr-[10px]"
+                                  type="smallimg"
                                 />
                               </div>
                               <div className="lg:basis-8/12 md:basis-8/12 episodes-content-block  p-4 w-full mt-[10px] md:m-0">
@@ -416,6 +430,16 @@ export default function PodcastDetail({ res }) {
                         )
                       )}
                   </ul>
+
+                  {optionsPagination?.totalResults >
+                    CONSTANTS.PAGINATION_PAGE_SIZE && (
+                    <Pagination
+                      loading={loading}
+                      paginationOptions={optionsPagination}
+                      onPagination={setOptionsPagination}
+                      className="my-6"
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -469,7 +493,7 @@ export default function PodcastDetail({ res }) {
                     className="mx-3 flex items-center  ml-4"
                   >
                     <img
-                      src="/img/faq/twiter.svg"
+                      src="https://backend.vlinkinfo.com/uploads/twitter_49483ce942.png"
                       alt="Vlink Twitter"
                       className="h-[20px]"
                     />
@@ -526,27 +550,45 @@ export default function PodcastDetail({ res }) {
 }
 
 export async function getStaticProps({ params: { slug } }) {
-  const [podcastDetail, episodes, techStories] = await Promise.all([
+  const [podcastDetail, techStories] = await Promise.all([
     REQUEST({
       method: "GET",
-      url: `/api/podcast-details?%5Bpopulate%5D%5B0%5D=playlist_data.playlist_img&populate%5B1%5D=section.image&populate%5B2%5D=audio&filters[slug][$eq]=${slug}`,
+      url: `${API_ENDPOINTS.PODCAST_DETAILS}&filters[slug][$eq]=${slug}`,
     }),
+    // REQUEST({
+    //   method: "GET",
+    //   url: `/api/podcast-details?%5Bpopulate%5D%5B0%5D=playlist_data.playlist_img&populate%5B1%5D=section.image&sort[0]=playlist_data.episode%3Adesc&filters[slug][$ne]=${slug}&pagination[page]=1&pagination[pageSize]=4`,
+    // }),
     REQUEST({
       method: "GET",
-      url: `/api/podcast-details?%5Bpopulate%5D%5B0%5D=playlist_data.playlist_img&populate%5B1%5D=section.image&sort[0]=playlist_data.episode%3Adesc&filters[slug][$ne]=${slug}&pagination[page]=1&pagination[pageSize]=4`,
-    }),
-    REQUEST({
-      method: "GET",
-      url: "/api/webinar-details?[populate][0]=image&pagination[page]=1&pagination[pageSize]=3",
+      url: `${API_ENDPOINTS.WEBINAR_DETAILS}&pagination[page]=1&pagination[pageSize]=3`,
     }),
   ]);
-  const res = JSON.stringify({
-    podcastDetail: podcastDetail?.data?.data[0]?.attributes,
-    episodes: episodes?.data?.data,
-    techStories: techStories?.data?.data,
-  });
+
+  let page = 1;
+  let limit = 4;
+  let contentPages = [];
+  let total = 0;
+  do {
+    const [res] = await Promise.all([
+      REQUEST({
+        method: "GET",
+        url: `${API_ENDPOINTS.TECHNOLOGY_PODCAST_DETAIL}&pagination[page]=${page}&pagination[pageSize]=${limit}`,
+      }),
+    ]);
+    contentPages = [...contentPages, ...res?.data?.data];
+    if (res?.data?.meta?.pagination?.total) {
+      total = res?.data?.meta?.pagination?.total;
+      page = page + 1;
+    } else break;
+  } while (total > contentPages.length);
+
   return {
-    props: { res },
+    props: {
+      podcastDetail: podcastDetail?.data?.data[0]?.attributes,
+      techStoriesv: techStories?.data?.data,
+      episodes: contentPages,
+    },
   };
 }
 

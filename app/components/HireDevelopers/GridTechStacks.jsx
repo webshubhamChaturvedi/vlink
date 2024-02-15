@@ -18,28 +18,30 @@ const GridTechStacks = ({ list }) => {
           >
             <div className="technologystacks-padd flex flex-col lg:flex-row  h-full py-6 lg:py-0">
               <div className="text-center lg:text-left p-4">
-                <div className="flex flex-wrap md:justify-between justify-center mb-5">
+                <div className="flex flex-wrap md:justify-between justify-center mb-0 md:mb-5">
                   <p
                     className={`md:text-[20px] text-[17px] font-[600] mb-5 text-center lg:text-left md:w-auto w-[100%]`}
                   >
                     {item?.h}
                   </p>
                   <div className="flex flex-wrap sm:justify-none justify-center">
-                    <button
-                      className="shadow-[0px_0px_20px_rgba(0,80,213,0.13)] hover:bg-primary text-primary bg-white hover:text-white px-3 py-3 leading-[16px]"
-                      onClick={
-                        item?.button_link
-                          ? () => router.push(item.button_link)
-                          : () => {}
-                      }
-                    >
-                      <span className="text-[14px] leading-[16px] whitespace-nowrap">
-                        {item?.button_text}
-                      </span>
-                    </button>
+                    {item?.button_link && (
+                      <button
+                        className="shadow-[0px_0px_20px_rgba(0,80,213,0.13)] hover:bg-primary text-primary bg-white hover:text-white px-3 py-3 leading-[16px]"
+                        onClick={
+                          item?.button_link
+                            ? () => router.push(item.button_link)
+                            : () => {}
+                        }
+                      >
+                        <span className="text-[14px] leading-[16px] whitespace-nowrap">
+                          {item?.button_text}
+                        </span>
+                      </button>
+                    )}
                   </div>
                 </div>
-                <p className={`text-sm  mb-4`}>{item?.p}</p>
+                <p className={`text-sm  mb-2 md:mb-4`}>{item?.p}</p>
                 <div className="flex flex-wrap gap-2 items-center">
                   {item &&
                     item?.section4_language?.length > 0 &&

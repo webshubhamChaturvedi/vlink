@@ -13,6 +13,7 @@ import CertificateBar from "app/components/Home/CertificateBar";
 import { useRouter } from "next/router";
 import { apiEndpoint } from "app/scripts/fetch";
 import Metatag from "app/components/metaTag";
+import TestimonialData from "app/components/warehouse/TestimonialData";
 
 export default function Healthcare({ res }) {
   const { asPath } = useRouter();
@@ -48,14 +49,18 @@ export default function Healthcare({ res }) {
         <meta
           property="og:title"
           content={
-            industriesLearningData?.title
-              ? industriesLearningData?.title
-              : `Vlink`
+            industriesLearningData?.Seo?.metaTitle ||
+            industriesLearningData?.title ||
+            `Vlink`
           }
         />
         <meta
           property="og:description"
-          content={industriesLearningData?.description || "Vlink Description"}
+          content={
+            industriesLearningData?.Seo?.metaDescription ||
+            industriesLearningData?.description ||
+            "Vlink Description"
+          }
         />
         <meta
           property="og:url"
@@ -64,7 +69,8 @@ export default function Healthcare({ res }) {
 
         <Metatag
           content={apiEndpoint(
-            industriesLearningData?.section1?.image?.data?.attributes?.url
+            industriesLearningData?.Seo?.metaImage?.data?.attributes?.url ||
+              industriesLearningData?.section1?.image?.data?.attributes?.url
           )}
         />
         <link rel="canonical" href={canonicalUrl} />
@@ -95,15 +101,7 @@ export default function Healthcare({ res }) {
         section_title={industriesLearningData?.success_story}
         section_content={stories}
       />
-      <Testimonial
-        section_title={testimonial?.Testimonial}
-        section_content={testimonial?.testimonial_content}
-      />
-      {/* 
-      
-   
-    
-     */}
+      <TestimonialData testimonials={testimonial} isNewTestimonial={true} />
       <GetInTouchForm />
     </div>
   );

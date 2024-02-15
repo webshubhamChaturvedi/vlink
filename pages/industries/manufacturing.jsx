@@ -1,21 +1,19 @@
 import Head from "next/head";
 import SuccessStories from "app/components/Home/SuccesStories";
-import Testimonial from "app/components/Home/Testimonials";
 import GetInTouchForm from "app/components/common/GetInTouchForm";
 import SectionHeader from "app/components/common/SectionHeader";
 import HowWeWork from "app/components/Services/HowWeWork";
 import Solutions from "app/components/Teams/Solutions";
 import OurSolutions from "app/components/Industries/Learning/OurSolutions";
-import { useEffect, useState } from "react";
 import REQUEST from "app/helpers/http.service";
 import API_ENDPOINTS from "app/helpers/apiEndpoint";
 import HeroSection from "app/components/common/HeroSection";
 import CertificateBar from "app/components/Home/CertificateBar";
-import ACTION_TYPE from "store/action-type";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { apiEndpoint } from "app/scripts/fetch";
 import Metatag from "app/components/metaTag";
+import TestimonialData from "app/components/warehouse/TestimonialData";
 
 export default function Manufacturing({ res }) {
   const dispatch = useDispatch();
@@ -54,14 +52,18 @@ export default function Manufacturing({ res }) {
         <meta
           property="og:title"
           content={
-            industriesLearningData?.title
-              ? industriesLearningData?.title
-              : `Vlink`
+            industriesLearningData?.Seo?.metaTitle ||
+            industriesLearningData?.title ||
+            `Vlink`
           }
         />
         <meta
           property="og:description"
-          content={industriesLearningData?.description || "Vlink Description"}
+          content={
+            industriesLearningData?.Seo?.metaDescription ||
+            industriesLearningData?.description ||
+            "Vlink Description"
+          }
         />
         <meta
           property="og:url"
@@ -70,7 +72,8 @@ export default function Manufacturing({ res }) {
 
         <Metatag
           content={apiEndpoint(
-            industriesLearningData?.section1?.image?.data?.attributes?.url
+            industriesLearningData?.Seo?.metaImage?.data?.attributes?.url ||
+              industriesLearningData?.section1?.image?.data?.attributes?.url
           )}
         />
         <link rel="canonical" href={canonicalUrl} />
@@ -101,15 +104,7 @@ export default function Manufacturing({ res }) {
         section_title={industriesLearningData?.success_story}
         section_content={stories}
       />
-      <Testimonial
-        section_title={testimonial?.Testimonial}
-        section_content={testimonial?.testimonial_content}
-      />
-      {/* 
-      
-   
-    
-     */}
+      <TestimonialData testimonials={testimonial} isNewTestimonial={true} />
       <GetInTouchForm />
     </div>
   );
